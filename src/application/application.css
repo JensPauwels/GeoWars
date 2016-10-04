@@ -1,0 +1,50 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#container{
+	-fx-background-color: #38383838 ;
+	-fx-background-image: url("../images/space.jpg"); 
+    -fx-background-position: center center;
+    
+  
+}
+
+#h1{
+	-fx-min-width: 800px;
+	-fx-font-size: 100pt;
+	-fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0); 
+	-fx-text-fill: rgb(77,26,77);
+		-fx-background-image: url("../images/test_cropped.jpg"); 
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat ;
+}
+
+#alert,#username{
+	-fx-font-size: 30pt;
+		-fx-text-fill: rgb(77,26,77);
+	-fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0); 
+}
+
+#GameButton{
+	-fx-min-width: 200px;
+}
+
+#button,#userNameInput,#passwordInput,#GameButton,#table{
+
+    -fx-background-color: 
+        #090a0c,
+        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+        linear-gradient(#20262b, #191d22),
+        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: purple;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 10, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(violet, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+    
+
+}
+
+

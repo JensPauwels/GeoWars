@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gameOptions.GameOptionsController">
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="username"  text="hiermoethetkomen">
+               <VBox.margin>
+                  <Insets bottom="100.0" />
+               </VBox.margin>
+            </Label>
+            <Button id="GameButton" onAction="#loadSinglePlayer" mnemonicParsing="false"  prefHeight="25.0" prefWidth="108.0" text="Single Player" />
+            <Button id="GameButton" onAction="#loadMultiPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="104.0" text="Multi Player" />
+            <Button id="GameButton" onAction="#loadHighScores" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" text="Highscores" />
+            <Button id="GameButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="93.0" text="Settings" />
+            <Button id="GameButton" onAction="#logOut" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="102.0" text="Logout" />
+         </children>
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </VBox>
+   </center>
+</BorderPane>
