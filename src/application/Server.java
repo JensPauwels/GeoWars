@@ -12,22 +12,18 @@ public class Server {
     private static DataInputStream din;
     private static DataOutputStream dout;
     public static int[] ports = new int[2];
-    private static Server testServer = new Server();
 
-    private void makeConnection() throws IOException {
-        for(int poort : ports){
-            ss = new ServerSocket(poort);
-            s = ss.accept();
-            din = new DataInputStream(s.getInputStream());
-            dout = new DataOutputStream(s.getOutputStream());
-        }
-
+    private void makeConnection(int poort) throws IOException {
+        ss = new ServerSocket(poort);
+        s = ss.accept();
+        din = new DataInputStream(s.getInputStream());
+        dout = new DataOutputStream(s.getOutputStream());
     }
 
     public static void main(String args[]) throws IOException {
         System.out.println("The server is live");
-
-        testServer.makeConnection();
+        Server testServer = new Server();
+        testServer.makeConnection(1201);
         while(true){
             testServer.ontvangBerichtjes();
         }
@@ -37,8 +33,7 @@ public class Server {
         System.out.println(din.readUTF());
     }
 
-    public static void addPorts(int portnumber) throws IOException{
+    public static void addPorts(int portnumber){
         ports[ports.length] = portnumber;
-        testServer.makeConnection();
     }
 }

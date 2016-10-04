@@ -3,12 +3,14 @@ package application;
 import application.multiPlayer.JoinMultiPlayer;
 import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
+
 public class Engine {
 
     private User user = new User();
-    private JoinMultiPlayer client = new JoinMultiPlayer(getUsername(),1201);
     private static Engine firstInstance = null;
     private static boolean firstThread = true;
+
 
 
 
@@ -25,7 +27,7 @@ public class Engine {
             }
 
             synchronized(Engine.class){
-                if(firstInstance == null) {firstInstance = new Engine();}
+                if(firstInstance == null) {firstInstance = new Engine() ;}
             }
         }
         return firstInstance;
@@ -39,11 +41,8 @@ public class Engine {
         return this.user.getUsername();
     }
     public User getUser(){ return this.user;}
-    public JoinMultiPlayer getClient() {return this.client;}
 
-    public void changeScreen(){
 
-    }
 
 
 

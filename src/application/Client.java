@@ -1,6 +1,7 @@
 package application;
 
 
+import application.gameOptions.GameOptionsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -40,6 +41,7 @@ public class Client extends Application  {
 
     public static void main(String[] args) throws IOException {
         launch(args);
+
     }
 
 }

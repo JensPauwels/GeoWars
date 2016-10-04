@@ -16,17 +16,11 @@ public class JoinMultiPlayer {
     private DbConnection db = new DbConnection();
 
 
-    public JoinMultiPlayer(String username, int port) {
-
+    public JoinMultiPlayer(String username, int port) throws IOException {
         this.username = username;
         this.port = port;
-        //Server.addPorts(port);
-        //makeConnection(port);
-
-        //System.out.println("dit is je poort nummer "+db.getPortNumber(username));
-
+        makeConnection(port);
     }
-
 
     public void sendText(String username) throws IOException{
         dout.writeUTF( username+" has joined the lobby" );

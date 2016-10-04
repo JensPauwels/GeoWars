@@ -13,8 +13,10 @@ public class GameOptionsController  {
     private DbConnection db = new DbConnection();
     private Engine instantie = Engine.getInstance();
 
+
     @FXML
     public void initialize() {
+        System.out.println(username + "dit is de username");
             System.out.println(System.identityHashCode(instantie));
             System.out.println("test in GameControllers :"+ instantie.getUsername() );
             System.out.println(username);
