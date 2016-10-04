@@ -23,7 +23,7 @@ public class Controller {
 	private void initialGame() throws IOException {
 
 		if (db.controle("select * from users where username like '" + userNameInput.getText() + "' and password like '" + passwordInput.getText()+ "'")) {
-            Client.loadScreen("gameOptions");
+			Client.loadScreen("gameOptions");
             System.out.println("dit is de username input :" + userNameInput.getText());
             instantie.setUserName(userNameInput.getText());
             System.out.println("dit is een test als hij aanpast :" +instantie.getUsername());

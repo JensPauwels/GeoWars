@@ -1,16 +1,15 @@
 package application;
 
-import application.multiPlayer.Client;
+import application.multiPlayer.JoinMultiPlayer;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 public class Engine {
 
     private User user = new User();
-    private Client client = new Client(getUsername(),1201);
+    private JoinMultiPlayer client = new JoinMultiPlayer(getUsername(),1201);
     private static Engine firstInstance = null;
     private static boolean firstThread = true;
-    private BorderPane mainView;
+
 
 
     public static Engine getInstance()  {
@@ -40,15 +39,13 @@ public class Engine {
         return this.user.getUsername();
     }
     public User getUser(){ return this.user;}
-    public Client getClient() {return this.client;}
+    public JoinMultiPlayer getClient() {return this.client;}
 
     public void changeScreen(){
 
     }
 
-    public void setMainView(BorderPane borderPane){
-        this.mainView = borderPane;
-    }
+
 
 
 

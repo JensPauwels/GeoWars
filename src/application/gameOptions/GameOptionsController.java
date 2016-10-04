@@ -41,7 +41,7 @@ public class GameOptionsController  {
 
     @FXML
     private void loadSinglePlayer() throws IOException {
-       Client.loadScreen("singlePlayer");
+        Client.loadScreen("singlePlayer");
     }
 
     @FXML

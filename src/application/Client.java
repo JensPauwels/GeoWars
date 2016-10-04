@@ -24,7 +24,7 @@ public class Client extends Application  {
         Scene scene = new Scene(mainLayout);
         scene.getStylesheets().add("application/application.css");
         primaryStage.setScene(scene);
-        primaryStage.show();	
+        primaryStage.show();
         loadScreen("loginScreen");
     }
 
@@ -39,8 +39,6 @@ public class Client extends Application  {
     }
 
     public static void main(String[] args) throws IOException {
-        Engine instantie = Engine.getInstance();
-        instantie.setMainView(mainLayout);
         launch(args);
     }
 

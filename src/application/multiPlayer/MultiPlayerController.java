@@ -12,6 +12,8 @@ public class MultiPlayerController {
 
     @FXML
     public void initialize() throws IOException {
+
+
         instantie.getClient().sendText(instantie.getUsername());
     }
 
