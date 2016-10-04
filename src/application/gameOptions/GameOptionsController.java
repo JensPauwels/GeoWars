@@ -15,18 +15,12 @@ public class GameOptionsController  {
 
     @FXML
     public void initialize() {
-        try{
             System.out.println(System.identityHashCode(instantie));
             System.out.println("test in GameControllers :"+ instantie.getUsername() );
             System.out.println(username);
             instantie.getUser().setPortnumber(db.getPortNumber(instantie.getUsername()));
             System.out.println( "Dit is je port number:"+ instantie.getUser().getPortnumber());
             username.setText(instantie.getUsername());
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-
     }
 
     @FXML
