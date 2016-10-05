@@ -19,8 +19,6 @@ public class LoginController {
 	@FXML
 	private void initialGame() throws IOException {
 
-
-
 		this.username = userNameInput.getText();
 		this.password = passwordInput.getText();
 
