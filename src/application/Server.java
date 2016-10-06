@@ -11,7 +11,7 @@ public class Server {
     private static Socket s;
     private static DataInputStream din;
     private static DataOutputStream dout;
-    public static int[] ports = new int[2];
+
 
     private void makeConnection(int poort) throws IOException {
         ss = new ServerSocket(poort);
@@ -28,12 +28,11 @@ public class Server {
             testServer.ontvangBerichtjes();
         }
     }
+
     
     private void ontvangBerichtjes() throws IOException{
         System.out.println(din.readUTF());
     }
 
-    public static void addPorts(int portnumber){
-        ports[ports.length] = portnumber;
-    }
+
 }

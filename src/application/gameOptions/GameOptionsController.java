@@ -1,6 +1,7 @@
 package application.gameOptions;
 
 import application.Engine;
+import application.highScores.HighScoresController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
@@ -16,23 +17,21 @@ public class GameOptionsController  {
 
     @FXML
     public void initialize() {
-        System.out.println(username + "dit is de username");
-            System.out.println(System.identityHashCode(instantie));
-            System.out.println("test in GameControllers :"+ instantie.getUsername() );
-            System.out.println(username);
             instantie.getUser().setPortnumber(db.getPortNumber(instantie.getUsername()));
             System.out.println( "Dit is je port number:"+ instantie.getUser().getPortnumber());
-            username.setText(instantie.getUsername());
+            //username.setText(instantie.getUsername());
     }
 
     @FXML
     private void loadHighScores() throws IOException {
         Client.loadScreen("highScores");
+
     }
 
     @FXML
     private void loadMultiPlayer() throws IOException {
         Client.loadScreen("multiPlayer");
+
     }
 
     @FXML

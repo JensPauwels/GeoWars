@@ -9,8 +9,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import static java.awt.SystemColor.window;
+
 public class Client extends Application  {
-    private Stage primaryStage;
+    private  Stage primaryStage;
     private static BorderPane mainLayout;
 
     @Override
@@ -18,6 +20,13 @@ public class Client extends Application  {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("GeoWars");
         showMainView();
+
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            System.out.println("ik sluit het venster");
+
+            primaryStage.close();
+        });
     }
 
     private void showMainView() throws IOException{
@@ -39,9 +48,9 @@ public class Client extends Application  {
         mainLayout.setCenter(createBorderPane(url+"/"+url+".FXML"));
     }
 
+
     public static void main(String[] args) throws IOException {
         launch(args);
-
     }
 
 }

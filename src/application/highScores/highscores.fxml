@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
+
 
 <BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.highScores.HighScoresController">
 	<bottom>
 		<VBox alignment="CENTER" prefHeight="181.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
 			<children>
-            <Button  mnemonicParsing="false" text="test" />
-				<Button id="button" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadGameOptions" text="goBackToOptions" />
+
+				<Button id="button" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadGameOptions" text="Go back to options" />
 			</children>
 		</VBox>
 	</bottom>
-	<center>
-		<TableView fx:id="table" maxHeight="500.0" maxWidth="600.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.54" prefHeight="582.0" prefWidth="701.0" BorderPane.alignment="CENTER">
-			<columns>
-				<TableColumn fx:id="highscoreUserName" prefWidth="303.0" text="Username" />
-				<TableColumn fx:id="highscore" maxWidth="310.0" prefWidth="296.0" text="Highscore" />
-			</columns>
-			<BorderPane.margin>
-				<Insets top="30.0" />
-			</BorderPane.margin>
-		</TableView>
-	</center>
+   <center>
+
+      <VBox fx:id="vbox" maxHeight="300.0" maxWidth="400.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="50.0" />
+         </BorderPane.margin></VBox>
+   </center>
+   <top>
+      <Label id="highscore" text="Highscores Table" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="50.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
 </BorderPane>
