@@ -15,15 +15,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 public class HighScoresController {
-
-    private Engine instantie = Engine.getInstance();
-    private DbConnection db = new DbConnection();
     public  VBox vbox;
 
     @FXML
     public void initialize() throws IOException {
-        test();
-        System.out.println("dit is de score van " +instantie.getUsername()+" : "+db.getHighscore(instantie.getUsername()));
+        loadHighScoreResults();
     }
 
     @FXML
@@ -31,30 +27,26 @@ public class HighScoresController {
        Client.loadScreen("gameoptions");
     }
 
-   private  void test() throws IOException {
-
-       TableColumn<User, String> nameColumn = new TableColumn<>("username");
-       nameColumn.setMinWidth(178);
-       nameColumn.setId("table");
-       nameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-       TableColumn<User, String> highScoreColumn = new TableColumn<>("highscore");
-       highScoreColumn.setMinWidth(180);
-       highScoreColumn.setId("table");
-       highScoreColumn.setCellValueFactory(new PropertyValueFactory<>("highscore"));
+   private  void loadHighScoreResults() throws IOException {
        TableView<User> tableView = new TableView<>();
-
-
-       vbox.setId("table");
-       tableView.setItems(getProduct());
-       tableView.getColumns().addAll(nameColumn, highScoreColumn);
+       tableView.setItems(generateUserData());
+       tableView.getColumns().addAll(createColumn("username"), createColumn("highscore"));
        vbox.getChildren().addAll(tableView);
     }
 
-    private  ObservableList<User> getProduct(){
+    private TableColumn<User,String> createColumn(String columnname){
+        TableColumn<User, String> column = new TableColumn<>(columnname);
+        column.setMinWidth(199);
+        column.setId("table");
+        column.setCellValueFactory(new PropertyValueFactory<>(columnname));
+        return column;
+    }
+
+    private  ObservableList<User> generateUserData(){
         //TODO: dynamisch inladen via db
         ObservableList<User> users = FXCollections.observableArrayList();
         users.add(new User("joske","pauwels"));
-        users.add(new User("testje","test"));
+        users.add(new User("testje","loadHighScoreResults"));
         users.add(new User("geiten","anothertest"));
         return users;
 

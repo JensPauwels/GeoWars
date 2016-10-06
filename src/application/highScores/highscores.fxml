@@ -16,7 +16,7 @@
 	</bottom>
    <center>
 
-      <VBox fx:id="vbox" maxHeight="300.0" maxWidth="400.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox  fx:id="vbox" maxHeight="300.0" maxWidth="400.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="50.0" />
          </BorderPane.margin></VBox>

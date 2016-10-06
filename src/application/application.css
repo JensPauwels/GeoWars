@@ -18,7 +18,7 @@
     -fx-background-repeat: no-repeat ;
 }
 
-#alert,#username,#highscore{
+#alert,#username,#,#vbox{
 	-fx-font-size: 30pt;
 		-fx-text-fill: rgb(77,26,77);
 	-fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0); 
