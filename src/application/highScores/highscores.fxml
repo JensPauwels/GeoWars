@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.*?>
 <BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.highScores.HighScoresController">
 	<bottom>
-        <VBox alignment="CENTER" prefHeight="181.0" prefWidth="1000.0" BorderPane.alignment="CENTER">x
+		<VBox alignment="CENTER" prefHeight="181.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+			<children>
 
-            <Button id="button" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false"
-                    onAction="#loadGameOptions" text="Go back to options"/>
-        </VBox>
+				<Button id="button" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadGameOptions" text="Go back to options" />
+			</children>
+		</VBox>
 	</bottom>
    <center>
 
