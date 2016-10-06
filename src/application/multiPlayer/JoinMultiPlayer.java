@@ -1,24 +1,18 @@
 package application.multiPlayer;
 
 import application.DbConnection;
-import application.Server;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class JoinMultiPlayer {
     private static Socket s;
     private static DataOutputStream dout;
-    private String username;
-    private int port;
-    private DbConnection db = new DbConnection();
+
 
 
     public JoinMultiPlayer(String username, int port) throws IOException {
-        this.username = username;
-        this.port = port;
         makeConnection(port);
     }
 

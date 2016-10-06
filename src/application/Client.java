@@ -1,15 +1,13 @@
 package application;
 
 
-import application.gameOptions.GameOptionsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import java.io.IOException;
 
-import static java.awt.SystemColor.window;
+import java.io.IOException;
 
 public class Client extends Application  {
     private  Stage primaryStage;

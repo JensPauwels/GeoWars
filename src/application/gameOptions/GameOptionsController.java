@@ -1,12 +1,12 @@
 package application.gameOptions;
 
-import application.Engine;
-import application.highScores.HighScoresController;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import java.io.IOException;
-import application.DbConnection;
 import application.Client;
+import application.DbConnection;
+import application.Engine;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
+import java.io.IOException;
 
 public class GameOptionsController  {
 

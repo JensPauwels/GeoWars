@@ -1,9 +1,8 @@
 package application.multiPlayer;
 
+import application.Client;
 import application.DbConnection;
 import application.Engine;
-import application.Client;
-import application.Server;
 import javafx.fxml.FXML;
 
 import java.io.IOException;

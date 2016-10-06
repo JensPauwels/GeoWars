@@ -1,15 +1,12 @@
 package testFunctions;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-
 import application.DbConnection;
+import org.junit.Test;
 
 
 public class TestFunctions {
-	DbConnection db = new DbConnection();
+	private DbConnection db = new DbConnection();
 	private String username = "test";
-	private String pass = "test123";
 
 	@Test
 	public void kanari() {
@@ -26,7 +23,7 @@ public class TestFunctions {
 
 	@Test
 	public void controlOnLogin() {
-		String query = "select * from users where username like '" + username + "' and password like '" + pass+ "'";
+		String query = "select * from users where username like '" + username + "' and password like 'test123'";
 		
 		if (!db.controle(query)) {
 			System.err.println("controleLogin");

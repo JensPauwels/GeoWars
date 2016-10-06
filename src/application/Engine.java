@@ -1,10 +1,5 @@
 package application;
 
-import application.multiPlayer.JoinMultiPlayer;
-import javafx.scene.layout.BorderPane;
-
-import java.io.IOException;
-
 public class Engine {
 
     private User user = new User();
