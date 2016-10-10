@@ -24,11 +24,11 @@
 	-fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0); 
 }
 
-#GameButton{
+.GameButton{
 	-fx-min-width: 200px;
 }
 
-#button,#userNameInput,#passwordInput,#GameButton,#table{
+#button,#userNameInput,#passwordInput,.GameButton,#table{
 
     -fx-background-color: 
         #090a0c,

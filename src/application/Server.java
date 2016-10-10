@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class Server {
     private static ServerSocket ss;
@@ -13,8 +14,8 @@ public class Server {
     private static DataOutputStream dout;
 
 
-    private void makeConnection(int poort) throws IOException {
-        ss = new ServerSocket(poort);
+    private void makeConnection(int port) throws IOException {
+        ss = new ServerSocket(port);
         s = ss.accept();
         din = new DataInputStream(s.getInputStream());
         dout = new DataOutputStream(s.getOutputStream());
@@ -24,9 +25,7 @@ public class Server {
         System.out.println("The server is live");
         Server testServer = new Server();
         testServer.makeConnection(1201);
-        while(true){
-            testServer.ontvangBerichtjes();
-        }
+        while(true){testServer.ontvangBerichtjes();}
     }
 
     

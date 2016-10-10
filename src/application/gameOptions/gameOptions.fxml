@@ -20,15 +20,15 @@
                <Insets bottom="100.0"/>
             </VBox.margin>
          </Label>
-         <Button id="GameButton" onAction="#loadSinglePlayer" mnemonicParsing="false" prefHeight="25.0"
+         <Button styleClass="GameButton" onAction="#loadSinglePlayer" mnemonicParsing="false" prefHeight="25.0"
                  prefWidth="108.0" text="Single Player"/>
-         <Button id="GameButton" onAction="#loadMultiPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+         <Button styleClass="GameButton" onAction="#loadMultiPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
                  prefHeight="25.0" prefWidth="104.0" text="Multi Player"/>
-         <Button id="GameButton" onAction="#loadHighScores" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+         <Button styleClass="GameButton" onAction="#loadHighScores" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
                  prefHeight="25.0" prefWidth="106.0" text="Highscores"/>
-         <Button id="GameButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0"
+         <Button styleClass="GameButton" onAction="#loadSettings" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0"
                  prefWidth="93.0" text="Settings"/>
-         <Button id="GameButton" onAction="#logOut" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+         <Button styleClass="GameButton" onAction="#logOut" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
                  prefHeight="25.0" prefWidth="102.0" text="Logout"/>
       </VBox>
    </center>

@@ -4,7 +4,6 @@ public class User {
     private String username;
     private String password;
     private int highscore;
-    private int portnumber;
 
     public User(String username, String password){
         this.username = username;
@@ -16,14 +15,6 @@ public class User {
         this.username = "" ;
         this.password = "";
         this.highscore = 0;
-    }
-
-    public int getPortnumber() {
-        return portnumber;
-    }
-
-    public void setPortnumber(int portnumber) {
-        this.portnumber = portnumber;
     }
 
     public String getUsername() {

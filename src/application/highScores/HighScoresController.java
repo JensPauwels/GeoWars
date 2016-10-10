@@ -1,8 +1,6 @@
 package application.highScores;
 
 import application.Client;
-import application.DbConnection;
-import application.Engine;
 import application.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +30,7 @@ public class HighScoresController {
        tableView.setItems(generateUserData());
        tableView.getColumns().addAll(createColumn("username"), createColumn("highscore"));
        vbox.getChildren().addAll(tableView);
-    }
+   }
 
     private TableColumn<User,String> createColumn(String columnname){
         TableColumn<User, String> column = new TableColumn<>(columnname);

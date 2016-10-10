@@ -8,13 +8,11 @@ import java.sql.Statement;
 public class DbConnection {
 	private Statement st;
 	private ResultSet rs;
-	//private PreparedStatement ps;
-
-
 
 	public DbConnection() {
+		//
 		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3309/loginsystem?autoReconnect=true&useSSL=false", "root", "");
+			Connection con = DriverManager.getConnection("jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608","sql8139608","BsR3mcjcUa");
 			st = con.createStatement();
 		} catch (Exception ex) {
 			System.out.println("Error: " + ex);
@@ -33,8 +31,6 @@ public class DbConnection {
 		}
 		return bool;}
 
-
-	//db.updateTable("update users set highscore=" + 500 + " where username like 'test'");
 	public void updateTable(String query){
 		try {
 			st.executeUpdate(query);
@@ -55,20 +51,5 @@ public class DbConnection {
 		}
 		return highscore;
 	}
-
-	public int getPortNumber(String username) {
-		int highscore = 0;
-		try {
-			String query = "select portnumber from users where username like '" + username + "'";
-			rs = st.executeQuery(query);
-			rs.first();
-			highscore = rs.getInt(1);
-		} catch (Exception ex) {
-			System.out.println("Error: " +ex);
-		}
-		return highscore;
-	}
-
-
 
 }
