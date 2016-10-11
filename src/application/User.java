@@ -5,15 +5,13 @@ public class User {
     private String password;
     private int highscore;
 
-    public User(String username, String password){
+    public User(String username,int highscore){
         this.username = username;
-        this.password = password;
-        this.highscore = 0;
+        this.highscore = highscore;
     }
 
     public User(){
         this.username = "" ;
-        this.password = "";
         this.highscore = 0;
     }
 

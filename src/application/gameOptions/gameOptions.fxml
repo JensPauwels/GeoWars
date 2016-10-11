@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gameOptions.GameOptionsController">
+
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gameOptions.GameOptionsController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="TOP_CENTER">
          <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
          <cursor>
-            <Cursor fx:constant="DEFAULT"/>
+            <Cursor fx:constant="DEFAULT" />
          </cursor>
          <Label fx:id="username" text="Chooise an option">
             <VBox.margin>
-               <Insets bottom="100.0"/>
+               <Insets bottom="100.0" />
             </VBox.margin>
          </Label>
-         <Button styleClass="GameButton" onAction="#loadSinglePlayer" mnemonicParsing="false" prefHeight="25.0"
-                 prefWidth="108.0" text="Single Player"/>
-         <Button styleClass="GameButton" onAction="#loadMultiPlayer" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                 prefHeight="25.0" prefWidth="104.0" text="Multi Player"/>
-         <Button styleClass="GameButton" onAction="#loadHighScores" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                 prefHeight="25.0" prefWidth="106.0" text="Highscores"/>
-         <Button styleClass="GameButton" onAction="#loadSettings" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0"
-                 prefWidth="93.0" text="Settings"/>
-         <Button styleClass="GameButton" onAction="#logOut" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                 prefHeight="25.0" prefWidth="102.0" text="Logout"/>
+         <JFXButton styleClass="options" onAction="#loadSinglePlayer" text="Single Player" />
+         <JFXButton styleClass="options" layoutX="461.0" layoutY="145.0" onAction="#loadMultiPlayer" text="Multi Player" />
+         <JFXButton styleClass="options" layoutX="461.0" layoutY="290.0" onAction="#loadHighScores" text="Highscores" />
+         <JFXButton styleClass="options" layoutX="461.0" layoutY="327.0" onAction="#loadSettings" text="Settings" />
+         <JFXButton styleClass="options" layoutX="476.0" layoutY="364.0" onAction="#logOut" text="Logout" />
       </VBox>
    </center>
 </BorderPane>

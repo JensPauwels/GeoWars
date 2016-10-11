@@ -15,22 +15,13 @@ public class LoginController {
 	public TextField userNameInput;
 	public PasswordField passwordInput;
 	public Label  alert;
-	private String username,password;
-
-
-
 
 	@FXML
 	private void initialGame() throws IOException {
 
-		this.username = userNameInput.getText();
-		this.password = passwordInput.getText();
 
-
-		if (db.controle("select * from users where username like '" + username + "' and password like '" + password+ "'")) {
-			System.out.println(username);
+		if (db.controle("select * from users where username like '" + userNameInput.getText() + "' and password like '" + passwordInput.getText()+ "'")) {
 			Client.loadScreen("gameOptions");
-			System.out.println("dit is de username input :" + username);
         } else {
 			alert.setText("Enter the right creds or register to our game");
 		}
@@ -39,15 +30,11 @@ public class LoginController {
 	@FXML
 	private void Register() throws IOException {
 
-		this.username = userNameInput.getText();
-		this.password = passwordInput.getText();
-
-		if (db.controle("select * from users where username like '" + username + "'")) {
+		if (db.controle("select * from users where username like '" + userNameInput.getText() + "'")) {
 			alert.setText("Username is already token");
 		} else {
 			alert.setVisible(false);
-			db.updateTable("insert into users values('" + username + "','" + password + "',0)");
-
+			db.updateTable("insert into users values('" + userNameInput.getText() + "','" + passwordInput.getText() + "',0)");
 			Client.loadScreen("gameOptions");
 		}
 	}

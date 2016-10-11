@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DbConnection {
 	private Statement st;
 	private ResultSet rs;
 
 	public DbConnection() {
-		//
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608","sql8139608","BsR3mcjcUa");
 			st = con.createStatement();
@@ -29,7 +30,8 @@ public class DbConnection {
 		} catch (Exception ex) {
 			System.out.println("Error: " + ex);
 		}
-		return bool;}
+		return bool;
+	}
 
 	public void updateTable(String query){
 		try {
@@ -39,17 +41,23 @@ public class DbConnection {
 		}
 	}
 
-	public String getHighscore(String username) {
-		String highscore = "";
+	public List<User> getHighscores(String query) {
+		List<User> testlist = new LinkedList<>();
 		try {
-			String query = "select highscore from users where username like '" + username + "'";
 			rs = st.executeQuery(query);
-			rs.first();
-			highscore = rs.getString(1);
+			System.out.println(rs);
+			while (rs.next()) {
+				String str = rs.getString("username");
+				 int i= rs.getInt("highscore");
+				User user = new User(str, i);
+				testlist.add(user);
+			}
 		} catch (Exception ex) {
 			System.out.println("Error: " +ex);
 		}
-		return highscore;
+		return testlist;
 	}
+
+
 
 }

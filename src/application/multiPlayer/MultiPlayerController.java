@@ -17,8 +17,6 @@ public class MultiPlayerController {
     private static DataOutputStream dout;
     @FXML
     public void initialize()  {
-        //joinMultiPlayer();
-       // sendText(username);
     }
 
     @FXML
