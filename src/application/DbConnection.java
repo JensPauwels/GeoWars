@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,56 +9,40 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DbConnection {
-	private Statement st;
-	private ResultSet rs;
+    private Statement st;
+    private ResultSet rs;
 
-	public DbConnection() {
-		try {
-			Connection con = DriverManager.getConnection("jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608","sql8139608","BsR3mcjcUa");
-			st = con.createStatement();
-		} catch (Exception ex) {
-			System.out.println("Error: " + ex);
-		}
-	}
-	
-	public boolean controle( String query) {
-		boolean bool = false;
-		try {
-			rs = st.executeQuery(query);
-			if (rs.next()) {
-				bool = true;
-			}
-		} catch (Exception ex) {
-			System.out.println("Error: " + ex);
-		}
-		return bool;
-	}
+    public DbConnection() {
+        String url = "jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608";
+        String username = "sql8139608";
+        String password = "BsR3mcjcUa";
 
-	public void updateTable(String query){
-		try {
-			st.executeUpdate(query);
-		} catch (Exception ex) {
-			System.out.println("Error: " +ex);
-		}
-	}
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            st = con.createStatement();
+            } catch (Exception ex) {
+        }
+    }
 
-	public List<User> getHighscores(String query) {
-		List<User> testlist = new LinkedList<>();
-		try {
-			rs = st.executeQuery(query);
-			System.out.println(rs);
-			while (rs.next()) {
-				String str = rs.getString("username");
-				 int i= rs.getInt("highscore");
-				User user = new User(str, i);
-				testlist.add(user);
-			}
-		} catch (Exception ex) {
-			System.out.println("Error: " +ex);
-		}
-		return testlist;
-	}
+    public boolean controle(String query) throws Exception {
+        rs = st.executeQuery(query);
+        return rs.next();
+    }
 
+    public void updateTable(String query) throws Exception {
+        st.executeUpdate(query);
+    }
 
+    public List<User> getHighscores(String query) throws Exception {
+        List<User> userList = new LinkedList<>();
+        rs = st.executeQuery(query);
 
+        while (rs.next()) {
+            String username = rs.getString("username");
+            int highScore = rs.getInt("highscore");
+            userList.add(new User(username, highScore));
+        }
+
+        return userList;
+    }
 }

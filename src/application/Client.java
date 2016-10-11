@@ -10,24 +10,21 @@ import java.io.IOException;
 
 public class Client extends Application  {
     private  Stage primaryStage;
-    private static BorderPane mainLayout;
+    private static  BorderPane mainLayout = new BorderPane();
+    private Scene scene = new Scene(mainLayout);
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("application.GeoWars");
+        this.primaryStage.setTitle("application.SinglePlayer");
         showMainView();
-        primaryStage.setOnCloseRequest(e -> {
-            e.consume();
-            primaryStage.close();
-        });
     }
 
     private void showMainView() {
-        mainLayout = new BorderPane();
+
         mainLayout.setMinHeight(600);
         mainLayout.setMinWidth(800);
         mainLayout.setId("container");
-        Scene scene = new Scene(mainLayout);
         scene.getStylesheets().add("application/application.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -36,14 +33,11 @@ public class Client extends Application  {
 
     private static BorderPane createBorderPane(String url) {
         try{
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Client.class.getResource(url));
             return loader.load();
 
         }catch (IOException e){
-
-            System.out.println("error in createBorderPane");
             return null;
         }
     }

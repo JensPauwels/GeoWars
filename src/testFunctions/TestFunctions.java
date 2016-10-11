@@ -4,17 +4,20 @@ import application.DbConnection;
 import org.junit.Test;
 
 
-public class TestFunctions {
+public class TestFunctions  {
 	private DbConnection db = new DbConnection();
 	private String username = "test";
 
 	@Test
-	public void kanari() {
-		System.out.println("piep");
+	public void basicTest(){
+		Boolean x = true;
+		if(!x){
+			System.err.print("basictest");
+		}
 	}
 
 	@Test
-	public void duplicatedUsers() {
+	public void duplicatedUsers() throws  Exception {
 		String query =  "select * from users where username like '" + username + "'";
 		if (!db.controle(query)) {
 			System.err.println("duplicatedUser");
@@ -22,9 +25,8 @@ public class TestFunctions {
 	}
 
 	@Test
-	public void controlOnLogin() {
+	public void controlOnLogin() throws  Exception{
 		String query = "select * from users where username like '" + username + "' and password like 'test123'";
-		
 		if (!db.controle(query)) {
 			System.err.println("controleLogin");
 		}

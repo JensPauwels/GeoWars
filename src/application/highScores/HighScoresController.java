@@ -18,8 +18,13 @@ public class HighScoresController {
     public  VBox vbox;
     private DbConnection db = new DbConnection();
 
+    // deze Class werkt in principe maar moet nog een visuele upgrade krijgen :)
+
+    // UITBREIDING
+    // indien we op een highscore naam klikken een link naar die persoon zijn achievements?
+
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() throws Exception {
         loadHighScoreResults();
     }
 
@@ -28,13 +33,13 @@ public class HighScoresController {
        Client.loadScreen("gameoptions");
     }
 
-   private  void loadHighScoreResults() throws IOException {
-       TableView<User> tableView = new TableView<>();
-       tableView.setItems(generateUserData());
-       tableView.setMaxHeight(500);
-       tableView.getColumns().addAll(createColumn("username"), createColumn("highscore"));
-       vbox.getChildren().addAll(tableView);
-   }
+    private  void loadHighScoreResults() throws Exception {
+        TableView<User> tableView = new TableView<>();
+        tableView.setItems(generateUserData());
+        tableView.setMaxHeight(500);
+        tableView.getColumns().addAll(createColumn("username"), createColumn("highscore"));
+        vbox.getChildren().addAll(tableView);
+    }
 
     private TableColumn<User,String> createColumn(String columnname){
         TableColumn<User, String> column = new TableColumn<>(columnname);
@@ -44,14 +49,11 @@ public class HighScoresController {
         return column;
     }
 
-    private  ObservableList<User> generateUserData(){
-        //TODO: dynamisch inladen via db
+    private  ObservableList<User> generateUserData() throws Exception{
         ObservableList<User> users = FXCollections.observableArrayList();
         List<User> test =   db.getHighscores("SELECT  userName,highscore FROM users order by highscore desc");
-        for (int i=0; i<test.size();i++) {users.add(test.get(i));
-        }
+        for (int i=0; i<test.size();i++) {users.add(test.get(i));}
         return users;
-
     }
 
 }

@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import java.io.IOException;
 
 public class GameOptionsController  {
+
+    // is er een mogelijkheid voor de text van de button te krijgen waar je op klikt waardoor je in principe een dynamische function hebt?
+
     @FXML
     private void loadHighScores() {
         Client.loadScreen("highScores");
