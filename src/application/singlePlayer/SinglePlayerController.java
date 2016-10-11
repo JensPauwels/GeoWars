@@ -15,5 +15,7 @@ public class SinglePlayerController {
     @FXML
     private void loadGameOptions() throws IOException {
         Client.loadScreen("gameOptions");
+
+        //dit is een test voor github
     }
 }
