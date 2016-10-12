@@ -4,8 +4,6 @@ public class settingsController {
     // in deze class moeten we allemaal settings bedenken oa
     // - Muziek of niet
 
-
-
     //DIT IS PAS UITBREIDNIG
     // - linken aan social media
     // - online/ ofline display

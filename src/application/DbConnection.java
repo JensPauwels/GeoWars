@@ -1,6 +1,5 @@
 package application;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ public class DbConnection {
     public DbConnection() {
         String url = "jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608";
         String username = "sql8139608";
-        String password = "BsR3mcjcUa";
+        String password = "**********";
 
         try {
             Connection con = DriverManager.getConnection(url, username, password);
@@ -36,7 +35,6 @@ public class DbConnection {
     public List<User> getHighscores(String query) throws Exception {
         List<User> userList = new LinkedList<>();
         rs = st.executeQuery(query);
-
         while (rs.next()) {
             String username = rs.getString("username");
             int highScore = rs.getInt("highscore");

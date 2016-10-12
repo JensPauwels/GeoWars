@@ -3,28 +3,15 @@ package application;
 
 public class Engine {
     private static Engine firstInstance = null;
-    private static boolean firstThread = true;
 
     public static Engine getInstance() {
         if (firstInstance == null) {
-            if (firstThread) {
-                firstThread = false;
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            synchronized (Engine.class) {
-                if (firstInstance == null) {
-                    firstInstance = new Engine();
-                }
-            }
+            firstInstance = new Engine();
         }
         return firstInstance;
     }
+
+
 
     // functions die in de engine moeten horen hier thuis (op deze manier kan je engine.getinstance.(function)) => beter dan static te gebruiken volgends mij
     // over nadenken mogelijks kan deze class een init bevatten voor de currentplayer => dus als de player inlogged haalt de engine alle settings van de player op uit de online db
@@ -32,4 +19,5 @@ public class Engine {
     // wanneer de speler iets aanpast zal dit in de engine bijgehouden worden
     // en ten slot als de speler zijn scherm afsluit zal dit doorgestuurd worden naar de database waardoor hij de volgende keer bij de login die gegevens uit de database krijgt
     // indien iets anders beter zou zijn let me know xoxo
+
 }

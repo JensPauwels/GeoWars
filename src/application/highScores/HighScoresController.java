@@ -2,6 +2,7 @@ package application.highScores;
 
 import application.Client;
 import application.DbConnection;
+import application.Engine;
 import application.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,6 @@ public class HighScoresController {
     private DbConnection db = new DbConnection();
 
     // deze Class werkt in principe maar moet nog een visuele upgrade krijgen :)
-
     // UITBREIDING
     // indien we op een highscore naam klikken een link naar die persoon zijn achievements?
 
