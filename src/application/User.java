@@ -1,18 +1,22 @@
 package application;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+
 public class User {
     private String username;
-    private String password;
     private int highscore;
+    private Settings settings;
 
-    public User(String username,int highscore){
+
+    public User(String username, int highscore) {
         this.username = username;
         this.highscore = highscore;
-    }
+        this.settings = new Settings();
 
-    public User(){
-        this.username = "" ;
-        this.highscore = 0;
+    }
+    
+    public Settings getSettings(){
+        return this.settings;
     }
 
     public String getUsername() {
@@ -21,14 +25,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getHighscore() {

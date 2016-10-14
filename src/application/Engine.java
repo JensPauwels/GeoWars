@@ -3,6 +3,10 @@ package application;
 
 public class Engine {
     private static Engine firstInstance = null;
+    private User currentUser;
+    private DbConnection db = new DbConnection();
+    private String username;
+
 
     public static Engine getInstance() {
         if (firstInstance == null) {
@@ -10,6 +14,37 @@ public class Engine {
         }
         return firstInstance;
     }
+
+    public void initCurrentUser(){
+
+        try{
+            setCurrentUser(db.initUser(username));
+            System.out.println(currentUser.getHighscore());
+            }
+        catch (Exception ex){
+                System.out.println(ex);
+            }
+
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setCurrentUser(User currentUser){
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
+
+    public void saveCurrentUser() throws Exception{
+
+        db.updateTable("t");
+
+    }
+
 
 
 

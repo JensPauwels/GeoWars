@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class Server {
     private static ServerSocket ss;
@@ -25,11 +24,13 @@ public class Server {
         System.out.println("The server is live");
         Server testServer = new Server();
         testServer.makeConnection(1201);
-        while(true){testServer.ontvangBerichtjes();}
+        while (true) {
+            testServer.ontvangBerichtjes();
+        }
     }
 
-    
-    private void ontvangBerichtjes() throws IOException{
+
+    private void ontvangBerichtjes() throws IOException {
         System.out.println(din.readUTF());
     }
 

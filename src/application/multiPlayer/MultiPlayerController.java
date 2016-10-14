@@ -2,7 +2,6 @@ package application.multiPlayer;
 
 import application.Client;
 import application.DbConnection;
-import application.Server;
 import javafx.fxml.FXML;
 
 import java.io.DataOutputStream;

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
 <BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gameOptions.GameOptionsController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="TOP_CENTER">
@@ -16,7 +15,7 @@
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
-         <Label fx:id="username" text="Chooise an option">
+         <Label fx:id="h1" text="">
             <VBox.margin>
                <Insets bottom="100.0" />
             </VBox.margin>

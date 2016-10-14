@@ -2,7 +2,6 @@ package application.highScores;
 
 import application.Client;
 import application.DbConnection;
-import application.Engine;
 import application.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class HighScoresController {
-    public  VBox vbox;
+    public VBox vbox;
     private DbConnection db = new DbConnection();
 
     // deze Class werkt in principe maar moet nog een visuele upgrade krijgen :)
@@ -30,10 +29,10 @@ public class HighScoresController {
 
     @FXML
     private void loadGameOptions() throws IOException {
-       Client.loadScreen("gameoptions");
+        Client.loadScreen("gameoptions");
     }
 
-    private  void loadHighScoreResults() throws Exception {
+    private void loadHighScoreResults() throws Exception {
         TableView<User> tableView = new TableView<>();
         tableView.setItems(generateUserData());
         tableView.setMaxHeight(500);
@@ -41,7 +40,7 @@ public class HighScoresController {
         vbox.getChildren().addAll(tableView);
     }
 
-    private TableColumn<User,String> createColumn(String columnname){
+    private TableColumn<User, String> createColumn(String columnname) {
         TableColumn<User, String> column = new TableColumn<>(columnname);
         column.setMinWidth(199);
         column.setId("table");
@@ -49,10 +48,16 @@ public class HighScoresController {
         return column;
     }
 
-    private  ObservableList<User> generateUserData() throws Exception{
+    private ObservableList<User> generateUserData() throws Exception {
         ObservableList<User> users = FXCollections.observableArrayList();
-        List<User> test =   db.getHighscores("SELECT  userName,highscore FROM users order by highscore desc");
-        for (int i=0; i<test.size();i++) {users.add(test.get(i));}
+        String query = "SELECT  userName,highscore FROM users order by highscore desc";
+        List<User> listOfUsers = db.getHighscores(query);
+        
+        int number = listOfUsers.size();
+        if(number > 5){number = 5;}
+        for (int i = 0; i <  number; i++) {
+            users.add(listOfUsers.get(i));
+        }
         return users;
     }
 

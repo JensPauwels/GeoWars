@@ -21,7 +21,11 @@ import javafx.scene.input.KeyCode;
  */
 
 
-public class SinglePlayer extends GameApplication{
+public class SinglePlayer extends GameApplication {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     protected void initInput() {
@@ -58,8 +62,6 @@ public class SinglePlayer extends GameApplication{
 
 
     }
-
-
 
     @Override
     protected void initAssets() {
@@ -101,9 +103,5 @@ public class SinglePlayer extends GameApplication{
         settings.setApplicationMode(ApplicationMode.DEVELOPER);
 
 
-
-    }
-    public static void main(String[] args) {
-        launch(args);
     }
 }
