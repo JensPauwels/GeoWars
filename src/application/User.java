@@ -12,7 +12,6 @@ public class User {
         this.username = username;
         this.highscore = highscore;
         this.settings = new Settings();
-
     }
     
     public Settings getSettings(){

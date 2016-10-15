@@ -16,7 +16,6 @@ public class DbConnection {
         String url = "jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608";
         String username = "sql8139608";
         String password = "";
-
         try {
             Connection con = DriverManager.getConnection(url, username, password);
             st = con.createStatement();
@@ -65,4 +64,6 @@ public class DbConnection {
         }
         return userList;
     }
+
+
 }

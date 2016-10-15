@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -13,10 +14,19 @@ public class Client extends Application {
     private Scene scene = new Scene(mainLayout);
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("application.SinglePlayer");
         showMainView();
+
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            Engine instance = Engine.getInstance();
+            try {
+                instance.saveCurrentUser();
+            } catch (Exception e1) {}
+            primaryStage.close();
+        });
     }
 
     private void showMainView() {
@@ -31,14 +41,13 @@ public class Client extends Application {
     }
 
     private static BorderPane createBorderPane(String url) {
+        BorderPane borderPane = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Client.class.getResource(url));
-            return loader.load();
-
-        } catch (IOException e) {
-            return null;
-        }
+            borderPane = loader.load();
+        } catch (IOException e) {}
+        return borderPane;
     }
 
     public static void loadScreen(String url) {

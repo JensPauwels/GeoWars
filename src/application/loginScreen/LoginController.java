@@ -50,9 +50,21 @@ public class LoginController {
             alert.setText(username+" is already token");
         } else {
             alert.setVisible(false);
+
+
+
+
             //String transAction = "BEGIN; INSERT INTO users VALUES('"+ username+"', '"+ password+"',0); INSERT INTO settings VALUES('"+username+"',false,false); COMMIT;";
+            query = "INSERT INTO users VALUES(default,'"+ username+"', '"+ password+"',0)";
             System.out.println(query);
+
             db.updateTable(query);
+            query = "INSERT INTO settings VALUES(default,'"+username+"',false,false)";
+
+            db.updateTable(query);
+
+            System.out.println(query);
+
             Client.loadScreen("gameOptions");
         }
     }

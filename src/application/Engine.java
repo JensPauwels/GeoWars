@@ -41,12 +41,10 @@ public class Engine {
 
     public void saveCurrentUser() throws Exception{
 
-        db.updateTable("t");
+        String query = "UPDATE settings SET music="+ currentUser.getSettings().isMusic()+",autoSave="+currentUser.getSettings().isAutoSave() +" WHERE username = '"+ currentUser.getUsername()+"'";
+        db.updateTable(query);
 
     }
-
-
-
 
     // functions die in de engine moeten horen hier thuis (op deze manier kan je engine.getinstance.(function)) => beter dan static te gebruiken volgends mij
     // over nadenken mogelijks kan deze class een init bevatten voor de currentplayer => dus als de player inlogged haalt de engine alle settings van de player op uit de online db

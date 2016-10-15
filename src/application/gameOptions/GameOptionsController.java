@@ -1,6 +1,7 @@
 package application.gameOptions;
 
 import application.Client;
+import application.Engine;
 import javafx.fxml.FXML;
 
 public class GameOptionsController {
@@ -28,8 +29,10 @@ public class GameOptionsController {
     }
 
     @FXML
-    private void logOut() {
+    private void logOut() throws  Exception {
+        Engine.getInstance().saveCurrentUser();
         Client.loadScreen("loginScreen");
+
     }
 
 
