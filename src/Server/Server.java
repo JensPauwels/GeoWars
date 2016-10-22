@@ -1,4 +1,4 @@
-package application;
+package Server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -28,7 +28,6 @@ public class Server {
             testServer.ontvangBerichtjes();
         }
     }
-
 
     private void ontvangBerichtjes() throws IOException {
         System.out.println(din.readUTF());

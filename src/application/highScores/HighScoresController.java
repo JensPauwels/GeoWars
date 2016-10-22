@@ -1,7 +1,8 @@
 package application.highScores;
 
-import application.Client;
-import application.DbConnection;
+import application.UserInterface;
+import application.DataBase.DbConnection;
+import application.Engine.Engine;
 import application.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,8 @@ import java.util.List;
 
 public class HighScoresController {
     public VBox vbox;
-    private DbConnection db = new DbConnection();
+    private Engine instance = Engine.getInstance();
+    private DbConnection db = instance.getDb();
 
     // deze Class werkt in principe maar moet nog een visuele upgrade krijgen :)
     // UITBREIDING
@@ -29,7 +31,7 @@ public class HighScoresController {
 
     @FXML
     private void loadGameOptions() throws IOException {
-        Client.loadScreen("gameoptions");
+        UserInterface.loadScreen("gameoptions");
     }
 
     private void loadHighScoreResults() throws Exception {

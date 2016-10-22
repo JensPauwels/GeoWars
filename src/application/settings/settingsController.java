@@ -1,13 +1,13 @@
 package application.settings;
 
-import application.Client;
-import application.Engine;
+import application.UserInterface;
+import application.Engine.Engine;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 
 public class settingsController {
     public JFXToggleButton music,autoSave;
-    public Engine instance  = Engine.getInstance();
+    private Engine instance  = Engine.getInstance();
 
 
     @FXML
@@ -29,7 +29,7 @@ public class settingsController {
 
     @FXML
     public void loadGameOptions(){
-        Client.loadScreen("gameOptions");
+        UserInterface.loadScreen("gameOptions");
     }
 
     // in deze class moeten we allemaal settings bedenken oa

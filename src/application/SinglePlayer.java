@@ -7,25 +7,25 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
 import javafx.scene.input.KeyCode;
 
-/**
- * Created by jens on 10/10/16.
- */
 
 /*
 
     Dit is in absoluut prototype het enige die maar werkt is de wasd functions
     nog verder uitzoeken hoe fxgl werkt => nog voor de zekerheid ook eens nagaan als we effectief wel game libaries mogen usen
 
-
-
  */
 
 
 public class SinglePlayer extends GameApplication {
 
+
     public static void main(String[] args) {
         launch(args);
+
     }
+
+
+
 
     @Override
     protected void initInput() {

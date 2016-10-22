@@ -1,5 +1,8 @@
-package application;
+package application.Engine;
 
+
+import application.DataBase.DbConnection;
+import application.User;
 
 public class Engine {
     private static Engine firstInstance = null;
@@ -11,20 +14,21 @@ public class Engine {
     public static Engine getInstance() {
         if (firstInstance == null) {
             firstInstance = new Engine();
+
         }
         return firstInstance;
     }
+
 
     public void initCurrentUser(){
 
         try{
             setCurrentUser(db.initUser(username));
             System.out.println(currentUser.getHighscore());
-            }
+        }
         catch (Exception ex){
-                System.out.println(ex);
-            }
-
+            System.out.println(ex);
+        }
     }
 
     public void setUsername(String username){
@@ -41,10 +45,16 @@ public class Engine {
 
     public void saveCurrentUser() throws Exception{
 
-        String query = "UPDATE settings SET music="+ currentUser.getSettings().isMusic()+",autoSave="+currentUser.getSettings().isAutoSave() +" WHERE username = '"+ currentUser.getUsername()+"'";
+        String query = "UPDATE settings SET music="+ currentUser.getSettings().isMusic()+",save="+currentUser.getSettings().isAutoSave() +" WHERE username = '"+ currentUser.getUsername()+"'";
         db.updateTable(query);
 
     }
+
+    public DbConnection getDb(){
+        return this.db;
+    }
+
+
 
     // functions die in de engine moeten horen hier thuis (op deze manier kan je engine.getinstance.(function)) => beter dan static te gebruiken volgends mij
     // over nadenken mogelijks kan deze class een init bevatten voor de currentplayer => dus als de player inlogged haalt de engine alle settings van de player op uit de online db

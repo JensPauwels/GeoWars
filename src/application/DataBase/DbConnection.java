@@ -1,4 +1,7 @@
-package application;
+package application.DataBase;
+
+import application.Settings;
+import application.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +16,13 @@ public class DbConnection {
     private User currentUser;
 
     public DbConnection() {
-        String url = "jdbc:mysql://sql8.freesqldatabase.com:3306/sql8139608";
-        String username = "sql8139608";
-        String password = "";
+
+
+        String url = "jdbc:mysql://localhost/geowars";
+        String username = "root";
+        String password = "localhost";
+
+
         try {
             Connection con = DriverManager.getConnection(url, username, password);
             st = con.createStatement();
@@ -36,6 +43,7 @@ public class DbConnection {
     public User initUser(String username) throws  Exception{
         String query = "select * from users where username like'"+username +"'";
 
+
         rs = st.executeQuery(query);
         if(rs.next()){
             int highscore = rs.getInt("highscore");
@@ -47,7 +55,7 @@ public class DbConnection {
 
         if(rs.next()){
             Settings currentUserSettings = currentUser.getSettings();
-            currentUserSettings.setAutoSave(rs.getBoolean("autoSave"));
+            currentUserSettings.setAutoSave(rs.getBoolean("save"));
             currentUserSettings.setMusic(rs.getBoolean("music"));
         }
         return currentUser;
@@ -64,6 +72,4 @@ public class DbConnection {
         }
         return userList;
     }
-
-
 }

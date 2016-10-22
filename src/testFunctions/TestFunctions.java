@@ -1,6 +1,6 @@
 package testFunctions;
 
-import application.DbConnection;
+import application.DataBase.DbConnection;
 import org.junit.Test;
 
 
@@ -8,13 +8,6 @@ public class TestFunctions {
     private DbConnection db = new DbConnection();
     private String username = "test";
 
-    @Test
-    public void basicTest() {
-        Boolean x = true;
-        if (!x) {
-            System.err.print("basictest");
-        }
-    }
 
     @Test
     public void duplicatedUsers() throws Exception {

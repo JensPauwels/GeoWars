@@ -2,7 +2,7 @@
 
 #container {
     -fx-background-color: #38383838;
-    -fx-background-image: url("../images/space.jpg");
+    -fx-background-image: url("../../images/space.jpg");
     -fx-background-position: center center;
 
 }
@@ -18,7 +18,7 @@
     -fx-font-size: 100pt;
     -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
     -fx-text-fill: rgb(77, 26, 77);
-    -fx-background-image: url("../images/test_cropped.jpg");
+    -fx-background-image: url("../../images/test_cropped.jpg");
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
