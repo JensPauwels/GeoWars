@@ -1,7 +1,7 @@
 package application.DataBase;
 
-import application.Settings;
-import application.User;
+import application.Engine.Settings;
+import application.Engine.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,7 +55,7 @@ public class DbConnection {
 
         if(rs.next()){
             Settings currentUserSettings = currentUser.getSettings();
-            currentUserSettings.setAutoSave(rs.getBoolean("save"));
+            currentUserSettings.setAutoSave(rs.getBoolean("autosave"));
             currentUserSettings.setMusic(rs.getBoolean("music"));
         }
         return currentUser;

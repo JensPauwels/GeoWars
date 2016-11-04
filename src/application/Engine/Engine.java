@@ -2,14 +2,14 @@ package application.Engine;
 
 
 import application.DataBase.DbConnection;
-import application.User;
+import application.UserInterface;
 
 public class Engine {
     private static Engine firstInstance = null;
     private User currentUser;
     private DbConnection db = new DbConnection();
+    private UserInterface ui;
     private String username;
-
 
     public static Engine getInstance() {
         if (firstInstance == null) {
@@ -18,7 +18,6 @@ public class Engine {
         }
         return firstInstance;
     }
-
 
     public void initCurrentUser(){
 
@@ -31,21 +30,29 @@ public class Engine {
         }
     }
 
-    public void setUsername(String username){
-        this.username = username;
+    public UserInterface getUi() {
+        return ui;
     }
 
-    public void setCurrentUser(User currentUser){
-        this.currentUser = currentUser;
+    public void setUi(UserInterface ui) {
+        this.ui = ui;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public User getCurrentUser(){
         return this.currentUser;
     }
 
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public void saveCurrentUser() throws Exception{
 
-        String query = "UPDATE settings SET music="+ currentUser.getSettings().isMusic()+",save="+currentUser.getSettings().isAutoSave() +" WHERE username = '"+ currentUser.getUsername()+"'";
+        String query = "UPDATE settings SET music=" + currentUser.getSettings().isMusic() + ",autosave=" + currentUser.getSettings().isAutoSave() + " WHERE username = '" + currentUser.getUsername() + "'";
         db.updateTable(query);
 
     }
@@ -53,14 +60,5 @@ public class Engine {
     public DbConnection getDb(){
         return this.db;
     }
-
-
-
-    // functions die in de engine moeten horen hier thuis (op deze manier kan je engine.getinstance.(function)) => beter dan static te gebruiken volgends mij
-    // over nadenken mogelijks kan deze class een init bevatten voor de currentplayer => dus als de player inlogged haalt de engine alle settings van de player op uit de online db
-    // hierdoor kan de client alle settings van de speler weten zoals gebruik ik wasd of pijltjes etc
-    // wanneer de speler iets aanpast zal dit in de engine bijgehouden worden
-    // en ten slot als de speler zijn scherm afsluit zal dit doorgestuurd worden naar de database waardoor hij de volgende keer bij de login die gegevens uit de database krijgt
-    // indien iets anders beter zou zijn let me know xoxo
 
 }

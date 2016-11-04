@@ -1,8 +1,5 @@
 package application;
 
-/**
- * Created by jens on 22/10/16.
- */
 
 public class Client {
 

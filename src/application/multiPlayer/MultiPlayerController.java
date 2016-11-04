@@ -1,7 +1,7 @@
 package application.multiPlayer;
 
-import application.UserInterface;
 import application.DataBase.DbConnection;
+import application.UserInterface;
 import javafx.fxml.FXML;
 
 import java.io.DataOutputStream;
@@ -15,14 +15,10 @@ public class MultiPlayerController {
     // die while(true) nagaat als er clients bijkomen => ook gelimiteerd naar hoeveel clients er mogen => als uitbreiding mss zelf opties geven aan de multiplayer
     // zoals moeilijkheidsgraad, revive options etc
 
-    private DbConnection db = new DbConnection();
-    private String username = "jos";
     private static Socket s;
     private static DataOutputStream dout;
-
-    @FXML
-    public void initialize() {
-    }
+    private DbConnection db = new DbConnection();
+    private String username = "jos";
 
     @FXML
     private void loadGameOptions() {

@@ -1,9 +1,9 @@
 package application.highScores;
 
-import application.UserInterface;
 import application.DataBase.DbConnection;
 import application.Engine.Engine;
-import application.User;
+import application.Engine.User;
+import application.UserInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,12 +17,7 @@ import java.util.List;
 
 public class HighScoresController {
     public VBox vbox;
-    private Engine instance = Engine.getInstance();
-    private DbConnection db = instance.getDb();
-
-    // deze Class werkt in principe maar moet nog een visuele upgrade krijgen :)
-    // UITBREIDING
-    // indien we op een highscore naam klikken een link naar die persoon zijn achievements?
+    private DbConnection db = Engine.getInstance().getDb();
 
     @FXML
     public void initialize() throws Exception {

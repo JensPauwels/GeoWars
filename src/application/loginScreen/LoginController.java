@@ -1,8 +1,8 @@
 package application.loginScreen;
 
-import application.UserInterface;
 import application.DataBase.DbConnection;
 import application.Engine.Engine;
+import application.UserInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -11,11 +11,11 @@ import javafx.scene.control.TextField;
 public class LoginController {
 
 
-    private Engine instance = Engine.getInstance();
-    private DbConnection db = instance.getDb();
     public TextField userNameInput;
     public PasswordField passwordInput;
     public Label alert;
+    private Engine instance = Engine.getInstance();
+    private DbConnection db = instance.getDb();
     private String query;
     private String username;
     private String password;
@@ -35,7 +35,7 @@ public class LoginController {
             instance.initCurrentUser();
             UserInterface.loadScreen("gameOptions");
         } else {
-            alert.setText("Enter the right creds or register to our game");
+            alert.setText("Enter the right creds or register to our application.game");
         }
     }
 
@@ -55,7 +55,7 @@ public class LoginController {
             query = "INSERT INTO users VALUES(default,'"+ username+"', '"+ password+"',0)";
             db.updateTable(query);
 
-            query = "INSERT INTO settings VALUES(default,'"+username+"',false,false)";
+            query = "INSERT INTO settings VALUES(default," + 0 + ",'" + username + "',false,false)";
             db.updateTable(query);
             UserInterface.loadScreen("gameOptions");
         }

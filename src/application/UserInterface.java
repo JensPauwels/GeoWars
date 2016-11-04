@@ -1,32 +1,64 @@
 package application;
 
+
 import application.Engine.Engine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
+
 public class UserInterface extends Application {
+
+
+    public static BorderPane mainLayout = new BorderPane();
+    public static Scene scene = new Scene(mainLayout);
     private Stage primaryStage;
-    private static BorderPane mainLayout = new BorderPane();
-    private Scene scene = new Scene(mainLayout);
+    private Engine instance = Engine.getInstance();
+
+    public UserInterface() {
+        instance.setUi(this);
+    }
+
+    private static BorderPane createBorderPane(String url) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(application.UserInterface.class.getResource(url));
+            return loader.load();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static void loadScreen(String url) {
+        mainLayout.setCenter(createBorderPane(url + "/" + url + ".FXML"));
+    }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
+
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("GeoWars");
+        this.primaryStage.setTitle("Medieval Wars");
         showMainView();
 
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
-            Engine instance = Engine.getInstance();
-            try {
-                instance.saveCurrentUser();
-            } catch (Exception e1) {}
-            primaryStage.close();
+            close();
         });
+
+    }
+
+    private void close() {
+        try {
+            instance.saveCurrentUser();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        primaryStage.close();
     }
 
     private void showMainView() {
@@ -38,22 +70,11 @@ public class UserInterface extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         loadScreen("loginScreen");
+        System.out.println();
     }
 
-    private static BorderPane createBorderPane(String url) {
-        BorderPane borderPane = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(UserInterface.class.getResource(url));
-            borderPane = loader.load();
-        } catch (IOException e) {}
-        return borderPane;
-    }
-
-    public static void loadScreen(String url) {
-        mainLayout.setCenter(createBorderPane(url + "/" + url + ".FXML"));
-    }
 
 }
+
 
 

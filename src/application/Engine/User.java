@@ -1,6 +1,5 @@
-package application;
+package application.Engine;
 
-import javax.print.attribute.SetOfIntegerSyntax;
 
 public class User {
     private String username;
