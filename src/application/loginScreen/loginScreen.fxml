@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" id="container" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="1000.0"
+            minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0"
             xmlns="http://javafx.com/javafx/8.0.65" fx:controller="application.loginScreen.LoginController">
     <center>
         <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
@@ -20,14 +20,58 @@
                 <VBox.margin>
                     <Insets bottom="200.0"/>
                 </VBox.margin>
-                <TextField fx:id="userNameInput" focusTraversable="false" promptText="Username"/>
-                <PasswordField fx:id="passwordInput" focusTraversable="false" promptText="Password">
+                <VBox prefHeight="200.0" prefWidth="177.0">
+                    <children>
+                        <Button id="button" mnemonicParsing="false" text="Sign in with google">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Button>
+                        <Button id="button" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                                text="Sign in with Facebook">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Button>
+                        <Button id="button" layoutX="10.0" layoutY="37.0" mnemonicParsing="false"
+                                text="Sign in with twitch">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Button>
+                    </children>
                     <HBox.margin>
                         <Insets/>
                     </HBox.margin>
-                </PasswordField>
-                <Button id="button" mnemonicParsing="false" onAction="#initialGame" text="Login"/>
-                <Button id="button" mnemonicParsing="false" onAction="#Register" text="Register"/>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="239.0">
+                    <children>
+                        <TextField fx:id="userNameInput" focusTraversable="false" promptText="Username">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </TextField>
+                        <PasswordField fx:id="passwordInput" focusTraversable="false" promptText="Password">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </PasswordField>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Button id="button" mnemonicParsing="false" onAction="#initialGame" text="Sign in">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                                <Label text="Forgot password?">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0"/>
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
             </HBox>
         </VBox>
     </center>

@@ -1,7 +1,7 @@
 package application.settings;
 
-import application.UserInterface;
 import application.Engine.Engine;
+import application.UserInterface;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 

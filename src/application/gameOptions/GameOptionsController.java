@@ -1,7 +1,7 @@
 package application.gameOptions;
 
-import application.UserInterface;
 import application.Engine.Engine;
+import application.UserInterface;
 import javafx.fxml.FXML;
 
 public class GameOptionsController {

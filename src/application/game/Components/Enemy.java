@@ -13,4 +13,12 @@ public class Enemy extends Sprite {
         return Utils.createArrowImageView((int) width);
     }
 
+    public boolean bots(Attractor a, Enemy e) {
+        boolean bool = false;
+        if (a.getLocation().x == e.getLocation().x && a.getLocation().y == e.getLocation().y) {
+            bool = true;
+        }
+        return bool;
+    }
+
 }

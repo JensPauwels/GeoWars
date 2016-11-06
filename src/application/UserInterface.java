@@ -23,7 +23,7 @@ public class UserInterface extends Application {
         instance.setUi(this);
     }
 
-    private static BorderPane createBorderPane(String url) {
+    public static BorderPane createBorderPane(String url) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(application.UserInterface.class.getResource(url));
@@ -44,12 +44,10 @@ public class UserInterface extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Medieval Wars");
         showMainView();
-
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
             close();
         });
-
     }
 
     private void close() {

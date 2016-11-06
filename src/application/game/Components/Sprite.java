@@ -74,8 +74,8 @@ public abstract class Sprite extends Region {
         Vector2D steer = Vector2D.subtract(desired, velocity);
         steer.limit(maxForce);
         applyForce(steer);
-
     }
+
 
     public void display() {
 
@@ -86,6 +86,7 @@ public abstract class Sprite extends Region {
     public Vector2D getLocation() {
         return location;
     }
+
 
     public void setLocation(double x, double y) {
         location.x = x;
