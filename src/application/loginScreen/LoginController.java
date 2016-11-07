@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 
 public class LoginController {
 
-
     public TextField userNameInput;
     public PasswordField passwordInput;
     public Label alert;
@@ -48,7 +47,6 @@ public class LoginController {
         query = "select * from users where username like '" + username+ "'";
         if (db.controle(query)) {
             alert.setText(username+" is already token");
-
         } else {
             alert.setVisible(false);
 
