@@ -140,13 +140,13 @@ public class Game {
         scene.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
             Vector2D loc = mainchar.getLocation();
-            if (key == KeyCode.W) {
+            if (key == KeyCode.W || key == KeyCode.UP) {
                 mainchar.setLocation(loc.x, loc.y - 25);
-            } else if (key == KeyCode.S) {
+            } else if (key == KeyCode.S || key == KeyCode.DOWN) {
                 mainchar.setLocation(loc.x, loc.y + 25);
-            } else if (key == KeyCode.A) {
+            } else if (key == KeyCode.A || key == KeyCode.LEFT) {
                 mainchar.setLocation(loc.x - 25, loc.y);
-            } else if (key == KeyCode.D) {
+            } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
                 mainchar.setLocation(loc.x + 25, loc.y);
             }
         });
