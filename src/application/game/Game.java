@@ -43,7 +43,6 @@ public class Game {
         gameScreen.setLeft(new VBox(test));
         mainLayout.setCenter(gameScreen);
 
-
         prepareGame();
         addListeners();
         startGame();
@@ -74,7 +73,6 @@ public class Game {
                 mainchar.display();
             }
         };
-
         loop.start();
 
     }
