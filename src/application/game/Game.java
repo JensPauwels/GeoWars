@@ -30,6 +30,8 @@ public class Game {
     private Label test;
     private int highscore = 0;
 
+    private boolean up, down, left, right;
+
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
         this.mainLayout = mainLayout;
@@ -71,6 +73,7 @@ public class Game {
                 }
                 addVehicles(); // nog ervoor zorgen dat het om de zoveel sec begint
                 mainchar.display();
+                moveChar();
             }
         };
         loop.start();
@@ -130,6 +133,19 @@ public class Game {
         mainchar = new Attractor(layer, location, velocity, acceleration, width, height);
     }
 
+    private void moveChar() {
+        Vector2D loc = mainchar.getLocation();
+        if (up) {
+            mainchar.setLocation(loc.x, loc.y - 5);
+        } else if (down) {
+            mainchar.setLocation(loc.x, loc.y + 5);
+        } else if (left) {
+            mainchar.setLocation(loc.x - 5, loc.y);
+        } else if (right) {
+            mainchar.setLocation(loc.x + 5, loc.y);
+        }
+    }
+
     private void addListeners() {
         scene.setOnMouseClicked(e -> {
             if (loop != null) {
@@ -139,18 +155,32 @@ public class Game {
 
         scene.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
-            Vector2D loc = mainchar.getLocation();
+
             if (key == KeyCode.W || key == KeyCode.UP) {
-                mainchar.setLocation(loc.x, loc.y - 25);
+                up = true;
             } else if (key == KeyCode.S || key == KeyCode.DOWN) {
-                mainchar.setLocation(loc.x, loc.y + 25);
+                down = true;
             } else if (key == KeyCode.A || key == KeyCode.LEFT) {
-                mainchar.setLocation(loc.x - 25, loc.y);
+                left = true;
             } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
-                mainchar.setLocation(loc.x + 25, loc.y);
+                right = true;
+            }
+        });
+
+        scene.setOnKeyReleased(e -> {
+            KeyCode key = e.getCode();
+            if (key == KeyCode.W || key == KeyCode.UP) {
+                up = false;
+            } else if (key == KeyCode.S || key == KeyCode.DOWN) {
+                down = false;
+            } else if (key == KeyCode.A || key == KeyCode.LEFT) {
+                left = false;
+            } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
+                right = false;
             }
         });
     }
 
 
 }
+
