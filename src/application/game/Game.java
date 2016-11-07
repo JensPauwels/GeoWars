@@ -1,10 +1,7 @@
 package application.game;
 
 import application.UserInterface;
-import application.game.Components.Attractor;
-import application.game.Components.Enemy;
-import application.game.Components.Layer;
-import application.game.Components.Vector2D;
+import application.game.Components.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -30,6 +27,8 @@ public class Game {
     private Label test;
     private int highscore = 0;
 
+    private List<Bullet> allBullets = new ArrayList<>();
+
     private boolean up, down, left, right;
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -46,8 +45,9 @@ public class Game {
         mainLayout.setCenter(gameScreen);
 
         prepareGame();
-        addListeners();
+
         startGame();
+        addListeners();
     }
 
     private void prepareGame() {
@@ -71,12 +71,21 @@ public class Game {
                     e.display();
                     gotHit(e);
                 }
-                addVehicles(); // nog ervoor zorgen dat het om de zoveel sec begint
+                //addVehicles(); // nog ervoor zorgen dat het om de zoveel sec begint
                 mainchar.display();
                 moveChar();
+
+                for (Bullet b : allBullets) {
+                    b.seek(allEnemys.get(0).getLocation());
+                    b.move();
+                    b.display();
+                }
+
+
             }
         };
         loop.start();
+
 
     }
 
@@ -106,9 +115,29 @@ public class Game {
 
         // create sprite and add to layer
         Enemy enemy = new Enemy(layer, location, velocity, acceleration, width, height);
-
-        // register vehicle
         allEnemys.add(enemy);
+
+    }
+
+    private void addBullet() {
+        Layer layer = playfield;
+
+        // random location
+        double x = mainchar.getLocation().x;
+        double y = mainchar.getLocation().y;
+
+        // dimensions
+        double width = 25;
+        double height = width / 2.0;
+
+        // create enemy data
+        Vector2D location = new Vector2D(x, y);
+        Vector2D velocity = new Vector2D(0, 0);
+        Vector2D acceleration = new Vector2D(0, 0);
+
+        // create sprite and add to layer
+        Bullet bullet = new Bullet(layer, location, velocity, acceleration, width, height);
+        allBullets.add(bullet);
 
     }
 
@@ -150,12 +179,12 @@ public class Game {
         scene.setOnMouseClicked(e -> {
             if (loop != null) {
                 System.out.println("fire fire");
+                addBullet();
             }
         });
 
         scene.setOnKeyPressed(e -> {
             KeyCode key = e.getCode();
-
             if (key == KeyCode.W || key == KeyCode.UP) {
                 up = true;
             } else if (key == KeyCode.S || key == KeyCode.DOWN) {
@@ -183,4 +212,6 @@ public class Game {
 
 
 }
+
+
 

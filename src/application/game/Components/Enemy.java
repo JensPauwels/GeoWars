@@ -1,6 +1,7 @@
 package application.game.Components;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 public class Enemy extends Sprite {
 
@@ -10,7 +11,12 @@ public class Enemy extends Sprite {
 
     @Override
     public Node createView() {
-        return Utils.createArrowImageView((int) width);
+
+        Label l = new Label("      ");
+        l.setId("enemy");
+
+
+        return l;
     }
 
     public boolean bots(Attractor a, Enemy e) {

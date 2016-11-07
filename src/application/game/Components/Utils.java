@@ -26,7 +26,7 @@ public class Utils {
      */
     public static ImageView createArrowImageView(double size) {
 
-        return createArrowImageView(size, size / 2.0, Color.BLUE, Color.BLUE.deriveColor(1, 1, 1, 0.3), 1);
+        return createArrowImageView(size, size / 2.0, Color.RED, Color.BLUE.deriveColor(1, 1, 1, 0.3), 1);
 
     }
 

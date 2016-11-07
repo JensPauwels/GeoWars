@@ -12,6 +12,20 @@
     -fx-text-fill: white;
 }
 
+#enemy {
+    -fx-background-image: url("../../images/orc.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+#character {
+    -fx-background-image: url("../../images/giphy.gif");
+    -fx-min-height: 70px;
+    -fx-max-width: 50px;
+
+    -fx-background-position: center center;
+}
+
 #h1 {
     -fx-min-width: 800px;
     -fx-font-size: 100pt;

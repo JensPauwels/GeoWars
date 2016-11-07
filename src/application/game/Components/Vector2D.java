@@ -16,10 +16,6 @@ public class Vector2D {
         return new Vector2D(v1.x - v2.x, v1.y - v2.y);
     }
 
-    public void set(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
 
     public double magnitude() {
         return Math.sqrt(x * x + y * y);
@@ -28,11 +24,6 @@ public class Vector2D {
     public void add(Vector2D v) {
         x += v.x;
         y += v.y;
-    }
-
-    public void add(double x, double y) {
-        this.x += x;
-        this.y += y;
     }
 
     public void multiply(double n) {
