@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 
 public class Enemy extends Sprite {
 
-    public Enemy(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
-        super(layer, location, velocity, acceleration, width, height);
+    public Enemy(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration) {
+        super(layer, location, velocity, acceleration, 12.5, 25);
     }
 
     @Override

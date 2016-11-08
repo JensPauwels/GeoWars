@@ -6,9 +6,9 @@ import javafx.scene.shape.Circle;
 public class Bullet extends Sprite {
     Vector2D test;
 
-    public Bullet(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
+    public Bullet(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration) {
 
-        super(layer, location, velocity, acceleration, width, height);
+        super(layer, location, velocity, acceleration, 25, 12.5);
     }
 
     public Vector2D getLocation() {
