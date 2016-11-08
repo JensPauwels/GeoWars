@@ -28,6 +28,8 @@ public class Game implements Runnable{
     private int highScore = 0;
     private List<Bullet> allBullets = new LinkedList<>();
     private boolean up, down, left, right;
+    private Vector2D velocity = new Vector2D(10,10);
+    private Vector2D acceleration = new Vector2D(100,100);
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
@@ -83,18 +85,18 @@ public class Game implements Runnable{
     }
 
     private void addEnemy() {
-        Enemy enemy = new Enemy(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
+        Enemy enemy = new Enemy(playfield, mainchar.getLocation(), velocity, acceleration);
         allEnemys.add(enemy);
     }
 
     private void addBullet(Vector2D loc) {
-        Bullet bullet = new Bullet(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
+        Bullet bullet = new Bullet(playfield, mainchar.getLocation(), velocity, acceleration);
         bullet.setLocation(loc);
         allBullets.add(bullet);
     }
 
     private void addMainCharacter() {
-        mainchar = new Attractor(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
+        mainchar = new Attractor(playfield, mainchar.getLocation(), velocity, acceleration);
     }
 
     private void moveChar() {
