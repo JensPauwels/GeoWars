@@ -4,20 +4,18 @@ import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 
 public class Bullet extends Sprite {
-    Vector2D test;
+    private Vector2D destination;
 
-    public Bullet(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration) {
-
-        super(layer, location, velocity, acceleration, 25, 12.5);
+    public Bullet(Layer layer, Vector2D location) {
+        super(layer, location, 25, 12.5);
     }
 
-    public Vector2D getLocation() {
-
-        return this.test;
+    public Vector2D getDestination() {
+        return this.destination;
     }
 
-    public void setLocation(Vector2D g) {
-        this.test = g;
+    public void setDestination(Vector2D location) {
+        this.destination = location;
     }
 
     @Override

@@ -26,12 +26,12 @@ public abstract class Sprite extends Region {
 
     Layer layer = null;
 
-    public Sprite(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
+    public Sprite(Layer layer, Vector2D location, double width, double height) {
 
         this.layer = layer;
         this.location = location;
-        this.velocity = velocity;
-        this.acceleration = acceleration;
+        this.velocity = new Vector2D(0,0);
+        this.acceleration = new Vector2D(0,0);
         this.width = width;
         this.height = height;
         this.centerX = width / 2;

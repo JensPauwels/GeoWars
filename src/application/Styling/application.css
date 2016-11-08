@@ -15,6 +15,7 @@
 #enemy {
     -fx-background-image: url("../../images/orc.png");
     -fx-background-size: cover;
+    -fx-min-width: 25px;
     -fx-background-position: center center;
 }
 

@@ -5,8 +5,8 @@ import javafx.scene.control.Label;
 
 
 public class Attractor extends Sprite {
-    public Attractor(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration) {
-        super(layer, location, velocity, acceleration, 25, 25);
+    public Attractor(Layer layer, Vector2D location) {
+        super(layer, location, 25, 25);
     }
 
     @Override
