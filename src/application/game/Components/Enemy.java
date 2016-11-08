@@ -3,6 +3,7 @@ package application.game.Components;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+
 public class Enemy extends Sprite {
 
     public Enemy(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
@@ -17,11 +18,8 @@ public class Enemy extends Sprite {
     }
 
     public boolean bots(Attractor a, Enemy e) {
-        boolean bool = false;
-        if (a.getLocation().x == e.getLocation().x && a.getLocation().y == e.getLocation().y) {
-            bool = true;
-        }
-        return bool;
+        return a.getBoundsInParent().intersects(e.getBoundsInParent());
     }
+
 
 }

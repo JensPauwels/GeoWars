@@ -6,10 +6,11 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,13 +21,13 @@ public class Game {
     private Layer playfield;
     private Random random = new Random();
     private Attractor mainchar;
-    private List<Enemy> allEnemys = new ArrayList<>();
+    private List<Enemy> allEnemys = new LinkedList<>();
     private Scene scene;
     private BorderPane mainLayout;
     private AnimationTimer loop;
     private Label test;
-    private int highscore = 0;
-    private List<Bullet> allBullets = new ArrayList<>();
+    private int highScore = 0;
+    private List<Bullet> allBullets = new LinkedList<>();
     private boolean up, down, left, right;
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -35,7 +36,7 @@ public class Game {
     }
 
     public void initGame() {
-        playfield = new Layer(600, 800);
+        playfield = new Layer(800, 500);
         BorderPane gameScreen = UserInterface.createBorderPane("game/game.FXML");
         gameScreen.setCenter(playfield);
         test = new Label("0");
@@ -43,7 +44,6 @@ public class Game {
         mainLayout.setCenter(gameScreen);
 
         prepareGame();
-
         startGame();
         addListeners();
     }
@@ -56,7 +56,7 @@ public class Game {
     }
 
     private void updateHighscore() {
-        test.setText(Integer.toString(highscore));
+        test.setText(Integer.toString(highScore));
     }
 
     private void startGame() {
@@ -69,26 +69,30 @@ public class Game {
                     e.display();
                     gotHit(e);
                 }
+
+
                 for (Bullet b : allBullets) {
-                    b.seek(allEnemys.get(0).getLocation());
+                    b.seek(b.getLocation());
                     b.move();
                     b.display();
                 }
+
 
                 mainchar.display();
                 moveChar();
             }
         };
         loop.start();
-
-
     }
 
     private void gotHit(Enemy e) {
+
         if (e.bots(mainchar, e)) {
             System.out.println("ouch");
-            highscore = highscore + 10;
+            highScore = highScore + 10;
             updateHighscore();
+            // playfield.getChildren().remove(e);
+
         }
     }
 
@@ -114,7 +118,7 @@ public class Game {
 
     }
 
-    private void addBullet() {
+    private void addBullet(Vector2D loc) {
         Layer layer = playfield;
 
         // random location
@@ -132,14 +136,13 @@ public class Game {
 
         // create sprite and add to layer
         Bullet bullet = new Bullet(layer, location, velocity, acceleration, width, height);
+        bullet.setLocation(loc);
         allBullets.add(bullet);
 
     }
 
-    private void Collicions(Enemy e) {
 
-        //if(e.)
-    }
+
 
     private void addMainCharacter() {
 
@@ -175,38 +178,33 @@ public class Game {
         }
     }
 
+    private void keyAction(KeyEvent e, Boolean bool) {
+        KeyCode key = e.getCode();
+        if (key == KeyCode.W || key == KeyCode.UP) {
+            up = bool;
+        } else if (key == KeyCode.S || key == KeyCode.DOWN) {
+            down = bool;
+        } else if (key == KeyCode.A || key == KeyCode.LEFT) {
+            left = bool;
+        } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
+            right = bool;
+        }
+    }
+
     private void addListeners() {
         scene.setOnMouseClicked(e -> {
             if (loop != null) {
                 System.out.println("fire fire");
-                addBullet();
+                addBullet(new Vector2D(e.getX(), e.getY()));
             }
         });
 
         scene.setOnKeyPressed(e -> {
-            KeyCode key = e.getCode();
-            if (key == KeyCode.W || key == KeyCode.UP) {
-                up = true;
-            } else if (key == KeyCode.S || key == KeyCode.DOWN) {
-                down = true;
-            } else if (key == KeyCode.A || key == KeyCode.LEFT) {
-                left = true;
-            } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
-                right = true;
-            }
+            keyAction(e, true);
         });
 
         scene.setOnKeyReleased(e -> {
-            KeyCode key = e.getCode();
-            if (key == KeyCode.W || key == KeyCode.UP) {
-                up = false;
-            } else if (key == KeyCode.S || key == KeyCode.DOWN) {
-                down = false;
-            } else if (key == KeyCode.A || key == KeyCode.LEFT) {
-                left = false;
-            } else if (key == KeyCode.D || key == KeyCode.RIGHT) {
-                right = false;
-            }
+            keyAction(e, false);
         });
     }
 
