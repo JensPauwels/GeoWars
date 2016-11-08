@@ -28,8 +28,6 @@ public class Game implements Runnable{
     private int highScore = 0;
     private List<Bullet> allBullets = new LinkedList<>();
     private boolean up, down, left, right;
-    private Vector2D velocity = new Vector2D(10,10);
-    private Vector2D acceleration = new Vector2D(100,100);
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
@@ -79,24 +77,78 @@ public class Game implements Runnable{
     }
 
     private void gotHit(Enemy e) {
+
         if (e.bots(mainchar, e)) {
             System.out.println("ouch");
+            highScore = highScore + 10;
+            // updateHighscore();
+
+
         }
     }
 
     private void addEnemy() {
-        Enemy enemy = new Enemy(playfield, mainchar.getLocation(), velocity, acceleration);
+        Layer layer = playfield;
+
+        // random location
+        double x = random.nextDouble() * 800;
+        double y = random.nextDouble() * 600;
+
+        // dimensions
+        double width = 25;
+        double height = width / 2.0;
+
+        // create enemy data
+        Vector2D location = new Vector2D(x, y);
+        Vector2D velocity = new Vector2D(0, 0);
+        Vector2D acceleration = new Vector2D(0, 0);
+
+        // create sprite and add to layer
+        Enemy enemy = new Enemy(layer, location, velocity, acceleration, width, height);
         allEnemys.add(enemy);
+
     }
 
     private void addBullet(Vector2D loc) {
-        Bullet bullet = new Bullet(playfield, mainchar.getLocation(), velocity, acceleration);
+        Layer layer = playfield;
+
+        // random location
+        double x = mainchar.getLocation().x;
+        double y = mainchar.getLocation().y;
+        // dimensions
+        double width = 25;
+        double height = width / 2.0;
+        // create enemy data
+        Vector2D location = new Vector2D(x, y);
+        Vector2D velocity = new Vector2D(10, 10);
+        Vector2D acceleration = new Vector2D(100, 100);
+
+        // create sprite and add to layer
+        Bullet bullet = new Bullet(layer, location, velocity, acceleration, width, height);
         bullet.setLocation(loc);
         allBullets.add(bullet);
+
     }
 
+
+
+
     private void addMainCharacter() {
-        mainchar = new Attractor(playfield, mainchar.getLocation(), velocity, acceleration);
+
+        Layer layer = playfield;
+
+        // center attractor
+        double x = 400;
+        double y = 300;
+        // dimensions
+        double width = 25;
+        double height = 25;
+        // create attractor data
+        Vector2D location = new Vector2D(x, y);
+        Vector2D velocity = new Vector2D(0, 0);
+        Vector2D acceleration = new Vector2D(0, 0);
+        // create attractor and add to layer
+        mainchar = new Attractor(layer, location, velocity, acceleration, width, height);
     }
 
     private void moveChar() {
@@ -127,6 +179,3 @@ public class Game implements Runnable{
 
     }
 }
-
-
-

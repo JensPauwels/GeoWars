@@ -6,9 +6,8 @@ import javafx.scene.control.Label;
 
 public class Enemy extends Sprite {
 
-    public Enemy(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration) {
-
-        super(layer, location, velocity, acceleration, 25, 12.5);
+    public Enemy(Layer layer, Vector2D location, Vector2D velocity, Vector2D acceleration, double width, double height) {
+        super(layer, location, velocity, acceleration, width, height);
     }
 
     @Override
@@ -21,6 +20,7 @@ public class Enemy extends Sprite {
     public boolean bots(Attractor a, Enemy e) {
         return a.getBoundsInParent().intersects(e.getBoundsInParent());
     }
+
 
 
 }
