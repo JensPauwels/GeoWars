@@ -44,6 +44,10 @@ public abstract class Sprite extends Region {
 
     }
 
+    public void setMaxSpeed(double speed){
+        this.maxSpeed = speed;
+    }
+
     public abstract Node createView();
 
     public void applyForce(Vector2D force) {
@@ -82,6 +86,34 @@ public abstract class Sprite extends Region {
 
             // ...set the magnitude according to how close we are.
             double m = Utils.map(d, 0, 100, 0, maxSpeed);
+            desired.multiply(m);
+
+        }
+        // Otherwise, proceed at maximum speed.
+        else {
+            desired.multiply(maxSpeed);
+        }
+
+        // The usual steering = desired - velocity
+        Vector2D steer = Vector2D.subtract(desired, velocity);
+        steer.limit(maxForce);
+
+        applyForce(steer);
+    }
+
+    public void shoot(Vector2D t){
+        Vector2D desired = Vector2D.subtract(t, location);
+
+        // The distance is the magnitude of the vector pointing from location to target.
+
+        double d = desired.magnitude();
+        desired.normalize();
+
+        // If we are closer than 100 pixels...
+        if (d < 100) {
+
+            // ...set the magnitude according to how close we are.
+            double m = Utils.map(d, 0, 100, 0, 5);
             desired.multiply(m);
 
         }

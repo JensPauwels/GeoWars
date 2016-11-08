@@ -43,6 +43,7 @@ public class UserInterface extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Medieval Wars");
+        this.primaryStage.setResizable(false);
         showMainView();
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
