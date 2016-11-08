@@ -11,7 +11,6 @@ public class Attractor extends Sprite {
     @Override
     public Node createView() {
 
-
         Label t = new Label("                       ");
         t.setId("character");
         return t;

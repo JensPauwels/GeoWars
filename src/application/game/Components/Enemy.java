@@ -11,11 +11,8 @@ public class Enemy extends Sprite {
 
     @Override
     public Node createView() {
-
         Label l = new Label("      ");
         l.setId("enemy");
-
-
         return l;
     }
 

@@ -26,9 +26,7 @@ public class Game {
     private AnimationTimer loop;
     private Label test;
     private int highscore = 0;
-
     private List<Bullet> allBullets = new ArrayList<>();
-
     private boolean up, down, left, right;
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -52,9 +50,9 @@ public class Game {
 
     private void prepareGame() {
         for (int i = 0; i < 10; i++) {
-            addVehicles();
+            addEnemy();
         }
-        addAttractors();
+        addMainCharacter();
     }
 
     private void updateHighscore() {
@@ -71,17 +69,14 @@ public class Game {
                     e.display();
                     gotHit(e);
                 }
-                //addVehicles(); // nog ervoor zorgen dat het om de zoveel sec begint
-                mainchar.display();
-                moveChar();
-
                 for (Bullet b : allBullets) {
                     b.seek(allEnemys.get(0).getLocation());
                     b.move();
                     b.display();
                 }
 
-
+                mainchar.display();
+                moveChar();
             }
         };
         loop.start();
@@ -97,7 +92,7 @@ public class Game {
         }
     }
 
-    private void addVehicles() {
+    private void addEnemy() {
         Layer layer = playfield;
 
         // random location
@@ -141,7 +136,12 @@ public class Game {
 
     }
 
-    private void addAttractors() {
+    private void Collicions(Enemy e) {
+
+        //if(e.)
+    }
+
+    private void addMainCharacter() {
 
         Layer layer = playfield;
 
