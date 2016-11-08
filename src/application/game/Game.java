@@ -77,78 +77,24 @@ public class Game implements Runnable{
     }
 
     private void gotHit(Enemy e) {
-
         if (e.bots(mainchar, e)) {
             System.out.println("ouch");
-            highScore = highScore + 10;
-           // updateHighscore();
-
-
         }
     }
 
     private void addEnemy() {
-        Layer layer = playfield;
-
-        // random location
-        double x = random.nextDouble() * 800;
-        double y = random.nextDouble() * 600;
-
-        // dimensions
-        double width = 25;
-        double height = width / 2.0;
-
-        // create enemy data
-        Vector2D location = new Vector2D(x, y);
-        Vector2D velocity = new Vector2D(0, 0);
-        Vector2D acceleration = new Vector2D(0, 0);
-
-        // create sprite and add to layer
-        Enemy enemy = new Enemy(layer, location, velocity, acceleration, width, height);
+        Enemy enemy = new Enemy(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
         allEnemys.add(enemy);
-
     }
 
     private void addBullet(Vector2D loc) {
-        Layer layer = playfield;
-
-        // random location
-        double x = mainchar.getLocation().x;
-        double y = mainchar.getLocation().y;
-        // dimensions
-        double width = 25;
-        double height = width / 2.0;
-        // create enemy data
-        Vector2D location = new Vector2D(x, y);
-        Vector2D velocity = new Vector2D(10, 10);
-        Vector2D acceleration = new Vector2D(100, 100);
-
-        // create sprite and add to layer
-        Bullet bullet = new Bullet(layer, location, velocity, acceleration, width, height);
+        Bullet bullet = new Bullet(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
         bullet.setLocation(loc);
         allBullets.add(bullet);
-
     }
 
-
-
-
     private void addMainCharacter() {
-
-        Layer layer = playfield;
-
-        // center attractor
-        double x = 400;
-        double y = 300;
-        // dimensions
-        double width = 25;
-        double height = 25;
-        // create attractor data
-        Vector2D location = new Vector2D(x, y);
-        Vector2D velocity = new Vector2D(0, 0);
-        Vector2D acceleration = new Vector2D(0, 0);
-        // create attractor and add to layer
-        mainchar = new Attractor(layer, location, velocity, acceleration, width, height);
+        mainchar = new Attractor(playfield, new Vector2D(mainchar.getLocation().x, mainchar.getLocation().y), new Vector2D(10, 10), new Vector2D(100, 100));
     }
 
     private void moveChar() {
