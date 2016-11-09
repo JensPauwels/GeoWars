@@ -87,11 +87,21 @@ public class Game{
 
     private void addBullet(Vector2D loc) {
         location = new Vector2D(mainchar.getLocation().x,mainchar.getLocation().y);
-        Bullet bullet = new Bullet(playfield, location);
 
+        // calculation a : angle of inclination
+        double a = (loc.y-mainchar.getLocation().y)/(loc.x-mainchar.getLocation().x);
 
+        // calculation b : startfigure
+        double b = loc.y-(a*loc.x);
 
-        bullet.setDestination(loc);
+        // y=ax+b
+        double destinationX = 815;
+        if(mainchar.getLocation().x > loc.x){destinationX = -15;}
+        double destinationY = (a*destinationX)+b;
+
+        Bullet bullet = new Bullet(playfield,location);
+        bullet.setDestination(destinationX,destinationY);
+
         allBullets.add(bullet);
     }
 
@@ -118,7 +128,7 @@ public class Game{
 
     private void addListeners() {
         scene.setOnMouseClicked(e -> {if (loop != null) {addBullet(new Vector2D(e.getX(), e.getY()));}
-            System.out.println("x "+ e.getX() + " y" + e.getY());});
+            });
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
     }
