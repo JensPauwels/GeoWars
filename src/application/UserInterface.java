@@ -2,6 +2,7 @@ package application;
 
 
 import application.Engine.Engine;
+import application.game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ public class UserInterface extends Application {
     public static Scene scene = new Scene(mainLayout);
     private Stage primaryStage;
     private Engine instance = Engine.getInstance();
+
 
     public UserInterface() {
         instance.setUi(this);
@@ -49,6 +51,11 @@ public class UserInterface extends Application {
             e.consume();
             close();
         });
+
+
+        // dit is om direct de game te starten
+        Game newGame = new Game(UserInterface.scene, UserInterface.mainLayout);
+        newGame.initGame();
     }
 
     private void close() {
@@ -69,7 +76,6 @@ public class UserInterface extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         loadScreen("loginScreen");
-        System.out.println();
     }
 
 

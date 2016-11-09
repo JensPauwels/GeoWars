@@ -1,6 +1,5 @@
 package application.game;
 
-import application.UserInterface;
 import application.game.Components.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -35,21 +34,19 @@ public class Game{
 
     public void initGame() {
         playfield = new Layer(800, 600);
-        BorderPane gameScreen = UserInterface.createBorderPane("game/game.FXML");
-        gameScreen.setCenter(playfield);
         mainLayout.setCenter(playfield);
-
         prepareGame();
         startGame();
         addListeners();
+
     }
 
     private void prepareGame() {
-        for (int i = 0; i < 10; i++) {addEnemy();}
+        for (int i = 0; i < 10; i++) { addEnemy(); }
         addMainCharacter();
     }
 
-    public void movement(Sprite s,Vector2D target){
+    private void movement(Sprite s,Vector2D target){
         s.seek(target);
         s.move();
         s.display();
@@ -59,10 +56,12 @@ public class Game{
         loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
                 for (Enemy e : allEnemys) {
                     movement(e,mainchar.getLocation());
                     gotHit(e);
                 }
+
                 for (Bullet b: allBullets) {
                     movement(b,b.getDestination());
                 }
@@ -76,7 +75,6 @@ public class Game{
 
     private void gotHit(Enemy e) {
         if (e.bots(mainchar, e)) {
-            System.out.println("ouch");
             highScore = highScore + 10;
         }
     }
@@ -90,8 +88,10 @@ public class Game{
     private void addBullet(Vector2D loc) {
         location = new Vector2D(mainchar.getLocation().x,mainchar.getLocation().y);
         Bullet bullet = new Bullet(playfield, location);
-        bullet.setDestination(loc);
 
+
+
+        bullet.setDestination(loc);
         allBullets.add(bullet);
     }
 
@@ -117,7 +117,8 @@ public class Game{
     }
 
     private void addListeners() {
-        scene.setOnMouseClicked(e -> {if (loop != null) {addBullet(new Vector2D(e.getX(), e.getY()));}});
+        scene.setOnMouseClicked(e -> {if (loop != null) {addBullet(new Vector2D(e.getX(), e.getY()));}
+            System.out.println("x "+ e.getX() + " y" + e.getY());});
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
     }
