@@ -54,6 +54,14 @@ public abstract class Sprite extends Region {
         acceleration.add(force);
     }
 
+    public boolean bots(Attractor a, Enemy e) {
+        return a.getBoundsInParent().intersects(e.getBoundsInParent());
+    }
+
+    public boolean shoot(Bullet a, Enemy e) {
+        return a.getBoundsInParent().intersects(e.getBoundsInParent());
+    }
+
     public void move() {
 
         // set velocity depending on acceleration

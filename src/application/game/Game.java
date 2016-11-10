@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,12 +18,12 @@ public class Game{
     private Layer playfield;
     private Random random = new Random();
     private Attractor mainchar;
-    private List<Enemy> allEnemys = new LinkedList<>();
+    private List<Enemy> allEnemys = new ArrayList<>();
     private Scene scene;
     private BorderPane mainLayout;
     private AnimationTimer loop;
     private int highScore = 0;
-    private List<Bullet> allBullets = new LinkedList<>();
+    private List<Bullet> allBullets = new ArrayList<>();
     private boolean up, down, left, right;
     private Vector2D location;
 
@@ -64,14 +64,29 @@ public class Game{
 
                 for (Bullet b: allBullets) {
                     movement(b,b.getDestination());
+                    if(shoot(b,allEnemys.get(0))){
+
+
+
+                        b.setVisible(false);
+                        System.out.println("raak");
+
+                    }
+
                 }
 
                 mainchar.display();
                 moveChar();
+                //addEnemy();
             }
         };
         loop.start();
     }
+
+    private boolean shoot (Bullet b, Enemy e ){
+        return b.shoot(b,e);
+    }
+
 
     private void gotHit(Enemy e) {
         if (e.bots(mainchar, e)) {

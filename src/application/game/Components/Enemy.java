@@ -16,9 +16,7 @@ public class Enemy extends Sprite {
         return img;
     }
 
-    public boolean bots(Attractor a, Enemy e) {
-        return a.getBoundsInParent().intersects(e.getBoundsInParent());
-    }
+
 
 
 

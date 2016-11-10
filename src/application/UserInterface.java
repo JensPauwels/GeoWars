@@ -2,7 +2,6 @@ package application;
 
 
 import application.Engine.Engine;
-import application.game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -54,8 +53,8 @@ public class UserInterface extends Application {
 
 
         // dit is om direct de game te starten
-        Game newGame = new Game(UserInterface.scene, UserInterface.mainLayout);
-        newGame.initGame();
+       // Game newGame = new Game(UserInterface.scene, UserInterface.mainLayout);
+       // newGame.initGame();
     }
 
     private void close() {
