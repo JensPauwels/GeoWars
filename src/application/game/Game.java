@@ -1,27 +1,21 @@
 package application.game;
 
-import application.Engine.Engine;
-import application.Engine.User;
+import application.Engine.*;
 import application.UserInterface;
 import application.game.Components.Attractor;
 import application.game.Components.BulletType.Bullet;
+import application.game.Components.BulletType.BulletFactory;
 import application.game.Components.BulletType.Enemy;
-import application.game.Components.BulletType.FireArrow;
-import application.game.Components.BulletType.Spear;
 import application.game.Components.Layer;
 import application.game.Components.Sprite;
 import application.game.Components.Vector2D;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.*;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class Game {
@@ -31,6 +25,7 @@ public class Game {
     private Attractor mainCharacter;
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
+    private BulletFactory bulletFactory = new BulletFactory();
     private Scene scene;
     private BorderPane mainLayout;
     private AnimationTimer loop;
@@ -56,16 +51,9 @@ public class Game {
         startGame();
 
         initFrameStuff();
-        printDmg();
+
     }
 
-    public void printDmg(){
-        Bullet spear = new Spear(playField,new Vector2D(0,0));
-        Bullet fireArrow = new FireArrow(playField,new Vector2D(0,0));
-
-        System.out.println(spear.getDamage());
-        System.out.println(fireArrow.getDamage());
-    }
 
     private void initFrameStuff(){
         playField.getChildren().addAll(highscoreLabel,stop);
@@ -92,7 +80,7 @@ public class Game {
         }
     }
 
-    private void movement(Sprite s,Vector2D target){
+    private void movement(Sprite s, Vector2D target){
         s.seek(target);
         s.move();
         s.display();
@@ -155,18 +143,14 @@ public class Game {
     }
 
     private void addBullet(Vector2D loc) {
-        location = new Vector2D(mainCharacter.getLocation().x, mainCharacter.getLocation().y);
+        location= new Vector2D(mainCharacter.getLocation().x,mainCharacter.getLocation().y);
+        Vector2D mouseLoc = new Vector2D(loc.x, loc.y);
 
-        double a = (loc.y- mainCharacter.getLocation().y)/(loc.x- mainCharacter.getLocation().x);
-        double b = loc.y-(a*loc.x);
-
-        double destinationX = 815;
-        if(mainCharacter.getLocation().x > loc.x){destinationX = -15;}
-        double destinationY = (a*destinationX)+b;
-
-        Bullet bullet = new Bullet(playField,location);
-        bullet.setDestination(destinationX,destinationY);
+        Bullet bullet = bulletFactory.makeBullet("Spear",playField,location,mouseLoc);
         allBullets.add(bullet);
+        System.out.println("Destination: x "+bullet.getDestination().x+" y "+bullet.getDestination().y);
+        System.out.println("Name: "+bullet.getName());
+
     }
 
     private void moveChar() {

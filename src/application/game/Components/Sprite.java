@@ -1,6 +1,5 @@
 package application.game.Components;
 
-import application.game.Components.BulletType.Bullet;
 import application.game.Components.BulletType.Enemy;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;

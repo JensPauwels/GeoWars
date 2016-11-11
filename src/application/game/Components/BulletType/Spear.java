@@ -1,20 +1,13 @@
 package application.game.Components.BulletType;
 
-import application.game.Components.Layer;
-import application.game.Components.Vector2D;
 
-/**
- * Created by jens on 11/11/16.
- */
+import application.game.Components.*;
+
 public class Spear extends Bullet {
+    public Spear(Layer layer, Vector2D mainLoc,Vector2D mouseLoc){
+        super(layer,mainLoc,mouseLoc);
+        setName("Spear");
 
 
-
-    public Spear(Layer layer, Vector2D location) {
-        super(layer, location);
-        this.setDamage(1);
     }
-
-
-
 }
