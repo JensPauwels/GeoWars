@@ -1,7 +1,6 @@
 package application.game.Components;
 
 import application.game.Components.BulletType.Bullet;
-import application.game.Components.BulletType.Enemy;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
@@ -27,11 +26,6 @@ public abstract class Sprite extends Region {
     private double angle;
 
     private Layer layer = null;
-
-
-
-
-
 
     public Sprite(Layer layer, Vector2D location, double width, double height) {
 

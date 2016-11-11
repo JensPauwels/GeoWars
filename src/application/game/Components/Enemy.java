@@ -1,8 +1,5 @@
-package application.game.Components.BulletType;
+package application.game.Components;
 
-import application.game.Components.Layer;
-import application.game.Components.Sprite;
-import application.game.Components.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
