@@ -1,18 +1,26 @@
-package application.game.Components;
+package application.game.Components.BulletType;
 
+import application.game.Components.Layer;
+import application.game.Components.Sprite;
+import application.game.Components.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 public class Bullet extends Sprite {
     private Vector2D destination;
+    private int damage;
 
     public Bullet(Layer layer, Vector2D location) {
         super(layer, location, 25, 12.5);
     }
 
+    public void setDamage(int dmg){
+        this.damage = dmg;
+    }
+
+    public int getDamage(){
+        return this.damage;
+    }
 
     public Vector2D getDestination() {
         return this.destination;

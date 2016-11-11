@@ -29,10 +29,6 @@ public class Engine {
         }
     }
 
-    public UserInterface getUi() {
-        return ui;
-    }
-
     public void setUi(UserInterface ui) {
         this.ui = ui;
     }

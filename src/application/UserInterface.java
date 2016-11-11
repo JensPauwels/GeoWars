@@ -37,6 +37,7 @@ public class UserInterface extends Application {
 
     public static void loadScreen(String url) {
         mainLayout.setCenter(createBorderPane(url + "/" + url + ".FXML"));
+
     }
 
     @Override

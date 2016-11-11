@@ -32,6 +32,7 @@ public class LoginController {
         if (db.controle(query)) {
             instance.setUsername(username);
             instance.initCurrentUser();
+
             UserInterface.loadScreen("gameOptions");
         } else {
             alert.setText("Enter the right creds or register to our application.game");

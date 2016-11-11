@@ -3,10 +3,7 @@ package application.DataBase;
 import application.Engine.Settings;
 import application.Engine.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,8 +33,12 @@ public class DbConnection {
         return rs.next();
     }
 
-    public void updateTable(String query) throws Exception {
-        st.executeUpdate(query);
+    public void updateTable(String query) {
+        try {
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public User initUser(String username) throws  Exception{
@@ -61,6 +62,8 @@ public class DbConnection {
         return currentUser;
 
     }
+
+
 
     public List<User> getHighscores(String query) throws Exception {
         List<User> userList = new LinkedList<>();

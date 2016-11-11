@@ -1,30 +1,37 @@
 package application.game.Components;
 
+import application.game.Components.BulletType.Bullet;
+import application.game.Components.BulletType.Enemy;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 public abstract class Sprite extends Region {
 
 
-    Vector2D location;
-    Vector2D velocity;
-    Vector2D acceleration;
+    private Vector2D location;
+    private Vector2D velocity;
+    private Vector2D acceleration;
 
-    double maxForce = 0.1;
-    double maxSpeed = 2;
+    private double maxForce = 0.1;
+    private double maxSpeed = 2;
 
-    Node view;
+    private Node view;
 
     // view dimensions
-    double width;
-    double height;
-    double centerX;
-    double centerY;
+    private double width;
+    private double height;
+    private double centerX;
+    private double centerY;
 
 
-    double angle;
+    private double angle;
 
-    Layer layer = null;
+    private Layer layer = null;
+
+
+
+
+
 
     public Sprite(Layer layer, Vector2D location, double width, double height) {
 
@@ -37,6 +44,7 @@ public abstract class Sprite extends Region {
         this.centerX = width / 2;
         this.centerY = height / 2;
         this.view = createView();
+
 
         setPrefSize(width, height);
         getChildren().add(view);
@@ -52,10 +60,6 @@ public abstract class Sprite extends Region {
 
     public void applyForce(Vector2D force) {
         acceleration.add(force);
-    }
-
-    public boolean bots(Attractor a, Enemy e) {
-        return a.getBoundsInParent().intersects(e.getBoundsInParent());
     }
 
     public boolean shoot(Bullet a, Enemy e) {
