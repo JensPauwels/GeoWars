@@ -9,6 +9,9 @@ public abstract class Sprite extends Region {
 
     private Vector2D location;
     private Vector2D velocity;
+
+
+
     private Vector2D acceleration;
 
     private double maxForce = 0.1;
@@ -24,6 +27,7 @@ public abstract class Sprite extends Region {
 
 
     private double angle;
+
 
     private Layer layer = null;
 
@@ -44,6 +48,14 @@ public abstract class Sprite extends Region {
         getChildren().add(view);
         layer.getChildren().add(this);
 
+    }
+
+    public Vector2D getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Vector2D acceleration) {
+        this.acceleration = acceleration;
     }
 
     public void setMaxSpeed(double speed){
@@ -98,8 +110,9 @@ public abstract class Sprite extends Region {
         }
         // Otherwise, proceed at maximum speed.
         else {
-            desired.multiply(maxSpeed);
+
         }
+        desired.multiply(maxSpeed);
 
         // The usual steering = desired - velocity
         Vector2D steer = Vector2D.subtract(desired, velocity);

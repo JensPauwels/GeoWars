@@ -19,6 +19,30 @@
 
 }
 
+#spear{
+    -fx-background-image: url("../../images/spear.png");
+    -fx-background-size: cover;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-background-position: center center;
+}
+#Donkey{
+    -fx-background-image: url("../../images/rsz_donkey_256.png");
+    -fx-background-size: cover;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-background-position: center center;
+}
+
+#Horse{
+    -fx-background-image: url("../../images/horse.png");
+    -fx-background-size: cover;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-background-position: center center;
+
+}
+
 #enemy {
     -fx-background-image: url("../../images/orc.png");
     -fx-background-size: cover;

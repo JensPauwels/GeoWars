@@ -6,6 +6,8 @@ import application.UserInterface;
 import application.game.Components.*;
 import application.game.Components.BulletType.Bullet;
 import application.game.Components.BulletType.BulletFactory;
+import application.game.Components.FollowerType.Follower;
+import application.game.Components.FollowerType.FollowerFactory;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +29,7 @@ public class Game {
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
     private BulletFactory bulletFactory = new BulletFactory();
+    private FollowerFactory followerFactory = new FollowerFactory();
     private Scene scene;
     private BorderPane mainLayout;
     private AnimationTimer loop;
@@ -37,6 +40,7 @@ public class Game {
     private Button stop = new Button("stop game");
     private Engine instance = Engine.getInstance();
     private User currUser = instance.getCurrentUser();
+    private Follower follower;
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
@@ -51,17 +55,10 @@ public class Game {
         prepareGame();
         startGame();
         initFrameStuff();
-        testDamages();
 
     }
 
-    private void testDamages(){
-        Bullet spear = bulletFactory.makeBullet("Spear",playField,mainCharacter.getLocation(),new Vector2D(0,0));
-        Bullet fireArrow = bulletFactory.makeBullet("Arrow",playField,mainCharacter.getLocation(),new Vector2D(0,0));
 
-        System.out.println(spear.getDamage());
-        System.out.println(fireArrow.getDamage());
-    }
 
 
     private void initFrameStuff(){
@@ -75,6 +72,8 @@ public class Game {
     private void prepareGame() {
         for (int i = 0; i < 25; i++) { addEnemy(); }
         addMainCharacter();
+        System.out.println(follower);
+        AddFollower();
     }
 
     private void updateHighscore(){
@@ -99,11 +98,15 @@ public class Game {
         loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                movement(follower,mainCharacter.getLocation());
+
                 for (Enemy e:allEnemys) {movement(e, mainCharacter.getLocation());}
 
                 for (int j = 0; j<allBullets.size();j++) {
                     Bullet b = allBullets.get(j);
                     movement(b,b.getDestination());
+                    if(b.outOfDestination()){allBullets.remove(b);}
+
 
                     for (int i = 0; i< allEnemys.size();i++) {
                         checkCollision(allEnemys.get(i),b);
@@ -151,10 +154,17 @@ public class Game {
         mainCharacter = new Attractor(playField, location);
     }
 
+    private void AddFollower(){
+        location = new Vector2D(350,300);
+        follower = followerFactory.makeFollower(playField,location);
+        System.out.println(follower.getName());
+    }
+
     private void addBullet(Vector2D loc) {
         location= new Vector2D(mainCharacter.getLocation().x,mainCharacter.getLocation().y);
         Vector2D mouseLoc = new Vector2D(loc.x, loc.y);
-        Bullet bullet = bulletFactory.makeBullet("Spear",playField,location,mouseLoc);
+        Bullet bullet = bulletFactory.makeBullet(playField,location,mouseLoc);
+        System.out.println(instance.getWeaponType());
         allBullets.add(bullet);
     }
 

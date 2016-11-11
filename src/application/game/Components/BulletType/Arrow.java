@@ -9,8 +9,8 @@ public class Arrow extends Bullet{
 
         public Arrow(Layer layer, Vector2D mainLoc, Vector2D mouseLoc){
             super(layer,mainLoc,mouseLoc);
-            this.setName("Arrow");
             this.setDamage(2);
+            this.setMaxSpeed(100);
 
         }
 

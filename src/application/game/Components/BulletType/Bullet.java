@@ -4,26 +4,25 @@ import application.game.Components.Layer;
 import application.game.Components.Sprite;
 import application.game.Components.Vector2D;
 import javafx.scene.Node;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
-
-/**
- * Created by Griet Coysman on 10/11/2016.
- */
 public  class Bullet extends Sprite {
 
-    private String name;
     private Vector2D destination;
     private int damage ;
 
-    public String getName(){
-        return  name;
+    public Bullet(Layer layer, Vector2D location,Vector2D mouseLoc) {
+        super(layer, location, 25, 12.5);
+        setDestination(location,mouseLoc);
     }
-    public void setName(String name){
-        this.name=name;
-    }
+
     public Vector2D getDestination() {
         return this.destination;
+    }
+
+    public boolean outOfDestination(){
+
+        return (getLocation().y > 650 || getLocation().y <-20 || getLocation().x > 850 || getLocation().x<-20);
     }
 
     public int getDamage() {
@@ -50,27 +49,17 @@ public  class Bullet extends Sprite {
 
     @Override
     public Node createView() {
-        Circle circle = new Circle();
-        circle.setCenterX(10);
-        circle.setCenterY(10);
-        circle.setRadius(5.0);
-        return circle;
+        Rectangle r = new Rectangle();
+        r.setX(20);
+        r.setY(20);
+        r.setWidth(20);
+        r.setHeight(10);
+        r.setArcWidth(5);
+        r.setArcHeight(5);
+
+        return r;
 
 
     }
-
-    public Bullet(Layer layer, Vector2D location,Vector2D mouseLoc) {
-        super(layer, location, 25, 12.5);
-        setDestination(location,mouseLoc);
-        System.out.println("ik ben hierin geweest");
-
-    }
-
-
-
-
-
-
-
 
 }

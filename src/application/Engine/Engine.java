@@ -9,7 +9,10 @@ public class Engine {
     private User currentUser;
     private DbConnection db = new DbConnection();
     private UserInterface ui;
-    private String username;
+    private String username,weaponType,followerType;
+
+
+
 
 
 
@@ -58,4 +61,19 @@ public class Engine {
         return this.db;
     }
 
+    public String getWeaponType() {
+        return weaponType;
+    }
+
+    public void setWeaponType(String weaponType) {
+        this.weaponType = weaponType;
+    }
+
+    public String getFollowerType() {
+        return followerType;
+    }
+
+    public void setFollowerType(String followerType) {
+        this.followerType = followerType;
+    }
 }
