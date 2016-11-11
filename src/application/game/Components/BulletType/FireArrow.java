@@ -10,9 +10,9 @@ public class FireArrow extends Bullet {
 
 
 
-    public FireArrow(Layer layer, Vector2D location) {
-        super(layer, location);
-        this.setDamage(2);
+    public FireArrow(Layer layer, Vector2D location, Vector2D mouseLoc) {
+        super(layer, location, mouseLoc);
+
     }
 
 

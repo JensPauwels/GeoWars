@@ -148,8 +148,6 @@ public class Game {
 
         Bullet bullet = bulletFactory.makeBullet("Spear",playField,location,mouseLoc);
         allBullets.add(bullet);
-        System.out.println("Destination: x "+bullet.getDestination().x+" y "+bullet.getDestination().y);
-        System.out.println("Name: "+bullet.getName());
 
     }
 
