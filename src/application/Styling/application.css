@@ -16,7 +16,6 @@
     -fx-background-color: #38383838;
     -fx-background-image: url("../../images/rsz_gameachtergrond.png");
     -fx-background-position: center center;
-
 }
 
 #spear{
@@ -53,15 +52,16 @@
 #enemy {
     -fx-background-image: url("../../images/orc.png");
     -fx-background-size: cover;
-    -fx-min-width: 25px;
+    -fx-min-width: 23px;
+    -fx-min-height: 27px;
     -fx-background-position: center center;
 }
 
 #character {
-    -fx-background-image: url("../../images/giphy.gif");
-    -fx-min-height: 70px;
-    -fx-max-width: 50px;
-
+    -fx-background-image: url("../../images/knight.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-height: 67px;
+    -fx-max-width: 32px;
     -fx-background-position: center center;
 }
 

@@ -63,6 +63,7 @@ public class Game {
 
     }
 
+
     private void initFrameStuff(){
         playField.getChildren().addAll(highscoreLabel,stop,livesLabel,waveLabel);
         stop.setLayoutY(550);
@@ -236,7 +237,6 @@ public class Game {
         scene.setOnKeyReleased(e -> keyAction(e, false));
 
         stop.setOnAction(e ->stopGame());
-
     }
 
     private void stopGame(){

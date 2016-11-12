@@ -12,7 +12,6 @@ public  class Bullet extends Sprite {
 
     private Vector2D destination;
     private int damage ;
-    private String name;
 
     public Bullet(Layer layer, Vector2D location,Vector2D mouseLoc) {
         super(layer, location, 25, 12.5);
@@ -21,9 +20,6 @@ public  class Bullet extends Sprite {
 
     public Vector2D getDestination() {
         return this.destination;
-    }
-    public void setName(String name){
-        this.name=name;
     }
     public boolean outOfDestination(){
 
