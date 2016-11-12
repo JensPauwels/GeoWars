@@ -1,5 +1,7 @@
 package application.game.Components;
 
+import application.Engine.Engine;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -16,7 +18,8 @@ public class Attractor extends Sprite {
     public Node createView() {
 
         Label t = new Label("                       ");
-        t.setId("character");
+        t.setId("characterWith"+ Engine.getInstance().getWeaponType());
+        System.out.println(t.getId());
         return t;
 
     }

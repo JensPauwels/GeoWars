@@ -25,6 +25,7 @@
     -fx-max-height: 5px;
     -fx-background-position: center center;
 }
+
 #arrow{
     -fx-background-image: url("../../images/arrow_left.png");
     -fx-background-repeat: no-repeat;
@@ -33,37 +34,50 @@
     -fx-background-position: center center;
 }
 #Donkey{
-    -fx-background-image: url("../../images/rsz_donkey_256.png");
+    -fx-background-image: url("../../images/donkey2.png");
     -fx-background-size: cover;
-    -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-min-width: 25px;
+    -fx-min-height: 24px;
     -fx-background-position: center center;
 }
 
 #Horse{
-    -fx-background-image: url("../../images/horse.png");
+    -fx-background-image: url("../../images/Horse7.png");
     -fx-background-size: cover;
-    -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-min-width: 25px;
+    -fx-min-height: 17px;
     -fx-background-position: center center;
 
 }
 
 #enemy {
-    -fx-background-image: url("../../images/orc.png");
+    -fx-background-image: url("../../images/orc2.png");
     -fx-background-size: cover;
-    -fx-min-width: 23px;
-    -fx-min-height: 27px;
+    -fx-min-width: 19px;
+    -fx-min-height: 21px;
     -fx-background-position: center center;
 }
 
-#character {
-    -fx-background-image: url("../../images/knight.png");
-    -fx-background-repeat: no-repeat;
-    -fx-min-height: 67px;
-    -fx-max-width: 32px;
+#characterWithArrow {
+    -fx-background-image: url("../../images/characterWithArrow.png");
+    -fx-min-height: 62px;
+    -fx-max-width: 28px;
     -fx-background-position: center center;
 }
+
+#characterWithSpear {
+    -fx-background-image: url("../../images/characterWithSpear.png");
+    -fx-min-height: 73px;
+    -fx-max-width: 53px;
+    -fx-background-position: center center;
+}
+#characterWithBolt {
+    -fx-background-image: url("../../images/characterWithBolt.png");
+    -fx-min-height: 52px;
+    -fx-max-width: 30px;
+    -fx-background-position: center center;
+}
+
 
 #h1 {
     -fx-min-width: 800px;

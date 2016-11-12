@@ -41,7 +41,7 @@ public class Game {
     private int enemysKilled = 0;
     private Label highscoreLabel = new Label("Highscore: "+highscore);
     private Label livesLabel;
-    private Label waveLabel = new Label("1");
+    private Label waveLabel = new Label("Level: "+wave);
 
     private Button stop = new Button("stop game");
     private Engine instance = Engine.getInstance();
@@ -116,7 +116,7 @@ public class Game {
             enemyToKill += 10;
             wave++;
             enemysKilled = 0;
-            waveLabel.setText(Integer.toString(wave));
+            waveLabel.setText("Level: "+Integer.toString(wave));
             for (int i = 0; i < enemyToKill+1 ; i++) {
                 addEnemy();
             }
@@ -174,6 +174,7 @@ public class Game {
         if(e.CollisionMainChar(a,e)){
             e.setVisible(false);
             allEnemys.remove(e);
+            enemysKilled++;
             updateHighscore();;
             mainCharacter.setlives(mainCharacter.getLives()-1);
             livesLabel.setText("Lives: "+Integer.toString(mainCharacter.getLives()));
