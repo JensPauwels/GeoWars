@@ -1,15 +1,16 @@
 package application.game.Components.BulletType;
 
-import application.game.Components.Layer;
-import application.game.Components.Sprite;
-import application.game.Components.Vector2D;
+import application.Engine.Engine;
+import application.game.Components.*;
 import javafx.scene.Node;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Label;
+
 
 public  class Bullet extends Sprite {
 
     private Vector2D destination;
     private int damage ;
+    private String name;
 
     public Bullet(Layer layer, Vector2D location,Vector2D mouseLoc) {
         super(layer, location, 25, 12.5);
@@ -19,7 +20,9 @@ public  class Bullet extends Sprite {
     public Vector2D getDestination() {
         return this.destination;
     }
-
+    public void setName(String name){
+        this.name=name;
+    }
     public boolean outOfDestination(){
 
         return (getLocation().y > 650 || getLocation().y <-20 || getLocation().x > 850 || getLocation().x<-20);
@@ -48,18 +51,11 @@ public  class Bullet extends Sprite {
     // gemeesnchappelijke code
 
     @Override
+
     public Node createView() {
-        Rectangle r = new Rectangle();
-        r.setX(20);
-        r.setY(20);
-        r.setWidth(20);
-        r.setHeight(10);
-        r.setArcWidth(5);
-        r.setArcHeight(5);
-
-        return r;
-
-
+            Label t = new Label();
+            t.setId(Engine.getInstance().getWeaponType().toLowerCase());
+            System.out.println(Engine.getInstance().getWeaponType());
+            return t;
     }
-
 }

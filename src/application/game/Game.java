@@ -36,7 +36,8 @@ public class Game {
     private boolean up, down, left, right;
     private Vector2D location;
     private int highscore = 0;
-    private Label highscoreLabel = new Label("0");
+    private Label highscoreLabel = new Label("Highscore: "+highscore);
+    private Label livesLabel;
     private Button stop = new Button("stop game");
     private Engine instance = Engine.getInstance();
     private User currUser = instance.getCurrentUser();
@@ -50,7 +51,6 @@ public class Game {
     public void initGame() {
         playField = new Layer(800, 600);
         mainLayout.setCenter(playField);
-
         addListeners();
         prepareGame();
         startGame();
@@ -62,24 +62,28 @@ public class Game {
 
 
     private void initFrameStuff(){
-        playField.getChildren().addAll(highscoreLabel,stop);
+        playField.getChildren().addAll(highscoreLabel,stop,livesLabel);
         stop.setLayoutY(550);
         stop.setLayoutX(50);
         highscoreLabel.setLayoutX(120);
         highscoreLabel.setLayoutY(20);
+        livesLabel.setLayoutX(350);
+        livesLabel.setLayoutY(20);
     }
 
     private void prepareGame() {
         for (int i = 0; i < 25; i++) { addEnemy(); }
         addMainCharacter();
-        System.out.println(follower);
         AddFollower();
+        livesLabel = new Label("Lives: "+Integer.toString(mainCharacter.getLives()));
+
     }
 
     private void updateHighscore(){
         highscore +=10;
-        highscoreLabel.setText(Integer.toString(highscore));
+        highscoreLabel.setText("Highscore: "+Integer.toString(highscore));
     }
+
 
     private void updateHighscoreToDataBase(){
         if(currUser.getHighscore() < highscore){
@@ -87,6 +91,7 @@ public class Game {
             instance.getDb().updateTable(query);
         }
     }
+
 
     private void movement(Sprite s, Vector2D target){
         s.seek(target);
@@ -100,7 +105,12 @@ public class Game {
             public void handle(long now) {
                 movement(follower,mainCharacter.getLocation());
 
-                for (Enemy e:allEnemys) {movement(e, mainCharacter.getLocation());}
+                for (int i = 0; i<allEnemys.size(); i++) {
+                    movement(allEnemys.get(i), mainCharacter.getLocation());
+                    if(checkCollisionEnemy(mainCharacter,allEnemys.get(i))&& mainCharacter.getLives()<=0){
+                        stopGame();
+                    };
+                }
 
                 for (int j = 0; j<allBullets.size();j++) {
                     Bullet b = allBullets.get(j);
@@ -109,7 +119,8 @@ public class Game {
 
 
                     for (int i = 0; i< allEnemys.size();i++) {
-                        checkCollision(allEnemys.get(i),b);
+                        checkCollisionBullet(allEnemys.get(i),b);
+
                     }
                  }
 
@@ -120,7 +131,8 @@ public class Game {
         loop.start();
     }
 
-    private boolean checkCollision(Enemy e,Bullet b){
+    // herhaling
+    private boolean checkCollisionBullet(Enemy e,Bullet b){
         Boolean tmp = false;
         if (e.shoot(b,e)) {
             b.setVisible(false);
@@ -130,10 +142,21 @@ public class Game {
             updateHighscore();
             tmp  = true;
         }
-
         return tmp;
     }
 
+    private  boolean checkCollisionEnemy (Attractor a, Enemy e){
+        boolean tmp = false;
+        if(e.CollisionMainChar(a,e)){
+            e.setVisible(false);
+            allEnemys.remove(e);
+            updateHighscore();;
+            mainCharacter.setlives(mainCharacter.getLives()-1);
+            livesLabel.setText("Lives: "+Integer.toString(mainCharacter.getLives()));
+            tmp = true;
+        }
+        return tmp;
+    }
 
     private void addEnemy() {
         double x = random.nextDouble() * 800;
@@ -189,11 +212,17 @@ public class Game {
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
 
-        stop.setOnAction(e ->{
-            loop.stop();
-            updateHighscoreToDataBase();
-            UserInterface.loadScreen("gameOptions");
+        stop.setOnAction(e ->{stopGame();
         });
+    }
+
+    private void stopGame(){
+        //stop loop
+        loop.stop();
+        //highscore opdaten
+        updateHighscoreToDataBase();
+        //naar game over scherm gaan
+        UserInterface.loadScreen("gameOptions");
     }
 
 }

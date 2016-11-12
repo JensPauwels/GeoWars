@@ -5,8 +5,11 @@ import javafx.scene.control.Label;
 
 
 public class Attractor extends Sprite {
+    private int lives;
+
     public Attractor(Layer layer, Vector2D location) {
         super(layer, location, 25, 25);
+        this.lives = 3;
     }
 
     @Override
@@ -16,6 +19,14 @@ public class Attractor extends Sprite {
         t.setId("character");
         return t;
 
+    }
+
+    public void setlives(int lives){
+        this.lives = lives;
+    }
+
+    public int getLives(){
+        return this.lives;
     }
 
 

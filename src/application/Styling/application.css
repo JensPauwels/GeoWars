@@ -21,9 +21,16 @@
 
 #spear{
     -fx-background-image: url("../../images/spear.png");
-    -fx-background-size: cover;
-    -fx-min-width: 60px;
-    -fx-min-height: 60px;
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 35px;
+    -fx-max-height: 5px;
+    -fx-background-position: center center;
+}
+#arrow{
+    -fx-background-image: url("../../images/arrow_left.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 51px;
+    -fx-min-height: 11px;
     -fx-background-position: center center;
 }
 #Donkey{

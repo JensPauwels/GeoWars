@@ -68,7 +68,10 @@ public abstract class Sprite extends Region {
         acceleration.add(force);
     }
 
-    public boolean shoot(Bullet a, Enemy e) {
+    public boolean shoot(Bullet b, Enemy e) {
+        return b.getBoundsInParent().intersects(e.getBoundsInParent());
+    }
+    public boolean CollisionMainChar(Attractor a, Enemy e){
         return a.getBoundsInParent().intersects(e.getBoundsInParent());
     }
 
