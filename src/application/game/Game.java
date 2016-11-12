@@ -36,8 +36,13 @@ public class Game {
     private boolean up, down, left, right;
     private Vector2D location;
     private int highscore = 0;
+    private int wave = 1;
+    private int enemyToKill = 10;
+    private int enemysKilled = 0;
     private Label highscoreLabel = new Label("Highscore: "+highscore);
     private Label livesLabel;
+    private Label waveLabel = new Label("1");
+
     private Button stop = new Button("stop game");
     private Engine instance = Engine.getInstance();
     private User currUser = instance.getCurrentUser();
@@ -58,24 +63,26 @@ public class Game {
 
     }
 
-
-
-
     private void initFrameStuff(){
-        playField.getChildren().addAll(highscoreLabel,stop,livesLabel);
+        playField.getChildren().addAll(highscoreLabel,stop,livesLabel,waveLabel);
         stop.setLayoutY(550);
         stop.setLayoutX(50);
         highscoreLabel.setLayoutX(120);
         highscoreLabel.setLayoutY(20);
         livesLabel.setLayoutX(350);
         livesLabel.setLayoutY(20);
+        waveLabel.setLayoutX(500);
+        waveLabel.setLayoutY(20);
+
     }
 
     private void prepareGame() {
-        for (int i = 0; i < 25; i++) { addEnemy(); }
+        for (int i = 0; i < enemyToKill; i++) { addEnemy(); }
         addMainCharacter();
         AddFollower();
         livesLabel = new Label("Lives: "+Integer.toString(mainCharacter.getLives()));
+
+
 
     }
 
@@ -93,30 +100,45 @@ public class Game {
     }
 
 
-    private void movement(Sprite s, Vector2D target){
+    private void movement(Sprite s, Vector2D target,boolean angles){
         s.seek(target);
-        s.move();
+        if(angles){s.move();
+        }
+        else {s.moveWithoutTurn();
+        }
+
         s.display();
+    }
+
+    private  void updateWaves(){
+        if(enemysKilled ==  enemyToKill){
+            enemyToKill += 10;
+            wave++;
+            enemysKilled = 0;
+            waveLabel.setText(Integer.toString(wave));
+            for (int i = 0; i < enemyToKill+1 ; i++) {
+                addEnemy();
+            }
+        }
     }
 
     private void startGame() {
         loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                movement(follower,mainCharacter.getLocation());
+                movement(follower,mainCharacter.getLocation(),false);
 
                 for (int i = 0; i<allEnemys.size(); i++) {
-                    movement(allEnemys.get(i), mainCharacter.getLocation());
+                    movement(allEnemys.get(i), mainCharacter.getLocation(),true);
                     if(checkCollisionEnemy(mainCharacter,allEnemys.get(i))&& mainCharacter.getLives()<=0){
                         stopGame();
-                    };
+                    }
                 }
 
                 for (int j = 0; j<allBullets.size();j++) {
                     Bullet b = allBullets.get(j);
-                    movement(b,b.getDestination());
+                    movement(b,b.getDestination(),true);
                     if(b.outOfDestination()){allBullets.remove(b);}
-
 
                     for (int i = 0; i< allEnemys.size();i++) {
                         checkCollisionBullet(allEnemys.get(i),b);
@@ -141,6 +163,7 @@ public class Game {
             allBullets.remove(b);
             updateHighscore();
             tmp  = true;
+            enemysKilled++;
         }
         return tmp;
     }
@@ -187,11 +210,11 @@ public class Game {
         location= new Vector2D(mainCharacter.getLocation().x,mainCharacter.getLocation().y);
         Vector2D mouseLoc = new Vector2D(loc.x, loc.y);
         Bullet bullet = bulletFactory.makeBullet(playField,location,mouseLoc);
-        System.out.println(instance.getWeaponType());
         allBullets.add(bullet);
     }
 
     private void moveChar() {
+        updateWaves();
         Vector2D loc = mainCharacter.getLocation();
         if (up && loc.y>0) {mainCharacter.setLocation(loc.x, loc.y - 5);}
         else if (down && loc.y <555) {mainCharacter.setLocation(loc.x, loc.y + 5);}
@@ -212,16 +235,13 @@ public class Game {
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
 
-        stop.setOnAction(e ->{stopGame();
-        });
+        stop.setOnAction(e ->stopGame());
+
     }
 
     private void stopGame(){
-        //stop loop
         loop.stop();
-        //highscore opdaten
         updateHighscoreToDataBase();
-        //naar game over scherm gaan
         UserInterface.loadScreen("gameOptions");
     }
 

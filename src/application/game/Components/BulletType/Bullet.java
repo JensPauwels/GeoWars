@@ -1,7 +1,9 @@
 package application.game.Components.BulletType;
 
 import application.Engine.Engine;
-import application.game.Components.*;
+import application.game.Components.Layer;
+import application.game.Components.Sprite;
+import application.game.Components.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -55,7 +57,6 @@ public  class Bullet extends Sprite {
     public Node createView() {
             Label t = new Label();
             t.setId(Engine.getInstance().getWeaponType().toLowerCase());
-            System.out.println(Engine.getInstance().getWeaponType());
             return t;
     }
 }

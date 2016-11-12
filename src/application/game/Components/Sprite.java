@@ -93,6 +93,22 @@ public abstract class Sprite extends Region {
         acceleration.multiply(0);
     }
 
+    public void moveWithoutTurn(){
+        // set velocity depending on acceleration
+        velocity.add(acceleration);
+
+        // limit velocity to max speed
+        velocity.limit(maxSpeed);
+
+        // change location depending on velocity
+        location.add(velocity);
+
+
+
+        // clear acceleration
+        acceleration.multiply(0);
+    }
+
 
     public void seek(Vector2D target) {
 
@@ -123,6 +139,8 @@ public abstract class Sprite extends Region {
 
         applyForce(steer);
     }
+
+
 
     public void display() {
 
