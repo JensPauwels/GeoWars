@@ -60,7 +60,6 @@ public class Game {
         prepareGame();
         startGame();
         initFrameStuff();
-
     }
 
 
@@ -74,7 +73,6 @@ public class Game {
         livesLabel.setLayoutY(20);
         waveLabel.setLayoutX(500);
         waveLabel.setLayoutY(20);
-
     }
 
     private void prepareGame() {
@@ -82,9 +80,6 @@ public class Game {
         addMainCharacter();
         AddFollower();
         livesLabel = new Label("Lives: "+Integer.toString(mainCharacter.getLives()));
-
-
-
     }
 
     private void updateHighscore(){
@@ -100,14 +95,12 @@ public class Game {
         }
     }
 
-
     private void movement(Sprite s, Vector2D target,boolean angles){
         s.seek(target);
         if(angles){s.move();
         }
         else {s.moveWithoutTurn();
         }
-
         s.display();
     }
 
@@ -140,10 +133,8 @@ public class Game {
                     Bullet b = allBullets.get(j);
                     movement(b,b.getDestination(),true);
                     if(b.outOfDestination()){allBullets.remove(b);}
-
                     for (int i = 0; i< allEnemys.size();i++) {
                         checkCollisionBullet(allEnemys.get(i),b);
-
                     }
                  }
 
@@ -243,7 +234,7 @@ public class Game {
     private void stopGame(){
         loop.stop();
         updateHighscoreToDataBase();
-        UserInterface.loadScreen("gameOptions");
+        UserInterface.loadScreen("endGame");
     }
 
 }

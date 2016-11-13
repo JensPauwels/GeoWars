@@ -1,7 +1,7 @@
 package application.Engine;
 
 
-public class User {
+public class User  {
     private String username;
     private int highscore;
     private Settings settings;

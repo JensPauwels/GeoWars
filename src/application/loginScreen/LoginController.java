@@ -3,15 +3,15 @@ package application.loginScreen;
 import application.DataBase.DbConnection;
 import application.Engine.Engine;
 import application.UserInterface;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 public class LoginController {
 
-    public TextField userNameInput;
-    public PasswordField passwordInput;
+    public JFXTextField userNameInput;
+    public JFXPasswordField passwordInput;
     public Label alert;
     private Engine instance = Engine.getInstance();
     private DbConnection db = instance.getDb();
