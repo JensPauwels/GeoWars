@@ -1,0 +1,125 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#container {
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../images/test123.jpg");
+    -fx-background-position: center center;
+}
+
+.title{
+    -fx-font-size: 30pt;
+    -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
+    -fx-text-fill: white;
+}
+
+#gameOptions {
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../images/rsz_menuwinter.png");
+    -fx-background-position: center center;
+}
+
+#spear{
+    -fx-background-image: url("../../images/spear.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 35px;
+    -fx-max-height: 5px;
+    -fx-background-position: center center;
+}
+
+#arrow{
+    -fx-background-image: url("../../images/arrow_left.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 51px;
+    -fx-min-height: 11px;
+    -fx-background-position: center center;
+}
+#Donkey{
+    -fx-background-image: url("../../images/donkey2.png");
+    -fx-background-size: cover;
+    -fx-min-width: 25px;
+    -fx-min-height: 24px;
+    -fx-background-position: center center;
+}
+
+#Horse{
+    -fx-background-image: url("../../images/Horse7.png");
+    -fx-background-size: cover;
+    -fx-min-width: 25px;
+    -fx-min-height: 17px;
+    -fx-background-position: center center;
+
+}
+
+#enemy {
+    -fx-background-image: url("../../images/orc2.png");
+    -fx-background-size: cover;
+    -fx-min-width: 19px;
+    -fx-min-height: 21px;
+    -fx-background-position: center center;
+}
+
+#characterWithArrow {
+    -fx-background-image: url("../../images/characterWithArrow.png");
+    -fx-min-height: 62px;
+    -fx-max-width: 28px;
+    -fx-background-position: center center;
+}
+
+#characterWithSpear {
+    -fx-background-image: url("../../images/characterWithSpear.png");
+    -fx-min-height: 73px;
+    -fx-max-width: 53px;
+    -fx-background-position: center center;
+}
+#characterWithBolt {
+    -fx-background-image: url("../../images/characterWithBolt.png");
+    -fx-min-height: 52px;
+    -fx-max-width: 30px;
+    -fx-background-position: center center;
+}
+
+
+#h1 {
+    -fx-min-width: 800px;
+    -fx-font-size: 100pt;
+    -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
+    -fx-text-fill: white;
+    -fx-background-image: url("../../images/rsz_medievalLogo.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+#vbox {
+    -fx-font-size: 30pt;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
+}
+
+.options {
+    -fx-min-width: 200px;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+    -fx-background-color:#1f2429 ;
+    -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
+
+}
+
+ #table {
+
+    -fx-background-color: white,
+    linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+    linear-gradient(#20262b, #191d22),
+    radial-gradient(center 50% 0%, radius 100%, rgba(114, 131, 148, 0.9), rgba(255, 255, 255, 0));
+    -fx-background-radius: 5, 4, 3, 5;
+    -fx-background-insets: 0, 1, 2, 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 10, 0.0, 0, 1);
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+
+}
+
+
