@@ -42,7 +42,6 @@ public class Game {
     private Label highscoreLabel = new Label("Highscore: "+highscore);
     private Label livesLabel;
     private Label waveLabel = new Label("Level: "+wave);
-
     private Button stop = new Button("stop game");
     private Engine instance = Engine.getInstance();
     private User currUser = instance.getCurrentUser();
@@ -97,10 +96,8 @@ public class Game {
 
     private void movement(Sprite s, Vector2D target,boolean angles){
         s.seek(target);
-        if(angles){s.move();
-        }
-        else {s.moveWithoutTurn();
-        }
+        if(angles){s.move();}
+        else {s.moveWithoutTurn();}
         s.display();
     }
 
