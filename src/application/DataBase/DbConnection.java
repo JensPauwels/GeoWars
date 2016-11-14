@@ -17,7 +17,6 @@ public class DbConnection {
 
 
 
-
         try {
             Connection con = DriverManager.getConnection(url, username, password);
             st = con.createStatement();

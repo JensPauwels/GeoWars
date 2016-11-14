@@ -75,7 +75,7 @@
             </HBox>
          <HBox alignment="CENTER">
             <children>
-               <JFXButton text="Create an account!" textFill="#0d3243">
+               <JFXButton text="Create an account!" textFill="#0d3243" onAction="#Register">
                   <HBox.margin>
                      <Insets top="100.0" />
                   </HBox.margin>
