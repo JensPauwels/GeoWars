@@ -8,12 +8,14 @@ import application.Game.Components.BulletType.BulletFactory;
 import application.Game.Components.Enemy;
 import application.Game.Components.FollowerType.Follower;
 import application.Game.Components.FollowerType.FollowerFactory;
+import application.Game.Components.PowerUp;
 import application.Game.Components.Vector2D;
 import application.UserInterface;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Game {
@@ -29,6 +32,7 @@ public class Game {
     private Attractor mainCharacter;
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
+    private List<PowerUp> powerups = new LinkedList<>();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right;
@@ -36,17 +40,19 @@ public class Game {
     private int highscore,enemysKilled = 0;
     private int wave = 1;
     private int enemyToKill = 10;
+    private int xp = 10;
     private Label highscoreLabel,livesLabel, waveLabel;
     private Button stop = new Button("stop Game");
     private User currUser = Engine.getInstance().getCurrentUser();
     private Follower follower;
+
+
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
         playField = new Pane();
         playField.setMinWidth(800);
         playField.setMinHeight(600);
-
         mainLayout.setCenter(playField);
     }
 
@@ -60,7 +66,6 @@ public class Game {
 
 
     private void initFrameStuff() {
-
         highscoreLabel = new Label("Highscore: " + highscore);
         waveLabel = new Label("Level: " + wave);
         playField.getChildren().addAll(highscoreLabel, stop, livesLabel, waveLabel);
@@ -74,15 +79,20 @@ public class Game {
         waveLabel.setLayoutY(20);
     }
 
+
+
     private void prepareGame() {
         for (int i = 0; i < enemyToKill; i++) {addEnemy();}
         addMainCharacter();
         AddFollower();
         livesLabel = new Label("Lives: " + Integer.toString(mainCharacter.getLives()));
+        spawnPowerUp();
+
+
     }
 
     private void updateHighscore() {
-        highscore += 10;
+        highscore += xp;
         highscoreLabel.setText("Highscore: " + Integer.toString(highscore));
     }
 
@@ -102,8 +112,35 @@ public class Game {
             enemysKilled = 0;
             waveLabel.setText("Level: " + Integer.toString(wave));
             for (int i = 0; i < enemyToKill + 1; i++) {addEnemy();}
+            spawnPowerUp();
         }
     }
+
+    private void spawnPowerUp(){
+
+        Random random = new Random();
+
+
+        location = new Vector2D(random.nextDouble() * 800, random.nextDouble()* 600);
+
+        PowerUp pu = new PowerUp(playField,location);
+        pu.setLayoutX(location.getX());
+        pu.setLayoutY(location.getY());
+
+
+        powerups.add(pu);
+
+    }
+
+
+    private void multiHighScore(){
+       // xp = xp * 2;
+        highscore = highscore +1;
+        System.out.println(highscore);
+    }
+
+
+
 
     private void startGame() {
         loop = new AnimationTimer() {
@@ -116,17 +153,32 @@ public class Game {
                     checkCollisionBullet(bullet);
                 }
 
-                follower.movement(mainCharacter.getLocation(),false);
+               // follower.movement(mainCharacter.getLocation(),false);
                 moveEnemysTowardsMainCharacter();
                 mainCharacter.display();
                 moveChar();
                 updateWaves();
+                specialAbilityDonkey();
+                //follower.movement(powerups.get(0).getLocation(),false);
+
 
             }
         };
         loop.start();
     }
 
+    private void specialAbilityDonkey(){
+
+
+        for (int i = 0; i < powerups.size() ; i++) {
+            follower.movement(powerups.get(0).getLocation(),false);
+            if(follower.coll(follower,powerups.get(0))){
+                multiHighScore();
+                powerups.get(0).setVisible(false);
+                powerups.remove(powerups.get(0));
+            }
+        }
+    }
     private void checkIfBulletsIsOutOfDestination(Bullet b){
         if(b.outOfDestination()){
             allBullets.remove(b);
@@ -155,7 +207,9 @@ public class Game {
             if (e.coll(b, e)) {
                 b.setVisible(false);
                 allBullets.remove(b);
+                //spawnPowerUp();
                 killEnemy(e);
+
             }
         }
     }
