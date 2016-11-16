@@ -1,14 +1,11 @@
 package application.Engine;
 
-/**
- * Created by jens on 13/10/16.
- */
 public class Settings {
 
     private boolean music;
     private boolean autoSave;
 
-    public Settings(){
+    public Settings() {
         this.music = false;
         this.autoSave = false;
     }

@@ -1,8 +1,8 @@
 package application.Controllers;
 
 import application.DataBase.DbConnection;
-import application.Engine.Engine;
 import application.Engine.User;
+import application.Engine.Engine;
 import application.UserInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,10 +49,12 @@ public class HighScoresController {
         ObservableList<User> users = FXCollections.observableArrayList();
         String query = "SELECT  userName,highscore FROM users order by highscore desc";
         List<User> listOfUsers = db.getHighscores(query);
-        
+
         int number = listOfUsers.size();
-        if(number > 5){number = 5;}
-        for (int i = 0; i <  number; i++) {
+        if (number > 5) {
+            number = 5;
+        }
+        for (int i = 0; i < number; i++) {
             users.add(listOfUsers.get(i));
         }
         return users;

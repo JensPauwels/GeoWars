@@ -53,10 +53,6 @@ public class UserInterface extends Application {
             close();
         });
 
-
-        // dit is om direct de game te starten
-       // Game newGame = new Game(UserInterface.scene, UserInterface.mainLayout);
-       // newGame.initGame();
     }
 
     private void close() {

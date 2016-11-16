@@ -6,7 +6,7 @@
     -fx-background-position: center center;
 }
 
-.title{
+.title {
     -fx-font-size: 30pt;
     -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
     -fx-text-fill: white;
@@ -18,7 +18,7 @@
     -fx-background-position: center center;
 }
 
-#spear{
+#spear {
     -fx-background-image: url("../../Images/spear.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 35px;
@@ -26,14 +26,15 @@
     -fx-background-position: center center;
 }
 
-#arrow{
+#arrow {
     -fx-background-image: url("../../Images/arrow_left.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 51px;
     -fx-min-height: 11px;
     -fx-background-position: center center;
 }
-#Donkey{
+
+#Donkey {
     -fx-background-image: url("../../Images/donkey2.png");
     -fx-background-size: cover;
     -fx-min-width: 25px;
@@ -41,7 +42,7 @@
     -fx-background-position: center center;
 }
 
-#Horse{
+#Horse {
     -fx-background-image: url("../../Images/Horse7.png");
     -fx-background-size: cover;
     -fx-min-width: 25px;
@@ -71,13 +72,13 @@
     -fx-max-width: 53px;
     -fx-background-position: center center;
 }
+
 #characterWithBolt {
     -fx-background-image: url("../../Images/characterWithBolt.png");
     -fx-min-height: 52px;
     -fx-max-width: 30px;
     -fx-background-position: center center;
 }
-
 
 #h1 {
     -fx-min-width: 800px;
@@ -101,12 +102,12 @@
     -fx-font-family: "Arial";
     -fx-font-size: 12px;
     -fx-padding: 10 20 10 20;
-    -fx-background-color:#1f2429 ;
+    -fx-background-color: #1f2429;
     -fx-effect: dropshadow(three-pass-box, white, 20, 0.3, 0, 0);
 
 }
 
- #table {
+#table {
 
     -fx-background-color: white,
     linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),

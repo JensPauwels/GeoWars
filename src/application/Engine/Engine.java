@@ -9,11 +9,7 @@ public class Engine {
     private User currentUser;
     private DbConnection db = new DbConnection();
     private UserInterface ui;
-    private String username,weaponType,followerType;
-
-
-
-
+    private String username, weaponType, followerType;
 
 
     public static Engine getInstance() {
@@ -23,13 +19,12 @@ public class Engine {
         return firstInstance;
     }
 
-    public void initCurrentUser(){
+    public void initCurrentUser() {
 
-        try{
+        try {
             setCurrentUser(db.initUser(username));
             System.out.println(currentUser.getHighscore());
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
@@ -42,7 +37,7 @@ public class Engine {
         this.username = username;
     }
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return this.currentUser;
     }
 
@@ -50,14 +45,14 @@ public class Engine {
         this.currentUser = currentUser;
     }
 
-    public void saveCurrentUser() throws Exception{
+    public void saveCurrentUser() throws Exception {
 
         String query = "UPDATE settings SET music=" + currentUser.getSettings().isMusic() + ",autosave=" + currentUser.getSettings().isAutoSave() + " WHERE username = '" + currentUser.getUsername() + "'";
         db.updateTable(query);
 
     }
 
-    public DbConnection getDb(){
+    public DbConnection getDb() {
         return this.db;
     }
 

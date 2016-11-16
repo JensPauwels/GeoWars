@@ -1,13 +1,15 @@
 package application.Game;
 
-import application.Engine.Engine;
 import application.Engine.User;
-import application.UserInterface;
-import application.Game.Components.*;
+import application.Engine.Engine;
+import application.Game.Components.Attractor;
 import application.Game.Components.BulletType.Bullet;
 import application.Game.Components.BulletType.BulletFactory;
+import application.Game.Components.Enemy;
 import application.Game.Components.FollowerType.Follower;
 import application.Game.Components.FollowerType.FollowerFactory;
+import application.Game.Components.Vector2D;
+import application.UserInterface;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,46 +17,41 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 
 public class Game {
 
-    private Layer playField;
-    private Random random = new Random();
+    private Pane playField;
     private Attractor mainCharacter;
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
-    private BulletFactory bulletFactory = new BulletFactory();
-    private FollowerFactory followerFactory = new FollowerFactory();
     private Scene scene;
-    private BorderPane mainLayout;
     private AnimationTimer loop;
     private boolean up, down, left, right;
     private Vector2D location;
-    private int highscore = 0;
+    private int highscore,enemysKilled = 0;
     private int wave = 1;
     private int enemyToKill = 10;
-    private int enemysKilled = 0;
-    private Label highscoreLabel = new Label("Highscore: "+highscore);
-    private Label livesLabel;
-    private Label waveLabel = new Label("Level: "+wave);
+    private Label highscoreLabel,livesLabel, waveLabel;
     private Button stop = new Button("stop Game");
-    private Engine instance = Engine.getInstance();
-    private User currUser = instance.getCurrentUser();
+    private User currUser = Engine.getInstance().getCurrentUser();
     private Follower follower;
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
-        this.mainLayout = mainLayout;
+        playField = new Pane();
+        playField.setMinWidth(800);
+        playField.setMinHeight(600);
+
+        mainLayout.setCenter(playField);
     }
 
     public void initGame() {
-        playField = new Layer(800, 600);
-        mainLayout.setCenter(playField);
+
         addListeners();
         prepareGame();
         startGame();
@@ -62,8 +59,11 @@ public class Game {
     }
 
 
-    private void initFrameStuff(){
-        playField.getChildren().addAll(highscoreLabel,stop,livesLabel,waveLabel);
+    private void initFrameStuff() {
+
+        highscoreLabel = new Label("Highscore: " + highscore);
+        waveLabel = new Label("Level: " + wave);
+        playField.getChildren().addAll(highscoreLabel, stop, livesLabel, waveLabel);
         stop.setLayoutY(550);
         stop.setLayoutX(50);
         highscoreLabel.setLayoutX(120);
@@ -75,41 +75,33 @@ public class Game {
     }
 
     private void prepareGame() {
-        for (int i = 0; i < enemyToKill; i++) { addEnemy(); }
+        for (int i = 0; i < enemyToKill; i++) {addEnemy();}
         addMainCharacter();
         AddFollower();
-        livesLabel = new Label("Lives: "+Integer.toString(mainCharacter.getLives()));
+        livesLabel = new Label("Lives: " + Integer.toString(mainCharacter.getLives()));
     }
 
-    private void updateHighscore(){
-        highscore +=10;
-        highscoreLabel.setText("Highscore: "+Integer.toString(highscore));
+    private void updateHighscore() {
+        highscore += 10;
+        highscoreLabel.setText("Highscore: " + Integer.toString(highscore));
     }
 
 
-    private void updateHighscoreToDataBase(){
-        if(currUser.getHighscore() < highscore){
-            String query = "update users set highscore="+highscore+" where username like '"+currUser.getUsername()+"'";
-            instance.getDb().updateTable(query);
+    private void updateHighscoreToDataBase() {
+        if (currUser.getHighscore() < highscore) {
+            String query = "update users set highscore=" + highscore + " where username like '" + currUser.getUsername() + "'";
+            Engine.getInstance().getDb().updateTable(query);
         }
     }
 
-    private void movement(Sprite s, Vector2D target,boolean angles){
-        s.seek(target);
-        if(angles){s.move();}
-        else {s.moveWithoutTurn();}
-        s.display();
-    }
 
-    private  void updateWaves(){
-        if(enemysKilled ==  enemyToKill){
+    private void updateWaves() {
+        if (enemysKilled == enemyToKill) {
             enemyToKill += 10;
             wave++;
             enemysKilled = 0;
-            waveLabel.setText("Level: "+Integer.toString(wave));
-            for (int i = 0; i < enemyToKill+1 ; i++) {
-                addEnemy();
-            }
+            waveLabel.setText("Level: " + Integer.toString(wave));
+            for (int i = 0; i < enemyToKill + 1; i++) {addEnemy();}
         }
     }
 
@@ -117,70 +109,71 @@ public class Game {
         loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                movement(follower,mainCharacter.getLocation(),false);
-
-                for (int i = 0; i<allEnemys.size(); i++) {
-                    movement(allEnemys.get(i), mainCharacter.getLocation(),true);
-                    if(checkCollisionEnemy(mainCharacter,allEnemys.get(i))&& mainCharacter.getLives()<=0){
-                        stopGame();
-                    }
+                for (int i = 0; i < allBullets.size(); i++) {
+                    Bullet bullet = allBullets.get(i);
+                    checkIfBulletsIsOutOfDestination(bullet);
+                    bullet.movement(bullet.getDestination(),true);
+                    checkCollisionBullet(bullet);
                 }
 
-                for (int j = 0; j<allBullets.size();j++) {
-                    Bullet b = allBullets.get(j);
-                    movement(b,b.getDestination(),true);
-                    if(b.outOfDestination()){allBullets.remove(b);}
-                    for (int i = 0; i< allEnemys.size();i++) {
-                        checkCollisionBullet(allEnemys.get(i),b);
-                    }
-                 }
+                follower.movement(mainCharacter.getLocation(),false);
+                moveEnemysTowardsMainCharacter();
+                mainCharacter.display();
+                moveChar();
+                updateWaves();
 
-            mainCharacter.display();
-            moveChar();
             }
         };
         loop.start();
     }
 
-    // herhaling
-    private boolean checkCollisionBullet(Enemy e,Bullet b){
-        Boolean tmp = false;
-        if (e.shoot(b,e)) {
-            b.setVisible(false);
-            e.setVisible(false);
-            allEnemys.remove(e);
+    private void checkIfBulletsIsOutOfDestination(Bullet b){
+        if(b.outOfDestination()){
             allBullets.remove(b);
-            updateHighscore();
-            tmp  = true;
-            enemysKilled++;
         }
-        return tmp;
     }
 
-    private  boolean checkCollisionEnemy (Attractor a, Enemy e){
-        boolean tmp = false;
-        if(e.CollisionMainChar(a,e)){
-            e.setVisible(false);
-            allEnemys.remove(e);
-            enemysKilled++;
-            updateHighscore();;
-            mainCharacter.setlives(mainCharacter.getLives()-1);
-            livesLabel.setText("Lives: "+Integer.toString(mainCharacter.getLives()));
-            tmp = true;
+    private void moveEnemysTowardsMainCharacter(){
+        for (int i = 0; i < allEnemys.size(); i++) {
+            Enemy enemy = allEnemys.get(i);
+            enemy.movement(mainCharacter.getLocation(),true);
+            checkCollisionEnemy(mainCharacter,enemy);
         }
-        return tmp;
+    }
+
+    private void killEnemy(Enemy e){
+        e.setVisible(false);
+        allEnemys.remove(e);
+        updateHighscore();
+        enemysKilled++;
+    }
+
+
+    private void checkCollisionBullet(Bullet b) {
+        for (int i = 0; i <allEnemys.size() ; i++) {
+            Enemy e = allEnemys.get(i);
+            if (e.coll(b, e)) {
+                b.setVisible(false);
+                allBullets.remove(b);
+                killEnemy(e);
+            }
+        }
+    }
+
+
+    private void checkCollisionEnemy(Attractor a, Enemy e) {
+        if (e.coll(a, e)) {
+            killEnemy(e);
+            mainCharacter.setlives(mainCharacter.getLives() - 1);
+            livesLabel.setText("Lives: " + Integer.toString(mainCharacter.getLives()));
+            if(a.getLives() <= 0){
+                stopGame();
+            }
+        }
     }
 
     private void addEnemy() {
-        double x = random.nextDouble() * 800;
-        double y = random.nextDouble() * 600;
-
-        if(x <400){x-=500;}
-        else{x+=500;}
-        if(y<300){y-=300;}
-        else{y+=300;}
-
-        location = new Vector2D(x,y );
+        location = new Vector2D();
         Enemy enemy = new Enemy(playField, location);
         allEnemys.add(enemy);
     }
@@ -190,27 +183,27 @@ public class Game {
         mainCharacter = new Attractor(playField, location);
     }
 
-    private void AddFollower(){
-        location = new Vector2D(350,300);
-        follower = followerFactory.makeFollower(playField,location);
-        System.out.println(follower.getName());
+    private void AddFollower() {
+        location = new Vector2D(350, 300);
+        FollowerFactory followerFactory = new FollowerFactory();
+        follower = followerFactory.makeFollower(playField, location);
     }
 
     private void addBullet(Vector2D loc) {
-        location= new Vector2D(mainCharacter.getLocation().x,mainCharacter.getLocation().y);
-        Vector2D mouseLoc = new Vector2D(loc.x, loc.y);
-        Bullet bullet = bulletFactory.makeBullet(playField,location,mouseLoc);
+        location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
+        BulletFactory bulletFactory = new BulletFactory();
+        Bullet bullet = bulletFactory.makeBullet(playField, location, loc);
         allBullets.add(bullet);
     }
 
     private void moveChar() {
-        updateWaves();
-        Vector2D loc = mainCharacter.getLocation();
+        double x = mainCharacter.getLocation().getX();
+        double y = mainCharacter.getLocation().getY();
 
-        if (up && loc.y>0) {mainCharacter.setLocation(loc.x, loc.y - 5);}
-        else if (down && loc.y <555) {mainCharacter.setLocation(loc.x, loc.y + 5); }
-        else if (left && loc.x>0) {mainCharacter.setLocation(loc.x - 5, loc.y);}
-        else if (right && loc.x<775) {mainCharacter.setLocation(loc.x + 5, loc.y);}
+        if (up && y > 0) {mainCharacter.setLocation(x, y - 5);}
+        else if (down && y < 555) {mainCharacter.setLocation(x, y + 5);}
+        else if (left && x > 0) {mainCharacter.setLocation(x - 5, y);}
+        else if (right && x < 775) {mainCharacter.setLocation(x + 5, y);}
     }
 
     private void keyAction(KeyEvent e, Boolean bool) {
@@ -225,14 +218,12 @@ public class Game {
         scene.setOnMouseClicked(e -> {if (loop != null) {addBullet(new Vector2D(e.getX(), e.getY()));}});
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
-
-        stop.setOnAction(e ->stopGame());
+        stop.setOnAction(e -> stopGame());
     }
 
-    private void stopGame(){
+    private void stopGame() {
         loop.stop();
         updateHighscoreToDataBase();
         UserInterface.loadScreen("endGame");
     }
-
 }

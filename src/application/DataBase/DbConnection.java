@@ -15,6 +15,10 @@ public class DbConnection {
     public DbConnection() {
 
 
+        String url = "jdbc:mysql://localhost/geowars";
+        String username = "root";
+        String password = "localhost";
+
 
         try {
             Connection con = DriverManager.getConnection(url, username, password);
@@ -24,7 +28,7 @@ public class DbConnection {
         }
     }
 
-    public boolean controle(String query)  {
+    public boolean controle(String query) {
 
         try {
             rs = st.executeQuery(query);
@@ -44,20 +48,19 @@ public class DbConnection {
     }
 
     public User initUser(String username) {
-        String query = "select * from users where username like'"+username +"'";
-
+        String query = "select * from users where username like'" + username + "'";
 
 
         try {
             rs = st.executeQuery(query);
-            if(rs.next()){
+            if (rs.next()) {
                 int highscore = rs.getInt("highscore");
-                currentUser = new User(username,highscore);
+                currentUser = new User(username, highscore);
             }
-            query = "select * from settings where username like'"+username + "'";
+            query = "select * from settings where username like'" + username + "'";
             rs = st.executeQuery(query);
 
-            if(rs.next()){
+            if (rs.next()) {
                 Settings currentUserSettings = currentUser.getSettings();
                 currentUserSettings.setAutoSave(rs.getBoolean("autosave"));
                 currentUserSettings.setMusic(rs.getBoolean("music"));
@@ -69,9 +72,7 @@ public class DbConnection {
         }
 
 
-
     }
-
 
 
     public List<User> getHighscores(String query) {
@@ -88,7 +89,6 @@ public class DbConnection {
             e.printStackTrace();
             return null;
         }
-
 
 
     }

@@ -1,7 +1,7 @@
 package application.Game.Components;
 
-import application.Game.Components.BulletType.Bullet;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 public abstract class Sprite extends Region {
@@ -9,7 +9,6 @@ public abstract class Sprite extends Region {
 
     private Vector2D location;
     private Vector2D velocity;
-
 
 
     private Vector2D acceleration;
@@ -29,14 +28,18 @@ public abstract class Sprite extends Region {
     private double angle;
 
 
-    private Layer layer = null;
 
-    public Sprite(Layer layer, Vector2D location, double width, double height) {
 
-        this.layer = layer;
+    private Pane bp  = null;
+
+    public Sprite(Pane bp, Vector2D location, double width, double height) {
+
+
+
+        this.bp = bp;
         this.location = location;
-        this.velocity = new Vector2D(0,0);
-        this.acceleration = new Vector2D(0,0);
+        this.velocity = new Vector2D(0, 0);
+        this.acceleration = new Vector2D(0, 0);
         this.width = width;
         this.height = height;
         this.centerX = width / 2;
@@ -46,7 +49,7 @@ public abstract class Sprite extends Region {
 
         setPrefSize(width, height);
         getChildren().add(view);
-        layer.getChildren().add(this);
+        bp.getChildren().add(this);
 
     }
 
@@ -58,7 +61,7 @@ public abstract class Sprite extends Region {
         this.acceleration = acceleration;
     }
 
-    public void setMaxSpeed(double speed){
+    public void setMaxSpeed(double speed) {
         this.maxSpeed = speed;
     }
 
@@ -68,14 +71,17 @@ public abstract class Sprite extends Region {
         acceleration.add(force);
     }
 
-    public boolean shoot(Bullet b, Enemy e) {
-        return b.getBoundsInParent().intersects(e.getBoundsInParent());
-    }
-    public boolean CollisionMainChar(Attractor a, Enemy e){
-        return a.getBoundsInParent().intersects(e.getBoundsInParent());
+    public boolean coll(Sprite sprite1,Sprite sprite2){
+        return  sprite1.getBoundsInParent().intersects(sprite2.getBoundsInParent());
     }
 
-    public void move() {
+    public void movement(Vector2D target,boolean angle){
+        seek(target);
+        move(angle);
+        display();
+    }
+
+    public void move(boolean b) {
 
         // set velocity depending on acceleration
         velocity.add(acceleration);
@@ -87,27 +93,14 @@ public abstract class Sprite extends Region {
         location.add(velocity);
 
         // angle: towards velocity (ie target)
-        angle = velocity.heading2D();
-
-        // clear acceleration
-        acceleration.multiply(0);
-    }
-
-    public void moveWithoutTurn(){
-        // set velocity depending on acceleration
-        velocity.add(acceleration);
-
-        // limit velocity to max speed
-        velocity.limit(maxSpeed);
-
-        // change location depending on velocity
-        location.add(velocity);
-
+        if(b){angle = velocity.heading2D();}
 
 
         // clear acceleration
         acceleration.multiply(0);
     }
+
+
 
 
     public void seek(Vector2D target) {
@@ -141,10 +134,9 @@ public abstract class Sprite extends Region {
     }
 
 
-
     public void display() {
 
-        relocate(location.x - centerX, location.y - centerY);
+        relocate(location.getX() - centerX, location.getY() - centerY);
         setRotate(Math.toDegrees(angle));
     }
 
@@ -154,8 +146,8 @@ public abstract class Sprite extends Region {
 
 
     public void setLocation(double x, double y) {
-        location.x = x;
-        location.y = y;
+        location.setX(x);
+        location.setY(y);
     }
 
 

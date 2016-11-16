@@ -2,11 +2,12 @@ package application.Game.Components;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 public class Enemy extends Sprite {
 
-    public Enemy(Layer layer, Vector2D location) {
-        super(layer, location, 12.5, 25);
+    public Enemy(Pane bp, Vector2D location) {
+        super(bp, location, 12.5, 25);
     }
 
     @Override
@@ -15,9 +16,6 @@ public class Enemy extends Sprite {
         img.setId("enemy");
         return img;
     }
-
-
-
 
 
 }

@@ -3,13 +3,14 @@ package application.Game.Components;
 import application.Engine.Engine;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 
 public class Attractor extends Sprite {
     private int lives;
 
-    public Attractor(Layer layer, Vector2D location) {
-        super(layer, location, 25, 25);
+    public Attractor(Pane bp, Vector2D location) {
+        super(bp, location, 25, 25);
         this.lives = 3;
     }
 
@@ -17,17 +18,17 @@ public class Attractor extends Sprite {
     public Node createView() {
 
         Label t = new Label("                       ");
-        t.setId("characterWith"+ Engine.getInstance().getWeaponType());
+        t.setId("characterWith" + Engine.getInstance().getWeaponType());
         System.out.println(t.getId());
         return t;
 
     }
 
-    public void setlives(int lives){
+    public void setlives(int lives) {
         this.lives = lives;
     }
 
-    public int getLives(){
+    public int getLives() {
         return this.lives;
     }
 

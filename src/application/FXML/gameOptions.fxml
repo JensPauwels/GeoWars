@@ -3,54 +3,56 @@
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane id="gameOptions" maxHeight="600.0" maxWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.GameOptionsController">
-   <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_CENTER">
-         <children>
-            <JFXButton onAction="#loadSinglePlayer" text="                ">
-               <padding>
-                  <Insets bottom="100.0" left="43.0" right="40.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="27.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton onAction="#loadMultiPlayer" text="                ">
-               <padding>
-                  <Insets bottom="100.0" left="43.0" right="40.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton onAction="#loadHighScores" text="                ">
-               <padding>
-                  <Insets bottom="100.0" left="43.0" right="40.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton onAction="#loadSettings" text="                ">
-               <padding>
-                  <Insets bottom="100.0" left="43.0" right="40.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton onAction="#logOut" text="                ">
-               <padding>
-                  <Insets bottom="100.0" left="43.0" right="40.0" top="50.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </JFXButton>
-         </children>
-         <BorderPane.margin>
-            <Insets top="250.0" />
-         </BorderPane.margin>
-      </HBox>
-   </center>
+<BorderPane id="gameOptions" maxHeight="600.0" maxWidth="800.0" prefHeight="600.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.Controllers.GameOptionsController">
+    <center>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_CENTER">
+            <children>
+                <JFXButton onAction="#loadSinglePlayer" text="                ">
+                    <padding>
+                        <Insets bottom="100.0" left="43.0" right="40.0" top="50.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="27.0"/>
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton onAction="#loadMultiPlayer" text="                ">
+                    <padding>
+                        <Insets bottom="100.0" left="43.0" right="40.0" top="50.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton onAction="#loadHighScores" text="                ">
+                    <padding>
+                        <Insets bottom="100.0" left="43.0" right="40.0" top="50.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton onAction="#loadSettings" text="                ">
+                    <padding>
+                        <Insets bottom="100.0" left="43.0" right="40.0" top="50.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton onAction="#logOut" text="                ">
+                    <padding>
+                        <Insets bottom="100.0" left="43.0" right="40.0" top="50.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </JFXButton>
+            </children>
+            <BorderPane.margin>
+                <Insets top="250.0"/>
+            </BorderPane.margin>
+        </HBox>
+    </center>
 </BorderPane>

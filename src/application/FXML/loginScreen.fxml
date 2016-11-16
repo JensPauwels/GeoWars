@@ -6,106 +6,118 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<BorderPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.LoginController">
+<BorderPane id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0"
+            prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.LoginController">
     <center>
         <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
             <Label id="h1" alignment="TOP_CENTER" contentDisplay="TOP">
                 <VBox.margin>
-                    <Insets bottom="50.0" />
+                    <Insets bottom="50.0"/>
                 </VBox.margin>
             </Label>
-            <HBox alignment="CENTER" maxHeight="150.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" spacing="10.0">
+            <HBox alignment="CENTER" maxHeight="150.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0"
+                  spacing="10.0">
                 <padding>
-                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                 </padding>
                 <VBox.margin>
-                    <Insets left="20.0" />
+                    <Insets left="20.0"/>
                 </VBox.margin>
                 <VBox prefHeight="170.0" prefWidth="177.0">
                     <HBox.margin>
-                        <Insets />
+                        <Insets/>
                     </HBox.margin>
-               <children>
-                  <JFXButton text="Login with facebook">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
-                  <JFXButton layoutX="10.0" layoutY="10.0" text="Login with google">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
-                  <JFXButton layoutX="10.0" layoutY="37.0" text="Login with twitch">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXButton>
-               </children>
+                    <children>
+                        <JFXButton text="Login with facebook">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton layoutX="10.0" layoutY="10.0" text="Login with google">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </VBox.margin>
+                        </JFXButton>
+                        <JFXButton layoutX="10.0" layoutY="37.0" text="Login with twitch">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </VBox.margin>
+                        </JFXButton>
+                    </children>
                 </VBox>
-            <Line endY="30.0" startY="150.0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Line>
+                <Line endY="30.0" startY="150.0">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Line>
                 <VBox prefHeight="200.0" prefWidth="239.0">
                     <children>
-                  <JFXTextField fx:id="userNameInput" labelFloat="true" promptText="Username">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXTextField>
-                  <JFXPasswordField fx:id="passwordInput" labelFloat="true" promptText="Password">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin></JFXPasswordField>
+                        <JFXTextField fx:id="userNameInput" labelFloat="true" promptText="Username">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </VBox.margin>
+                        </JFXTextField>
+                        <JFXPasswordField fx:id="passwordInput" labelFloat="true" promptText="Password">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </VBox.margin>
+                        </JFXPasswordField>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
-                        <JFXButton buttonType="RAISED" layoutX="448.0" layoutY="316.0" onAction="#initialGame" ripplerFill="WHITE" text="Sign in">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin></JFXButton>
-                        <JFXButton buttonType="RAISED" ripplerFill="WHITE" text="Forgot password?" textFill="#1f95d0">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="9.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </JFXButton>
+                                <JFXButton buttonType="RAISED" layoutX="448.0" layoutY="316.0" onAction="#initialGame"
+                                           ripplerFill="WHITE" text="Sign in">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </JFXButton>
+                                <JFXButton buttonType="RAISED" ripplerFill="WHITE" text="Forgot password?"
+                                           textFill="#1f95d0">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="9.0"/>
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="9.0"/>
+                                    </font>
+                                </JFXButton>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
             </HBox>
-         <HBox alignment="CENTER">
-            <children>
-               <JFXButton text="Create an account!" textFill="#0d3243" onAction="#Register">
-                  <HBox.margin>
-                     <Insets top="100.0" />
-                  </HBox.margin>
-                  <font>
-                     <Font size="11.0" />
-                  </font>
-               </JFXButton>
-            </children>
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
-         </HBox>
-         <HBox alignment="CENTER">
-            <children>
-               <JFXButton text="Play as a guest!" textFill="#1d495e">
-                  <HBox.margin>
-                     <Insets top="10.0" />
-                  </HBox.margin>
-                  <font>
-                     <Font size="11.0" />
-                  </font>
-               </JFXButton>
-            </children>
-         </HBox>
+            <HBox alignment="CENTER">
+                <children>
+                    <JFXButton text="Create an account!" textFill="#0d3243" onAction="#Register">
+                        <HBox.margin>
+                            <Insets top="100.0"/>
+                        </HBox.margin>
+                        <font>
+                            <Font size="11.0"/>
+                        </font>
+                    </JFXButton>
+                </children>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER">
+                <children>
+                    <JFXButton text="Play as a guest!" textFill="#1d495e">
+                        <HBox.margin>
+                            <Insets top="10.0"/>
+                        </HBox.margin>
+                        <font>
+                            <Font size="11.0"/>
+                        </font>
+                    </JFXButton>
+                </children>
+            </HBox>
         </VBox>
     </center>
     <bottom>
         <Label fx:id="alert" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="50.0" />
+                <Insets bottom="50.0"/>
             </BorderPane.margin>
         </Label>
     </bottom>

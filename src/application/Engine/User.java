@@ -1,7 +1,7 @@
 package application.Engine;
 
 
-public class User  {
+public class User {
     private String username;
     private int highscore;
     private Settings settings;
@@ -12,8 +12,8 @@ public class User  {
         this.highscore = highscore;
         this.settings = new Settings();
     }
-    
-    public Settings getSettings(){
+
+    public Settings getSettings() {
         return this.settings;
     }
 
@@ -29,7 +29,4 @@ public class User  {
         return highscore;
     }
 
-    public void setHighscore(int highscore) {
-        this.highscore = highscore;
-    }
 }

@@ -1,22 +1,19 @@
 package application.Game.Components.FollowerType;
 
 import application.Engine.Engine;
-import application.Game.Components.Layer;
 import application.Game.Components.Sprite;
 import application.Game.Components.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
-/**
- * Created by jens on 11/11/16.
- */
 public class Follower extends Sprite {
 
     private String name;
 
 
-    public Follower(Layer layer, Vector2D location) {
-        super(layer, location, 10, 10);
+    public Follower(Pane bp, Vector2D location) {
+        super(bp, location, 10, 10);
 
     }
 
