@@ -24,6 +24,7 @@ public class UserInterface extends Application {
         instance.setUi(this);
     }
 
+
     public static BorderPane createBorderPane(String url) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -36,7 +37,7 @@ public class UserInterface extends Application {
     }
 
     public static void loadScreen(String url) {
-        mainLayout.setCenter(createBorderPane(url + "/" + url + ".FXML"));
+        mainLayout.setCenter(createBorderPane("FXML/" + url + ".FXML"));
 
     }
 
