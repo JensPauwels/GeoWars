@@ -34,6 +34,14 @@
     -fx-background-position: center center;
 }
 
+#bolt{
+    -fx-background-image: url("../../Images/spear.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 35px;
+    -fx-max-height: 5px;
+    -fx-background-position: center center;
+}
+
 #Donkey {
     -fx-background-image: url("../../Images/donkey2.png");
     -fx-background-size: cover;
@@ -49,6 +57,14 @@
     -fx-min-height: 17px;
     -fx-background-position: center center;
 
+}
+
+#Unicorn {
+    -fx-background-image: url("../../Images/Unicorn.png");
+    -fx-background-size: cover;
+    -fx-min-width: 25px;
+    -fx-min-height: 17px;
+    -fx-background-position: center center;
 }
 
 #enemy {

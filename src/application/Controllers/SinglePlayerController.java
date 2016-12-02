@@ -1,22 +1,26 @@
 package application.Controllers;
-//import application.UserInterface;
+
 
 import application.Engine.Engine;
-import application.Game.Game;
-import application.UserInterface;
+import application.Engine.Game;
+import application.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public class SinglePlayerController {
 
+    private ObservableList<String> level = FXCollections.observableArrayList("Easy", "Medium", "Hard");
     private ObservableList<String> weaponsOfChoice = FXCollections.observableArrayList("Spear", "Arrow", "Bolt");
     private ObservableList<String> followerOfChoice = FXCollections.observableArrayList("Donkey", "Horse", "Unicorn");
     private Engine instance = Engine.getInstance();
-    public ChoiceBox weaponType, followerType;
+    public ChoiceBox<String> weaponType;
+    public ChoiceBox<String> followerType;
+    public ChoiceBox<String> levelType;
 
 
     @FXML
@@ -25,19 +29,23 @@ public class SinglePlayerController {
         weaponType.setValue(weaponsOfChoice.get(0));
         followerType.setItems(followerOfChoice);
         followerType.setValue(followerOfChoice.get(0));
+        levelType.setItems(level);
+        levelType.setValue(level.get(0));
+
     }
 
     @FXML
     private void loadGameOptions() throws IOException {
-        UserInterface.loadScreen("gameOptions");
+
+        Client.loadScreen("gameOptions");
     }
 
     @FXML
     private void launchGame() {
-        instance.setWeaponType(weaponType.getValue().toString());
-        instance.setFollowerType(followerType.getValue().toString());
-        System.out.println(followerType.getValue().toString());
-        Game newGame = new Game(UserInterface.scene, UserInterface.mainLayout);
+        instance.setWeaponType(weaponType.getValue());
+        instance.setFollowerType(followerType.getValue());
+        instance.setLevelType(levelType.getValue());
+        Game newGame = new Game(Client.scene, Client.mainLayout);
         newGame.initGame();
     }
 }

@@ -1,6 +1,6 @@
-package application.Game.Components.BulletType;
+package application.Models.BulletType;
 
-import application.Game.Components.Vector2D;
+import application.Models.Vector2D;
 import javafx.scene.layout.Pane;
 
 /**
@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 public class Bolt extends Bullet {
     public Bolt(Pane bp, Vector2D location, Vector2D mouseLoc) {
         super(bp, location, mouseLoc);
+        this.setMaxSpeed(99999);
         this.setDamage(3);
     }
 }

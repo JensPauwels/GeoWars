@@ -1,4 +1,4 @@
-package application.Game.Components;
+package application.Models;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -97,7 +97,7 @@ public abstract class Sprite extends Region {
 
 
         // clear acceleration
-        acceleration.multiply(0);
+        if(!b)acceleration.multiply(0);
     }
 
 

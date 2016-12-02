@@ -1,6 +1,6 @@
 package TestFunctions;
 
-import application.DataBase.DbConnection;
+import application.Engine.DbConnection;
 import org.junit.Test;
 
 

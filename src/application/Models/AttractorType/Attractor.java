@@ -1,6 +1,8 @@
-package application.Game.Components;
+package application.Models.AttractorType;
 
 import application.Engine.Engine;
+import application.Models.Sprite;
+import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -9,8 +11,8 @@ import javafx.scene.layout.Pane;
 public class Attractor extends Sprite {
     private int lives;
 
-    public Attractor(Pane bp, Vector2D location) {
-        super(bp, location, 25, 25);
+    public Attractor(Pane bp) {
+        super(bp, new Vector2D(400, 300), 25, 25);
         this.lives = 3;
     }
 

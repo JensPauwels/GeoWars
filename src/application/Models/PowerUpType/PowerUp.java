@@ -1,10 +1,12 @@
-package application.Game.Components;
+package application.Models.PowerUpType;
 
+import application.Models.Sprite;
+import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
-public class PowerUp extends Sprite{
+public class PowerUp extends Sprite {
 
     public PowerUp(Pane bp, Vector2D location) {
         super(bp, location, 12.5, 12.5);
@@ -14,9 +16,9 @@ public class PowerUp extends Sprite{
     @Override
     public Node createView() {
         Circle circle = new Circle();
-        circle.setCenterX(25);
-        circle.setCenterY(25);
-        circle.setRadius(12.5);
+        circle.setCenterX(5);
+        circle.setCenterY(5);
+        circle.setRadius(2.5);
         return circle;
 
     }

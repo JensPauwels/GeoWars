@@ -1,7 +1,7 @@
 package application.Controllers;
 
 import application.Engine.Engine;
-import application.UserInterface;
+import application.Client;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 
@@ -29,7 +29,7 @@ public class SettingsController {
 
     @FXML
     public void loadGameOptions() {
-        UserInterface.loadScreen("gameOptions");
+        Client.loadScreen("gameOptions");
     }
 
     // in deze class moeten we allemaal settings bedenken oa

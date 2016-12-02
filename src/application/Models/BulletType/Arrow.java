@@ -1,6 +1,6 @@
-package application.Game.Components.BulletType;
+package application.Models.BulletType;
 
-import application.Game.Components.Vector2D;
+import application.Models.Vector2D;
 import javafx.scene.layout.Pane;
 
 public class Arrow extends Bullet {

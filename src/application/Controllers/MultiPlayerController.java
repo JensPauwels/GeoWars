@@ -1,7 +1,7 @@
 package application.Controllers;
 
-import application.DataBase.DbConnection;
-import application.UserInterface;
+import application.Engine.DbConnection;
+import application.Client;
 import javafx.fxml.FXML;
 
 import java.io.DataOutputStream;
@@ -22,7 +22,7 @@ public class MultiPlayerController {
 
     @FXML
     private void loadGameOptions() {
-        UserInterface.loadScreen("gameOptions");
+        Client.loadScreen("gameOptions");
     }
 
     private void joinMultiPlayer() {

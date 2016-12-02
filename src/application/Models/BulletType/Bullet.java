@@ -1,8 +1,8 @@
-package application.Game.Components.BulletType;
+package application.Models.BulletType;
 
 import application.Engine.Engine;
-import application.Game.Components.Sprite;
-import application.Game.Components.Vector2D;
+import application.Models.Sprite;
+import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;

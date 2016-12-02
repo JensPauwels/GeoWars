@@ -1,7 +1,7 @@
 package application.Controllers;
 
 import application.Engine.Engine;
-import application.UserInterface;
+import application.Client;
 import javafx.fxml.FXML;
 
 public class GameOptionsController {
@@ -11,28 +11,28 @@ public class GameOptionsController {
 
     @FXML
     private void loadHighScores() {
-        UserInterface.loadScreen("highScores");
+        Client.loadScreen("highScores");
     }
 
     @FXML
     private void loadMultiPlayer() {
-        UserInterface.loadScreen("multiPlayer");
+        Client.loadScreen("multiPlayer");
     }
 
     @FXML
     private void loadSinglePlayer() {
-        UserInterface.loadScreen("singlePlayer");
+        Client.loadScreen("singlePlayer");
     }
 
     @FXML
     private void loadSettings() {
-        UserInterface.loadScreen("settings");
+        Client.loadScreen("settings");
     }
 
     @FXML
     private void logOut() throws Exception {
         Engine.getInstance().saveCurrentUser();
-        UserInterface.loadScreen("loginScreen");
+        Client.loadScreen("loginScreen");
 
     }
 

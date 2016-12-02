@@ -1,9 +1,9 @@
 package application.Controllers;
 
-import application.DataBase.DbConnection;
+import application.Engine.DbConnection;
 import application.Engine.User;
 import application.Engine.Engine;
-import application.UserInterface;
+import application.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,7 +26,7 @@ public class HighScoresController {
 
     @FXML
     private void loadGameOptions() throws IOException {
-        UserInterface.loadScreen("gameoptions");
+        Client.loadScreen("gameoptions");
     }
 
     private void loadHighScoreResults() throws Exception {

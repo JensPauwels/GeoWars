@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
-<Pane fx:controller="application.Game.Game" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
-      minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65"
-      xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Label layoutX="61.0" layoutY="27.0" text="Highscore"/>
-        <Label layoutX="148.0" layoutY="27.0" prefHeight="17.0" prefWidth="84.0" text="0"/>
-    </children>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.GameScreenController">
+   <children>
+      <Label fx:id="highscoreLabel" layoutX="59.0" layoutY="25.0" text="Highscore: 0" />
+      <Label fx:id="waveLabel" layoutX="170.0" layoutY="25.0" text="Wave: 1" />
+      <Label fx:id="Lives" layoutX="249.0" layoutY="25.0" text="Lives: 3 " />
+      <JFXButton layoutX="39.0" layoutY="547.0" text="Stop Game" />
+   </children>
 </Pane>

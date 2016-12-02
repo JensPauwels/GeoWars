@@ -1,9 +1,13 @@
 package application.Controllers;
 
-import application.UserInterface;
+import application.Client;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class GameScreenController {
+
+    public Label highscoreLabel,waveLabel,lives;
+
 
 
     @FXML
@@ -14,7 +18,7 @@ public class GameScreenController {
 
     @FXML
     public void goBack() throws Exception {
-        UserInterface.loadScreen("gameOptions");
+        Client.loadScreen("gameOptions");
     }
 
 

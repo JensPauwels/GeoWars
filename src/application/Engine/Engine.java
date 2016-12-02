@@ -1,22 +1,80 @@
 package application.Engine;
 
 
-import application.DataBase.DbConnection;
-import application.UserInterface;
+import application.Models.BulletType.*;
+import application.Models.FollowerType.Donkey;
+import application.Models.FollowerType.Follower;
+import application.Models.FollowerType.Horse;
+import application.Models.FollowerType.Unicorn;
+import application.Models.Vector2D;
+import application.Client;
+import javafx.scene.layout.Pane;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Engine {
     private static Engine firstInstance = null;
     private User currentUser;
     private DbConnection db = new DbConnection();
-    private UserInterface ui;
-    private String username, weaponType, followerType;
-
+    private Client ui;
+    private String username;
+    private String weaponType;
+    private String followerType;
+    private String levelType;
 
     public static Engine getInstance() {
+
         if (firstInstance == null) {
             firstInstance = new Engine();
         }
+
         return firstInstance;
+    }
+
+
+
+    public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {
+        switch (getWeaponType()){
+            case "Spear":
+                return new Spear(bp,mainLoc,mouseLoc);
+            case "Arrow":
+                return new Arrow(bp,mainLoc,mouseLoc);
+            case "Bolt":
+                return new Bolt(bp,mainLoc,mouseLoc);
+            case "Unicorn":
+                return new UnicornHorn(bp,mainLoc,mouseLoc);
+            default:
+                return null;
+        }
+
+
+    }
+
+    public Follower makeFollower(Pane bp) {
+
+
+        switch(getFollowerType()){
+            case "Donkey":
+                return new Donkey(bp);
+            case "Horse":
+                return new Horse(bp);
+            case "Unicorn":
+                return new Unicorn(bp);
+            default:
+                return  null;
+        }
+    }
+
+    public int getIncrease() {
+
+        Map<String,Integer> levels = new HashMap<String, Integer>(){{
+            put("Easy", 2);
+            put("Medium", 4);
+            put("Hard", 6);
+        }};
+
+        return levels.get(levelType);
     }
 
     public void initCurrentUser() {
@@ -29,7 +87,13 @@ public class Engine {
         }
     }
 
-    public void setUi(UserInterface ui) {
+    public void saveCurrentUser() throws Exception {
+
+        String query = "UPDATE settings SET music=" + currentUser.getSettings().isMusic() + ",autosave=" + currentUser.getSettings().isAutoSave() + " WHERE             username = '" + currentUser.getUsername() + "'";
+        db.updateTable(query);
+    }
+
+    public void setUi(Client ui) {
         this.ui = ui;
     }
 
@@ -41,19 +105,16 @@ public class Engine {
         return this.currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    private void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-    }
-
-    public void saveCurrentUser() throws Exception {
-
-        String query = "UPDATE settings SET music=" + currentUser.getSettings().isMusic() + ",autosave=" + currentUser.getSettings().isAutoSave() + " WHERE username = '" + currentUser.getUsername() + "'";
-        db.updateTable(query);
-
     }
 
     public DbConnection getDb() {
         return this.db;
+    }
+
+    public void setLevelType(String levelType) {
+        this.levelType = levelType;
     }
 
     public String getWeaponType() {
@@ -71,4 +132,5 @@ public class Engine {
     public void setFollowerType(String followerType) {
         this.followerType = followerType;
     }
+
 }

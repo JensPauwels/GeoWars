@@ -1,8 +1,8 @@
 package application.Controllers;
 
-import application.DataBase.DbConnection;
+import application.Engine.DbConnection;
 import application.Engine.Engine;
-import application.UserInterface;
+import application.Client;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -33,9 +33,9 @@ public class LoginController {
             instance.setUsername(username);
             instance.initCurrentUser();
 
-            UserInterface.loadScreen("gameOptions");
+            Client.loadScreen("gameOptions");
         } else {
-            alert.setText("Enter the right creds or register to our application.Game");
+            alert.setText("Enter the right creds or register to our application.Models");
         }
     }
 
@@ -56,7 +56,7 @@ public class LoginController {
 
             query = "INSERT INTO settings VALUES(default," + 0 + ",'" + username + "',false,false)";
             db.updateTable(query);
-            UserInterface.loadScreen("gameOptions");
+            Client.loadScreen("gameOptions");
         }
     }
 }
