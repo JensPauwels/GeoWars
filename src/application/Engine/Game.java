@@ -22,7 +22,6 @@ import java.util.Random;
 
 public class Game {
 
-
     private FakeDataBase fakeDataBase = new FakeDataBase();
     private Pane playField;
     private Attractor mainCharacter;
@@ -41,15 +40,7 @@ public class Game {
     private long time, shootersTime = System.currentTimeMillis();
     private Vector2D mouseLocation = new Vector2D(0, 0);
     private int angle = 0;
-
     private double shooterSpeed = 1;
-
-
-
-
-
-
-
 
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -219,8 +210,7 @@ public class Game {
             for (int i = 0; i < powerups.size(); i++) {
                 follower.movement(powerups.get(0).getLocation(), false);
                 if (follower.coll(follower, powerups.get(0))) {
-                    multiHighScore();
-                    shooterSpeed = 0.5;
+                    handlePowerUps();
                     powerups.get(0).setVisible(false);
                     powerups.remove(powerups.get(0));
                     time = System.currentTimeMillis();
