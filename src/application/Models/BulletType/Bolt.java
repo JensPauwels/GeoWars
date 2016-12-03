@@ -1,6 +1,8 @@
 package application.Models.BulletType;
 
 import application.Models.Vector2D;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 /**
@@ -12,4 +14,13 @@ public class Bolt extends Bullet {
         this.setMaxSpeed(99999);
         this.setDamage(3);
     }
+
+    @Override
+    public Node createView() {
+        Label t = new Label();
+        t.setId("bolt");
+        return t;
+    }
+
+
 }

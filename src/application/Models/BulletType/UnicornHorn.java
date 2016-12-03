@@ -20,7 +20,6 @@ public class UnicornHorn extends Bullet{
     public Node createView() {
         Label t = new Label();
         t.setId("UnicornHorn");
-
         return t;
     }
 

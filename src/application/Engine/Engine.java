@@ -32,8 +32,6 @@ public class Engine {
         return firstInstance;
     }
 
-
-
     public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {
         switch (getWeaponType()){
             case "Spear":

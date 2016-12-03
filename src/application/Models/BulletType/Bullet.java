@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 
-public class Bullet extends Sprite {
+public abstract class Bullet extends Sprite {
 
     private Vector2D destination;
     private int damage;
@@ -20,18 +20,13 @@ public class Bullet extends Sprite {
 
     @Override
 
-    public Node createView() {
-        Label t = new Label();
-        t.setId(Engine.getInstance().getWeaponType().toLowerCase());
-        return t;
-    }
+    public abstract Node createView();
 
     public Vector2D getDestination() {
         return this.destination;
     }
 
     public boolean outOfDestination() {
-
         return (getLocation().getY() > 650 || getLocation().getY() < -20 || getLocation().getX() > 850 || getLocation().getX() < -20);
     }
 
@@ -50,9 +45,7 @@ public class Bullet extends Sprite {
         double b = mouseLoc.getY() - (a * mouseLoc.getX());
         // y=ax+b
         double destinationX = 815;
-        if (mainLoc.getX() > mouseLoc.getX()) {
-            destinationX = -15;
-        }
+        if (mainLoc.getX() > mouseLoc.getX()) {destinationX = -15;}
         double destinationY = (a * destinationX) + b;
         this.destination = new Vector2D(destinationX, destinationY);
     }

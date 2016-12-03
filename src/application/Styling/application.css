@@ -42,6 +42,14 @@
     -fx-background-position: center center;
 }
 
+#UnicornHorn{
+    -fx-background-image: url("../../Images/spear.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 35px;
+    -fx-max-height: 5px;
+    -fx-background-position: center center;
+}
+
 #Donkey {
     -fx-background-image: url("../../Images/donkey2.png");
     -fx-background-size: cover;

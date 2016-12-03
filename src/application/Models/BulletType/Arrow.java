@@ -1,6 +1,9 @@
 package application.Models.BulletType;
 
+import application.Engine.Engine;
 import application.Models.Vector2D;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 public class Arrow extends Bullet {
@@ -9,8 +12,13 @@ public class Arrow extends Bullet {
         super(bp, mainLoc, mouseLoc);
         this.setDamage(2);
         this.setMaxSpeed(100);
+    }
 
-
+    @Override
+    public Node createView() {
+        Label t = new Label();
+        t.setId("arrow");
+        return t;
     }
 
 }

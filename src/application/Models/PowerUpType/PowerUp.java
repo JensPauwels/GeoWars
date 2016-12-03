@@ -6,10 +6,16 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
+import java.util.Random;
+
 public class PowerUp extends Sprite {
 
     public PowerUp(Pane bp, Vector2D location) {
+
         super(bp, location, 12.5, 12.5);
+
+
+
     }
 
 

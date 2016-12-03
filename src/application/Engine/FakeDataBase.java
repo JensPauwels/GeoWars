@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by jens on 02/12/2016.
  */
-public class FakeDataBase {
+ class FakeDataBase {
 
 
     private Map<String,bulletInfo> mymap = new HashMap<String,bulletInfo>(){
@@ -17,21 +17,22 @@ public class FakeDataBase {
             put("Bolt",new bulletInfo(50));
         }
     };
-    public long getTimeFromWeapon(String weapon){
+
+    long getTimeFromWeapon(String weapon){
         return mymap.get(weapon).getTime();
     }
 
 
-    public class bulletInfo{
+    private class bulletInfo{
 
         private long time;
 
 
-        public bulletInfo(long time){
+        bulletInfo(long time){
             this.time = time;
         }
 
-        public long getTime(){
+        long getTime(){
             return this.time;
         }
 
