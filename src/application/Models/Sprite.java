@@ -95,9 +95,8 @@ public abstract class Sprite extends Region {
         // angle: towards velocity (ie target)
         if(b){angle = velocity.heading2D();}
 
-
         // clear acceleration
-        if(!b)acceleration.multiply(0);
+        if(!b) acceleration.multiply(0);
     }
 
 
@@ -121,9 +120,7 @@ public abstract class Sprite extends Region {
 
         }
         // Otherwise, proceed at maximum speed.
-        else {
 
-        }
         desired.multiply(maxSpeed);
 
         // The usual steering = desired - velocity

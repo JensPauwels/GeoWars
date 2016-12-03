@@ -34,13 +34,22 @@ public class Game {
     private boolean up, down, left, right, shooting;
     private Vector2D location;
     private int highScore, enemysKilled = 0;
-    private int wave = 1;
     private int enemyToKill = 5;
     private GameField gameField = new GameField();
     private Engine instance = Engine.getInstance();
     private Follower follower;
     private long time, shootersTime = System.currentTimeMillis();
     private Vector2D mouseLocation = new Vector2D(0, 0);
+    private int angle = 0;
+
+    private double shooterSpeed = 1;
+
+
+
+
+
+
+
 
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -60,7 +69,7 @@ public class Game {
                 updateWaves();
                 doSpecialAbility();
                 shoot();
-                trippleArrow();
+                checkColOnPowerUps();
             }
         };
         loop.start();
@@ -71,6 +80,7 @@ public class Game {
         prepareGame();
         startGame();
     }
+
 
     private void prepareGame() {
         for (int i = 0; i < 5; i++) {addEnemy();}
@@ -120,29 +130,50 @@ public class Game {
     private void updateWaves() {
         if (enemysKilled == enemyToKill) {
             enemyToKill += instance.getIncrease();
-            wave++;
             enemysKilled = 0;
             for (int i = 0; i < enemyToKill + 1; i++) {addEnemy();}
             spawnPowerUp();
         }
     }
 
-
-
-
     private void multiHighScore() {
         highScore = highScore + 1;
     }
 
     private void trippleArrow() {
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 100));
+        addBullet(mouseLocation);
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 100));
+    }
+
+    private void checkColOnPowerUps(){
+
         for (int i = 0; i< powerups.size();i++) {
             if (powerups.get(i).coll(mainCharacter, powerups.get(i))) {
                 powerups.get(i).setVisible(false);
                 powerups.remove(powerups.get(i));
-                addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 100));
-                addBullet(mouseLocation);
-                addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 100));
+                handlePowerUps();
             }
+        }
+    }
+
+    private void handlePowerUps(){
+        Random r = new Random();
+        int number = r.nextInt(4+1);
+        System.out.println(number);
+        switch (number){
+            case 1:
+                trippleArrow();
+                break;
+            case 2:
+                shooterSpeed =0.5;
+                break;
+            case 3:
+                shooterSpeed =1.5;
+                break;
+            case 4:
+                multiHighScore();
+                System.out.println("highscore");
         }
     }
 
@@ -153,13 +184,24 @@ public class Game {
                 specialAbilityDonkey();
                 break;
             case "Horse":
-                follower.movement(mainCharacter.getLocation(), false);
+                specialAbilityHorse();
                 break;
             case "Unicorn":
                 specialAbilityUnicorn();
                 break;
             default:
         }
+    }
+
+
+    private void specialAbilityHorse(){
+
+            angle = angle + 1;
+            double x =mainCharacter.getLocation().getX() + Math.cos(angle) * 75;
+            double y = mainCharacter.getLocation().getY() + Math.sin(angle) * 75;
+            follower.setLocation(x,y);
+            follower.display();
+            time = System.currentTimeMillis();
     }
 
     private void specialAbilityUnicorn(){
@@ -178,6 +220,7 @@ public class Game {
                 follower.movement(powerups.get(0).getLocation(), false);
                 if (follower.coll(follower, powerups.get(0))) {
                     multiHighScore();
+                    shooterSpeed = 0.5;
                     powerups.get(0).setVisible(false);
                     powerups.remove(powerups.get(0));
                     time = System.currentTimeMillis();
@@ -252,7 +295,7 @@ public class Game {
     }
 
     private void shoot() {
-        if (shooting && shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) < System.currentTimeMillis()) {
+        if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
         }
