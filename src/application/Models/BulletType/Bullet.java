@@ -27,7 +27,7 @@ public abstract class Bullet extends Sprite {
     }
 
     public boolean outOfDestination() {
-        return (getLocation().getY() > 650 || getLocation().getY() < -20 || getLocation().getX() > 850 || getLocation().getX() < -20);
+        return (getLocation().getY() > 650 || getLocation().getY() < -20 || getLocation().getX() > 820 || getLocation().getX() < -20);
     }
 
     public int getDamage() {

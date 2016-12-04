@@ -27,7 +27,6 @@ public class Game {
     private Pane playField;
     private Attractor mainCharacter;
     private Follower follower;
-
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
     private List<Bullet> BulletFromBoss = new LinkedList<>();
@@ -36,15 +35,13 @@ public class Game {
     private GameField gameField = new GameField();
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
-
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
     private long time, shootersTime,bossSpeed = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
-    private boolean up, down, left, right, shooting;
-    private int highScore, enemysKilled,angle = 0;
+    private boolean up, down, left, right, shooting,bossDead;
+    private int highScore, enemysKilled,angle,waves = 0;
     private int enemyToKill = 5;
-
     private double shooterSpeed = 1;
 
     public Game(Scene scene, BorderPane mainLayout) {
@@ -66,7 +63,6 @@ public class Game {
                 shoot();
                 checkColOnPowerUps();
                 handleBoss();
-
             }
         };
         loop.start();
@@ -79,10 +75,10 @@ public class Game {
     }
 
     private void prepareGame() {
-        //for (int i = 0; i < 5; i++) {addEnemy();}
+        for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-        makeBoss();
+
 
     }
 
@@ -125,6 +121,9 @@ public class Game {
                 else {
                     boss.setVisible(false);
                     bosses.remove(boss);
+                    bossDead =true;
+
+
                 }
             }
         }
@@ -145,11 +144,16 @@ public class Game {
     }
 
     private void updateWaves() {
-        if (enemysKilled == enemyToKill) {
+        if (enemysKilled == enemyToKill || bossDead) {
+            bossDead =false;
             enemyToKill += instance.getIncrease();
             enemysKilled = 0;
-            for (int i = 0; i < enemyToKill + 1; i++) {addEnemy();}
-            spawnPowerUp();
+            waves++;
+            if(waves% 5==0){makeBoss();}
+            else{
+                for (int i = 0; i < enemyToKill ; i++) {addEnemy();}
+                spawnPowerUp();
+            }
         }
     }
 
