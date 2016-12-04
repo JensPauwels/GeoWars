@@ -7,10 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 public class Enemy extends Sprite {
+    private int health;
+
 
     public Enemy(Pane bp) {
         super(bp, new Vector2D(), 12.5, 25);
+
     }
+
 
     @Override
     public Node createView() {

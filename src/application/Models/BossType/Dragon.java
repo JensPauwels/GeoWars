@@ -8,9 +8,11 @@ import javafx.scene.layout.Pane;
  */
 public class Dragon extends Boss {
 
-    public Dragon(Pane bp, Vector2D location, double width, double height) {
-        super(bp, location, width, height);
+    public Dragon(Pane bp, Vector2D location) {
+        super(bp, location);
         this.setName("Dragon");
-        this.setHealth(100);
+        this.setHealth(25);
+        this.setTypeOfBullets("vuur");
+        this.setDestination(this.getLocation());
     }
 }

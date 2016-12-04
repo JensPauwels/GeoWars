@@ -3,6 +3,7 @@ package application.Engine;
 import application.Client;
 import application.FXML.GameField;
 import application.Models.AttractorType.Attractor;
+import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
@@ -25,23 +26,26 @@ public class Game {
     private FakeDataBase fakeDataBase = new FakeDataBase();
     private Pane playField;
     private Attractor mainCharacter;
+    private Follower follower;
+
     private List<Enemy> allEnemys = new LinkedList<>();
     private List<Bullet> allBullets = new LinkedList<>();
+    private List<Bullet> BulletFromBoss = new LinkedList<>();
     private List<PowerUp> powerups = new LinkedList<>();
+    private List<Boss> bosses = new LinkedList<>();
+    private GameField gameField = new GameField();
+    private Engine instance = Engine.getInstance();
+    private Random random = new Random();
+
+    private Vector2D mouseLocation,location = new Vector2D(0, 0);
+    private long time, shootersTime,bossSpeed = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting;
-    private Vector2D location;
-    private int highScore, enemysKilled = 0;
+    private int highScore, enemysKilled,angle = 0;
     private int enemyToKill = 5;
-    private GameField gameField = new GameField();
-    private Engine instance = Engine.getInstance();
-    private Follower follower;
-    private long time, shootersTime = System.currentTimeMillis();
-    private Vector2D mouseLocation = new Vector2D(0, 0);
-    private int angle = 0;
-    private double shooterSpeed = 1;
 
+    private double shooterSpeed = 1;
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
@@ -61,6 +65,8 @@ public class Game {
                 doSpecialAbility();
                 shoot();
                 checkColOnPowerUps();
+                handleBoss();
+
             }
         };
         loop.start();
@@ -72,25 +78,56 @@ public class Game {
         startGame();
     }
 
-
     private void prepareGame() {
-        for (int i = 0; i < 5; i++) {addEnemy();}
-        addMainCharacter();
-        AddFollower();
-        spawnPowerUp();
+        //for (int i = 0; i < 5; i++) {addEnemy();}
+        mainCharacter = new Attractor(playField);
+        follower = instance.makeFollower(playField);
+        makeBoss();
+
     }
 
     private void addEnemy() {
-        Enemy enemy = new Enemy(playField);
-        allEnemys.add(enemy);
+        allEnemys.add(new Enemy(playField));
     }
 
-    private void addMainCharacter() {
-        mainCharacter = new Attractor(playField);
+    private void handleBoss(){
+        for (int i = 0; i < bosses.size(); i++) {
+            Boss boss = bosses.get(i);
+            shootWithBoss(boss);
+            boss.changeLocation();
+        }
     }
 
-    private void AddFollower() {
-        follower = instance.makeFollower(playField);
+    private void shootWithBoss(Boss boss){
+        if(bossSpeed + 5000 < System.currentTimeMillis()){
+            location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
+            Vector2D bosslocation = new Vector2D(boss.getLocation().getX(),boss.getLocation().getY());
+            Bullet bullet = instance.makeBullet(playField, bosslocation, location);
+            BulletFromBoss.add(bullet);
+            bossSpeed = System.currentTimeMillis();
+        }
+    }
+
+    private void makeBoss() {
+        Boss boss = instance.makeBoss(playField,new Vector2D(300,200));
+        bosses.add(boss);
+    }
+
+    private void checkCollisionBoss(Bullet b){
+        for (int i = 0; i < bosses.size(); i++) {
+            Boss boss = bosses.get(i);
+            if(boss.coll(boss,b)){
+                if(boss.getHealth() >1){
+                    boss.setHealth(boss.getHealth() -1);
+                    b.setVisible(false);
+                    allBullets.remove(b);
+                }
+                else {
+                    boss.setVisible(false);
+                    bosses.remove(boss);
+                }
+            }
+        }
     }
 
     private void addBullet(Vector2D loc) {
@@ -100,22 +137,11 @@ public class Game {
     }
 
     private void spawnPowerUp() {
-        Random random = new Random();
+
         location = new Vector2D(random.nextDouble() * 800, random.nextDouble() * 600);
         PowerUp pu = new PowerUp(playField, location);
         pu.display();
         powerups.add(pu);
-    }
-
-    private void updateHighscore() {
-        highScore += 10;
-    }
-
-    private void updateHighscoreToDataBase() {
-        if (instance.getCurrentUser().getHighscore() < highScore) {
-            String query = "update users set highScore=" + highScore + " where username like '" + instance.getCurrentUser().getUsername() + "'";
-            instance.getDb().updateTable(query);
-        }
     }
 
     private void updateWaves() {
@@ -138,7 +164,6 @@ public class Game {
     }
 
     private void checkColOnPowerUps(){
-
         for (int i = 0; i< powerups.size();i++) {
             if (powerups.get(i).coll(mainCharacter, powerups.get(i))) {
                 powerups.get(i).setVisible(false);
@@ -150,8 +175,7 @@ public class Game {
 
     private void handlePowerUps(){
         Random r = new Random();
-        int number = r.nextInt(4+1);
-        System.out.println(number);
+        int number = r.nextInt(5);
         switch (number){
             case 1:
                 trippleArrow();
@@ -164,10 +188,9 @@ public class Game {
                 break;
             case 4:
                 multiHighScore();
-                System.out.println("highscore");
+
         }
     }
-
 
     private void doSpecialAbility() {
         switch (instance.getFollowerType()) {
@@ -184,15 +207,26 @@ public class Game {
         }
     }
 
-
     private void specialAbilityHorse(){
 
+        follower.movement(follower.getDestionation(),false);
+
+        if (Math.round(follower.getLocation().getX()) == Math.round(follower.getDestionation().getX()) && Math.round(follower.getLocation().getY()) == Math.round(follower.getDestionation().getY())) {
             angle = angle + 1;
             double x =mainCharacter.getLocation().getX() + Math.cos(angle) * 75;
             double y = mainCharacter.getLocation().getY() + Math.sin(angle) * 75;
-            follower.setLocation(x,y);
-            follower.display();
-            time = System.currentTimeMillis();
+            follower.setDestionation(new Vector2D(x,y));
+        }
+
+        if(time + 500 < System.currentTimeMillis()){
+            for (int i = 0; i < allEnemys.size(); i++) {
+                if(allEnemys.get(i).coll(allEnemys.get(i),follower)){
+                    allEnemys.get(i).setVisible(false);
+                    allEnemys.remove(allEnemys.get(i));
+                    time = System.currentTimeMillis();
+                }
+            }
+        }
     }
 
     private void specialAbilityUnicorn(){
@@ -222,7 +256,6 @@ public class Game {
         }
     }
 
-
     private void checkCollisionBullet(Bullet b) {
         for (int i = 0; i < allEnemys.size(); i++) {
             Enemy e = allEnemys.get(i);
@@ -244,11 +277,18 @@ public class Game {
 
     private void handleBullets() {
 
+        for (int i = 0; i < BulletFromBoss.size(); i++) {
+            Bullet bullet = BulletFromBoss.get(i);
+            if (bullet.outOfDestination()) BulletFromBoss.remove(bullet);
+            bullet.movement(bullet.getDestination(), true);
+        }
+
         for (int i = 0; i < allBullets.size(); i++) {
             Bullet bullet = allBullets.get(i);
             if (bullet.outOfDestination()) allBullets.remove(bullet);
             bullet.movement(bullet.getDestination(), true);
             checkCollisionBullet(bullet);
+            checkCollisionBoss(bullet);
         }
     }
 
@@ -311,5 +351,16 @@ public class Game {
         loop.stop();
         updateHighscoreToDataBase();
         Client.loadScreen("endGame");
+    }
+
+    private void updateHighscore() {
+        highScore += 10;
+    }
+
+    private void updateHighscoreToDataBase() {
+        if (instance.getCurrentUser().getHighscore() < highScore) {
+            String query = "update users set highScore=" + highScore + " where username like '" + instance.getCurrentUser().getUsername() + "'";
+            instance.getDb().updateTable(query);
+        }
     }
 }

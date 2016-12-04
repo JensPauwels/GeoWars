@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 public abstract class Follower extends Sprite {
 
     private String name;
+    private Vector2D destionation;
 
     public Follower(Pane bp) {
         super(bp, new Vector2D(350, 300), 10, 10);
@@ -18,6 +19,14 @@ public abstract class Follower extends Sprite {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Vector2D getDestionation() {
+        return destionation;
+    }
+
+    public void setDestionation(Vector2D destionation) {
+        this.destionation = destionation;
     }
 
     public abstract void specialAbility();
