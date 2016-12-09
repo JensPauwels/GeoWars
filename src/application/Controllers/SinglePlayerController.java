@@ -4,6 +4,7 @@ package application.Controllers;
 import application.Engine.Engine;
 import application.Engine.Game;
 import application.Client;
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,8 +22,7 @@ public class SinglePlayerController {
     public ChoiceBox<String> weaponType;
     public ChoiceBox<String> followerType;
     public ChoiceBox<String> levelType;
-
-
+ 
     @FXML
     private void initialize() {
         weaponType.setItems(weaponsOfChoice);
@@ -32,11 +32,11 @@ public class SinglePlayerController {
         levelType.setItems(level);
         levelType.setValue(level.get(0));
 
+
     }
 
     @FXML
     private void loadGameOptions() throws IOException {
-
         Client.loadScreen("gameOptions");
     }
 

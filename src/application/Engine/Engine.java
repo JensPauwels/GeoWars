@@ -58,8 +58,6 @@ public class Engine {
     }
 
     public Follower makeFollower(Pane bp) {
-
-
         switch(getFollowerType()){
             case "Donkey":
                 return new Donkey(bp);
@@ -73,13 +71,11 @@ public class Engine {
     }
 
     public int getIncrease() {
-
         Map<String,Integer> levels = new HashMap<String, Integer>(){{
             put("Easy", 2);
             put("Medium", 4);
             put("Hard", 6);
         }};
-
         return levels.get(levelType);
     }
 

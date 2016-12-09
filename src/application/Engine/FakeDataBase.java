@@ -1,7 +1,6 @@
 package application.Engine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +12,8 @@ import java.util.Map;
     private Map<String,bulletInfo> mymap = new HashMap<String,bulletInfo>(){
         {
             put("Spear",new bulletInfo(200));
-            put("Arrow",new bulletInfo(100));
-            put("Bolt",new bulletInfo(50));
+            put("Arrow",new bulletInfo(180));
+            put("Bolt",new bulletInfo(160));
         }
     };
 

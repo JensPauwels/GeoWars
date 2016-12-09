@@ -2,23 +2,29 @@
 
 #container {
     -fx-background-color: #38383838;
-    -fx-background-image: url("../../Images/test123.jpg");
+    -fx-background-image: url("../../Images/screens/test123.jpg");
     -fx-background-position: center center;
 }
 
 
 #loginPage{
     -fx-background-color: #38383838;
-    -fx-background-image: url("../../Images/rsz_loginscreen.png");
+    -fx-background-image: url("../../Images/screens/rsz_loginscreen.png");
     -fx-background-position: center center;
 }
 
 
 #dragon{
-    -fx-background-image: url("../../Images/dragon.png");
+    -fx-background-image: url("../../Images/boss/dragon.png");
     -fx-background-position: center center;
     -fx-min-width: 273px;
     -fx-min-height: 200px;
+}
+
+#configuration{
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_configurationscreen.png");
+    -fx-background-position: center center;
 }
 
 
@@ -26,12 +32,18 @@
 
 #gameOptions {
     -fx-background-color: #38383838;
-    -fx-background-image: url("../../Images/rsz_menuwinter.png");
+    -fx-background-image: url("../../Images/screens/rsz_menuwinterwithtitleandsnowdef.png");
+    -fx-background-position: center center;
+}
+
+#gameScreen{
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_gamescreen.png");
     -fx-background-position: center center;
 }
 
 #spear {
-    -fx-background-image: url("../../Images/spear.png");
+    -fx-background-image: url("../../Images/weapons/spear.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 35px;
     -fx-max-height: 5px;
@@ -39,7 +51,7 @@
 }
 
 #arrow {
-    -fx-background-image: url("../../Images/arrow_left.png");
+    -fx-background-image: url("../../Images/weapons/arrow_left.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 51px;
     -fx-min-height: 11px;
@@ -47,7 +59,7 @@
 }
 
 #bolt{
-    -fx-background-image: url("../../Images/spear.png");
+    -fx-background-image: url("../../Images/weapons/spear.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 35px;
     -fx-max-height: 5px;
@@ -56,7 +68,7 @@
 
 
 #UnicornHorn{
-    -fx-background-image: url("../../Images/spear.png");
+    -fx-background-image: url("../../Images/weapons/spear.png");
     -fx-background-repeat: no-repeat;
     -fx-min-width: 35px;
     -fx-max-height: 5px;
@@ -64,7 +76,7 @@
 }
 
 #Donkey {
-    -fx-background-image: url("../../Images/donkey2.png");
+    -fx-background-image: url("../../Images/followers/donkey2.png");
     -fx-background-size: cover;
     -fx-min-width: 25px;
     -fx-min-height: 24px;
@@ -72,7 +84,7 @@
 }
 
 #Horse {
-    -fx-background-image: url("../../Images/Horse7.png");
+    -fx-background-image: url("../../Images/followers/horse7.png");
     -fx-background-size: cover;
     -fx-min-width: 25px;
     -fx-min-height: 17px;
@@ -81,7 +93,7 @@
 }
 
 #Unicorn {
-    -fx-background-image: url("../../Images/Unicorn.png");
+    -fx-background-image: url("../../Images/followers/Unicorn.png");
     -fx-background-size: cover;
     -fx-min-width: 25px;
     -fx-min-height: 17px;
@@ -89,7 +101,7 @@
 }
 
 #enemy {
-    -fx-background-image: url("../../Images/orc2.png");
+    -fx-background-image: url("../../Images/enemy/orc2.png");
     -fx-background-size: cover;
     -fx-min-width: 19px;
     -fx-min-height: 21px;
@@ -97,21 +109,21 @@
 }
 
 #characterWithArrow {
-    -fx-background-image: url("../../Images/characterWithArrow.png");
+    -fx-background-image: url("../../Images/character/characterWithArrow.png");
     -fx-min-height: 62px;
     -fx-max-width: 28px;
     -fx-background-position: center center;
 }
 
 #characterWithSpear {
-    -fx-background-image: url("../../Images/characterWithSpear.png");
+    -fx-background-image: url("../../Images/character/characterWithSpear.png");
     -fx-min-height: 73px;
     -fx-max-width: 53px;
     -fx-background-position: center center;
 }
 
 #characterWithBolt {
-    -fx-background-image: url("../../Images/characterWithBolt.png");
+    -fx-background-image: url("../../Images/character/characterWithBolt.png");
     -fx-min-height: 52px;
     -fx-max-width: 30px;
     -fx-background-position: center center;

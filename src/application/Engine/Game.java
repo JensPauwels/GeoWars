@@ -1,7 +1,6 @@
 package application.Engine;
 
 import application.Client;
-import application.FXML.GameField;
 import application.Models.AttractorType.Attractor;
 import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
@@ -40,9 +39,11 @@ public class Game {
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead;
-    private int highScore, enemysKilled,angle,waves = 0;
+    private int highScore, enemysKilled,angle = 0;
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
+    private int waves = 1;
+    private int xp;
 
     public Game(Scene scene, BorderPane mainLayout) {
         this.scene = scene;
@@ -78,8 +79,6 @@ public class Game {
         for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-
-
     }
 
     private void addEnemy() {
@@ -95,7 +94,7 @@ public class Game {
     }
 
     private void shootWithBoss(Boss boss){
-        if(bossSpeed + 5000 < System.currentTimeMillis()){
+        if(bossSpeed + 500 < System.currentTimeMillis()){
             location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
             Vector2D bosslocation = new Vector2D(boss.getLocation().getX(),boss.getLocation().getY());
             Bullet bullet = instance.makeBullet(playField, bosslocation, location);
@@ -120,10 +119,10 @@ public class Game {
                 }
                 else {
                     boss.setVisible(false);
+                    xp = xp+  boss.getXp();
+                    gameField.updateHighscore(xp);
                     bosses.remove(boss);
                     bossDead =true;
-
-
                 }
             }
         }
@@ -149,6 +148,7 @@ public class Game {
             enemyToKill += instance.getIncrease();
             enemysKilled = 0;
             waves++;
+            gameField.updateWaves(waves);
             if(waves% 5==0){makeBoss();}
             else{
                 for (int i = 0; i < enemyToKill ; i++) {addEnemy();}
@@ -237,14 +237,14 @@ public class Game {
         follower.movement(mainCharacter.getLocation(), false);
         if(time + 5000 < System.currentTimeMillis()){
             location = new Vector2D(follower.getLocation().getX(), follower.getLocation().getY());
-            Bullet bullet = new UnicornHorn(playField,location,mouseLocation);
-            allBullets.add(bullet);
+            Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
+            System.out.println(bullet);
             time = System.currentTimeMillis();
         }
     }
 
     private void specialAbilityDonkey() {
-        if (time + 10000 < System.currentTimeMillis()) {
+        if (time + 10000 < System.currentTimeMillis() && powerups.size() > 0) {
             for (int i = 0; i < powerups.size(); i++) {
                 follower.movement(powerups.get(0).getLocation(), false);
                 if (follower.coll(follower, powerups.get(0))) {
@@ -300,6 +300,7 @@ public class Game {
         if (e.coll(a, e)) {
             killEnemy(e);
             mainCharacter.setlives(mainCharacter.getLives() - 1);
+            gameField.updateLives(mainCharacter.getLives());
             if (a.getLives() <= 0) {stopGame();}
         }
     }
@@ -307,7 +308,8 @@ public class Game {
     private void killEnemy(Enemy e) {
         e.setVisible(false);
         allEnemys.remove(e);
-        updateHighscore();
+        xp = xp+ e.getXp();
+        gameField.updateHighscore(xp);
         enemysKilled++;
     }
 
@@ -347,18 +349,14 @@ public class Game {
         scene.setOnKeyPressed(e -> keyAction(e, true));
         scene.setOnKeyReleased(e -> keyAction(e, false));
         gameField.getStop().setOnAction(e -> stopGame());
-        gameField.getPauze().setOnAction(e -> loop.stop());
-        gameField.getResume().setOnAction(e -> loop.start());
+        gameField.getPause().setOnAction(e -> loop.stop());
+
     }
 
     private void stopGame() {
         loop.stop();
         updateHighscoreToDataBase();
         Client.loadScreen("endGame");
-    }
-
-    private void updateHighscore() {
-        highScore += 10;
     }
 
     private void updateHighscoreToDataBase() {

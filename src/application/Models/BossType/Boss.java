@@ -18,13 +18,22 @@ public class Boss extends Sprite{
     private int health;
     private String typeOfBullets;
     private Vector2D destination;
+    private int xp;
     private Random random = new Random();
 
 
     public Boss(Pane bp, Vector2D location) {
         super(bp, location, 400, 300);
+        this.xp  = 50;
     }
 
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
 
     public Vector2D getDestination() {
         return destination;
