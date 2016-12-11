@@ -36,11 +36,11 @@ public class Engine {
 
     public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {
         switch (getWeaponType()){
-            case "Spear":
+            case "spear":
                 return new Spear(bp,mainLoc,mouseLoc);
-            case "Arrow":
+            case "bow":
                 return new Arrow(bp,mainLoc,mouseLoc);
-            case "Bolt":
+            case "crossbow":
                 return new Bolt(bp,mainLoc,mouseLoc);
             case "Unicorn":
                 return new UnicornHorn(bp,mainLoc,mouseLoc);

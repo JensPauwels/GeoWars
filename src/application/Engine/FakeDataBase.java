@@ -11,9 +11,9 @@ import java.util.Map;
 
     private Map<String,bulletInfo> mymap = new HashMap<String,bulletInfo>(){
         {
-            put("Spear",new bulletInfo(200));
-            put("Arrow",new bulletInfo(180));
-            put("Bolt",new bulletInfo(160));
+            put("spear",new bulletInfo(200));
+            put("bow",new bulletInfo(180));
+            put("crossbow",new bulletInfo(160));
         }
     };
 

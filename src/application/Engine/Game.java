@@ -21,7 +21,6 @@ import java.util.Random;
 
 
 public class Game {
-
     private FakeDataBase fakeDataBase = new FakeDataBase();
     private Pane playField;
     private Attractor mainCharacter;
@@ -35,7 +34,7 @@ public class Game {
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
-    private long time, shootersTime,bossSpeed = System.currentTimeMillis();
+    private long time, shootersTime,bossSpeed,testtime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead;
@@ -64,6 +63,7 @@ public class Game {
                 shoot();
                 checkColOnPowerUps();
                 handleBoss();
+
             }
         };
         loop.start();
@@ -79,6 +79,7 @@ public class Game {
         for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
+
     }
 
     private void addEnemy() {
@@ -331,6 +332,7 @@ public class Game {
     }
 
     private void shoot() {
+
         if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();

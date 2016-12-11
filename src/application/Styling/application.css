@@ -42,6 +42,22 @@
     -fx-background-position: center center;
 }
 
+#bowscreen{
+
+    -fx-background-image: url("../../Images/weapons/rsz_arrowandbow.png");
+    -fx-background-position: center center;
+}
+
+#spearscreen{
+    -fx-background-image: url("../../Images/weapons/rsz_spear.png");
+    -fx-background-position: center center;
+}
+
+#crossbowscreen{
+    -fx-background-image: url("../../Images/weapons/rsz_crossbow.png");
+    -fx-background-position: center center;
+}
+
 #spear {
     -fx-background-image: url("../../Images/weapons/spear.png");
     -fx-background-repeat: no-repeat;
@@ -108,21 +124,21 @@
     -fx-background-position: center center;
 }
 
-#characterWithArrow {
+#characterWithbow {
     -fx-background-image: url("../../Images/character/characterWithArrow.png");
     -fx-min-height: 62px;
     -fx-max-width: 28px;
     -fx-background-position: center center;
 }
 
-#characterWithSpear {
+#characterWithspear {
     -fx-background-image: url("../../Images/character/characterWithSpear.png");
     -fx-min-height: 73px;
     -fx-max-width: 53px;
     -fx-background-position: center center;
 }
 
-#characterWithBolt {
+#characterWithcrossbow {
     -fx-background-image: url("../../Images/character/characterWithBolt.png");
     -fx-min-height: 52px;
     -fx-max-width: 30px;

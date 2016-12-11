@@ -1,9 +1,10 @@
 package application.Models;
 
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Vector2D {
+public class Vector2D implements Serializable{
 
     private Random random = new Random();
     private double x;
