@@ -9,11 +9,8 @@ import java.util.LinkedList;
 
 public class ClientProgram extends Listener {
 
-	//Our client object.
 	static Client client;
-	//IP to connect to.
 	static String ip = "localhost";
-	//Ports to connect on.
 	static int tcpPort = 27960, udpPort = 27960;
 	static boolean messageReceived = false;
 

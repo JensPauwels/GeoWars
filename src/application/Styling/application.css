@@ -13,6 +13,12 @@
     -fx-background-position: center center;
 }
 
+#gameOver{
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_gameoverscreen.png");
+    -fx-background-position: center center;
+}
+
 
 #dragon{
     -fx-background-image: url("../../Images/boss/dragon.png");
