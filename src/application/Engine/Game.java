@@ -8,6 +8,8 @@ import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
+import application.Multiplayer.ClientProgram;
+import application.Multiplayer.PacketMessage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -34,20 +36,32 @@ public class Game {
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
-    private long time, shootersTime,bossSpeed,testtime = System.currentTimeMillis();
+    private long time, shootersTime,bossSpeed = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
-    private boolean up, down, left, right, shooting,bossDead;
+    private boolean up, down, left, right, shooting,bossDead,multiPlayer;
     private int highScore, enemysKilled,angle = 0;
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
     private int waves = 1;
     private int xp;
+    private ClientProgram cp = new ClientProgram();
+    private PacketMessage pm = new PacketMessage();
+    private static Attractor jef;
 
-    public Game(Scene scene, BorderPane mainLayout) {
+    public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) throws Exception{
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
+        cp.start();
+        this.multiPlayer = multiPlayer;
+    }
+
+    public void handler(){
+
+       this.pm.setFirstCharacter(mainCharacter.getLocation());
+       cp.setPm(this.pm);
+
     }
 
     private void startGame() {
@@ -63,22 +77,38 @@ public class Game {
                 shoot();
                 checkColOnPowerUps();
                 handleBoss();
-
+                if(multiPlayer){
+                    moveLocation();
+                    handler();
+                }
             }
         };
         loop.start();
     }
 
+    public void moveLocation(){
+        this.pm = cp.getPm() ;
+
+        if(this.pm.getId() == 1){jef.setLocation(this.pm.getSecondCharacter().getX(),this.pm.getSecondCharacter().getY());}
+        else{jef.setLocation(this.pm.getFirstCharacter().getX(),this.pm.getFirstCharacter().getY());}
+
+        jef.display();
+
+    }
+
+
     public void initGame() {
         addListeners();
         prepareGame();
         startGame();
+        if(multiPlayer) jef = new Attractor(playField);
     }
 
     private void prepareGame() {
         for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
+
 
     }
 

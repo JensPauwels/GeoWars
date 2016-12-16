@@ -54,11 +54,11 @@ public class SinglePlayerController {
 
 
     @FXML
-    private void launchGame() {
+    private void launchGame() throws Exception {
         instance.setWeaponType(weapons[index]);
         instance.setFollowerType(followerType.getValue());
         instance.setLevelType(levelType.getValue());
-        Game newGame = new Game(Client.scene, Client.mainLayout);
+        Game newGame = new Game(Client.scene, Client.mainLayout,true);
         newGame.initGame();
     }
 }

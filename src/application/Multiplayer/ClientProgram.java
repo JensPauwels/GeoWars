@@ -4,21 +4,32 @@ import application.Models.Vector2D;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import java.io.IOException;
 import java.util.LinkedList;
+
 
 
 public class ClientProgram extends Listener {
 
-	static Client client;
-	static String ip = "localhost";
-	static int tcpPort = 27960, udpPort = 27960;
-	static boolean messageReceived = false;
 
-	static long timer = System.currentTimeMillis();
-	
-	public static void main(String[] args) throws Exception {
-		PacketMessage thetest = new PacketMessage();
-		System.out.println("Connecting to the server...");
+	private String ip = "localhost";
+	private int tcpPort = 27960, udpPort = 27960;
+	private Client client;
+	private static PacketMessage pm ;
+
+
+	public static PacketMessage getPm() {
+		return pm;
+	}
+
+	public void setPm(PacketMessage pm) {
+		ClientProgram.pm = pm;
+		client.sendTCP(pm);
+	}
+
+
+	public void start() throws IOException {
+		pm = new PacketMessage();
 		client = new Client();
 		client.getKryo().register(java.util.concurrent.atomic.AtomicLong.class);
 		client.getKryo().register(java.util.Random.class);
@@ -28,21 +39,12 @@ public class ClientProgram extends Listener {
 		client.start();
 		client.connect(5000, ip, tcpPort, udpPort);
 		client.addListener(new ClientProgram());
-		client.sendTCP(thetest);
-		System.out.println("Connected! The client program is now waiting for a packet...\n");
-		while(true){
-			if(timer + 50< System.currentTimeMillis()){
-				client.sendTCP(thetest);
-				timer = System.currentTimeMillis();
-			}
-		}
 	}
 
 	public void received(Connection c, Object p){
 		if(p instanceof PacketMessage){
 			PacketMessage packet = (PacketMessage) p;
-			System.out.println(packet.messages.size());
-			messageReceived = true;
+			this.pm = packet;
 		}
 	}
 }
