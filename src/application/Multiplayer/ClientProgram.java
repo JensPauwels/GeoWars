@@ -4,6 +4,7 @@ import application.Models.Vector2D;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -12,11 +13,13 @@ import java.util.LinkedList;
 public class ClientProgram extends Listener {
 
 
-	private String ip = "localhost";
+	//private String ip = "localhost";
 	private int tcpPort = 27960, udpPort = 27960;
 	private Client client;
 	private static PacketMessage pm ;
 	//String ip = "172.31.22.151";
+
+	String ip = "172.31.22.151";
 
 
 	public static PacketMessage getPm() {

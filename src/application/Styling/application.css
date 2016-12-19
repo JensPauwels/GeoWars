@@ -23,8 +23,8 @@
 #dragon{
     -fx-background-image: url("../../Images/boss/dragon.png");
     -fx-background-position: center center;
-    -fx-min-width: 273px;
-    -fx-min-height: 200px;
+    -fx-min-width: 286px;
+    -fx-min-height: 151px;
 }
 
 #configuration{
@@ -69,6 +69,14 @@
     -fx-background-repeat: no-repeat;
     -fx-min-width: 35px;
     -fx-max-height: 5px;
+    -fx-background-position: center center;
+}
+
+#fire {
+    -fx-background-image: url("../../Images/boss/fire.png");
+    -fx-background-repeat: no-repeat;
+    -fx-min-width: 65px;
+    -fx-max-height: 24px;
     -fx-background-position: center center;
 }
 

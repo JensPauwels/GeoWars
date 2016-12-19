@@ -9,6 +9,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import static sun.net.www.protocol.http.AuthCacheValue.Type.Server;
+
 
 public class ServerProgram extends Listener {
 

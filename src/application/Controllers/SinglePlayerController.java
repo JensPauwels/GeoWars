@@ -58,7 +58,7 @@ public class SinglePlayerController {
         instance.setWeaponType(weapons[index]);
         instance.setFollowerType(followerType.getValue());
         instance.setLevelType(levelType.getValue());
-        Game newGame = new Game(Client.scene, Client.mainLayout,true);
+        Game newGame = new Game(Client.scene, Client.mainLayout,false);
         newGame.initGame();
     }
 }
