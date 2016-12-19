@@ -70,7 +70,7 @@ public class Boss extends Sprite{
     public void changeLocation(){
         this.movement(this.getDestination(),false);
         if(Math.round(this.getLocation().getX()) == Math.round(this.getDestination().getX()) && Math.round(this.getLocation().getY()) == Math.round(this.getDestination().getY())){
-            Vector2D location = new Vector2D(random.nextDouble() *600,random.nextDouble()*500);
+            Vector2D location = new Vector2D(random.nextDouble() *800,random.nextDouble()*600);
             this.setDestination(location);
         }
     }

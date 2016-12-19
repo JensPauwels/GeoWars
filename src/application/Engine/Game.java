@@ -67,9 +67,10 @@ public class Game {
     }
 
     private void prepareGame() {
-        for (int i = 0; i < 5; i++) {addEnemy();}
+       // for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
+        makeBoss();
 
 
     }
@@ -91,6 +92,9 @@ public class Game {
                     moveLocation();
                     handler();
                 }
+
+                System.out.println( Math.round(bosses.get(0).getLocation().getX())+ " ;" + bosses.get(0).getLocation().getY());
+                System.out.println(bosses.get(0).getDestination().getX() + ";" + bosses.get(0).getDestination().getY());
             }
         };
         loop.start();
@@ -126,7 +130,7 @@ public class Game {
     private void shootWithBoss(Boss boss){
         if(bossSpeed + 500 < System.currentTimeMillis()){
             location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
-            Vector2D bosslocation = new Vector2D(boss.getLocation().getX(),boss.getLocation().getY());
+            Vector2D bosslocation = new Vector2D(boss.getLocation().getX()-85,boss.getLocation().getY()-50);
             Bullet bullet = instance.makeFireBall(playField, bosslocation, location);
             BulletFromBoss.add(bullet);
             bossSpeed = System.currentTimeMillis();

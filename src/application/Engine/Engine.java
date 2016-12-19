@@ -50,13 +50,11 @@ public class Engine {
     }
 
     public Bullet makeFireBall(Pane bp, Vector2D mainLoc, Vector2D mouseLoc){
-        return new Arrow(bp,mainLoc,mouseLoc);
+        return new FireBall(bp,mainLoc,mouseLoc);
     }
 
     public Boss makeBoss(Pane bp, Vector2D mainloc){
         return new Dragon(bp,mainloc);
-
-
     }
 
     public Follower makeFollower(Pane bp) {
