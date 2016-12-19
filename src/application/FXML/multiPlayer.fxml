@@ -1,12 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="application.Controllers.MultiPlayerController">
-    <center>
-        <Button mnemonicParsing="false" onAction="#loadGameOptions"
-                text="back to  options" BorderPane.alignment="CENTER"/>
-    </center>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="configuration" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.MultiPlayerController">
+    <top>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+                    <children>
+                        <ChoiceBox fx:id="levelType" prefWidth="150.0">
+                            <HBox.margin>
+                                <Insets top="5.0" />
+                            </HBox.margin>
+                        </ChoiceBox>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="200.0">
+                    <children>
+                        <ChoiceBox fx:id="followerType" prefWidth="150.0">
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </HBox.margin>
+                        </ChoiceBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <JFXButton onAction="#previousWeapon">
+                            <HBox.margin>
+                                <Insets bottom="50.0" right="33.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                        <Region fx:id="weapon" minHeight="151.0" minWidth="145.0" />
+                        <JFXButton onAction="#nextWeapon">
+                            <HBox.margin>
+                                <Insets bottom="50.0" left="30.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="130.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets top="150.0" />
+            </BorderPane.margin>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <JFXButton fx:id="test" minHeight="35.0" minWidth="150.0" onAction="#loadGameOptions" text=" ">
+                    <HBox.margin>
+                        <Insets left="15.0" />
+                    </HBox.margin></JFXButton>
+                <Region maxHeight="100.0" prefHeight="37.0" prefWidth="600.0" />
+                <JFXButton minHeight="35.0" minWidth="160.0" onAction="#launchGame" prefWidth="0.0" text=" ">
+                    <HBox.margin>
+                        <Insets right="15.0" />
+                    </HBox.margin></JFXButton>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="20.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
 </BorderPane>

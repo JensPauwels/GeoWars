@@ -50,27 +50,30 @@ public class Game {
 
     private static Attractor jef;
 
-    public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) throws Exception{
+    public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
 
-        cp.start();
+
         this.multiPlayer = multiPlayer;
     }
 
-    public void initGame() {
+    public void initGame() throws Exception {
         addListeners();
         prepareGame();
         startGame();
-        if(multiPlayer) jef = new Attractor(playField);
+        if(multiPlayer) {
+            jef = new Attractor(playField);
+            cp.start();
+        }
     }
 
     private void prepareGame() {
-       // for (int i = 0; i < 5; i++) {addEnemy();}
+        //for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-        makeBoss();
+       // makeBoss();
 
 
     }
@@ -93,8 +96,7 @@ public class Game {
                     handler();
                 }
 
-                System.out.println( Math.round(bosses.get(0).getLocation().getX())+ " ;" + bosses.get(0).getLocation().getY());
-                System.out.println(bosses.get(0).getDestination().getX() + ";" + bosses.get(0).getDestination().getY());
+
             }
         };
         loop.start();
