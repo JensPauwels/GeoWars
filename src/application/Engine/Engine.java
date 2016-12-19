@@ -47,8 +47,10 @@ public class Engine {
             default:
                 return null;
         }
+    }
 
-
+    public Bullet makeFireBall(Pane bp, Vector2D mainLoc, Vector2D mouseLoc){
+        return new Arrow(bp,mainLoc,mouseLoc);
     }
 
     public Boss makeBoss(Pane bp, Vector2D mainloc){

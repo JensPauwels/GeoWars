@@ -15,8 +15,10 @@ import java.io.IOException;
 public class Client extends Application {
 
 
-    public static BorderPane mainLayout = new BorderPane();
-    public static Scene scene = new Scene(mainLayout);
+    public static BorderPane mainLayout;
+
+    public static Scene scene;
+
     private Stage primaryStage;
     private Engine instance = Engine.getInstance();
 
@@ -44,10 +46,11 @@ public class Client extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Medieval Wars");
         this.primaryStage.setResizable(false);
+        mainLayout = new BorderPane();
+        scene = new Scene(mainLayout);
         showMainView();
         primaryStage.setOnCloseRequest(e -> {
             e.consume();

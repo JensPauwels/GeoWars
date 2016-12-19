@@ -33,6 +33,8 @@ public class Game {
     private List<PowerUp> powerups = new LinkedList<>();
     private List<Boss> bosses = new LinkedList<>();
     private GameField gameField = new GameField();
+    private ClientProgram cp = new ClientProgram();
+    private PacketMessage pm = new PacketMessage();
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
@@ -45,22 +47,30 @@ public class Game {
     private double shooterSpeed = 1;
     private int waves = 1;
     private int xp;
-    private ClientProgram cp = new ClientProgram();
-    private PacketMessage pm = new PacketMessage();
+
     private static Attractor jef;
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) throws Exception{
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
+
         cp.start();
         this.multiPlayer = multiPlayer;
     }
 
-    public void handler(){
+    public void initGame() {
+        addListeners();
+        prepareGame();
+        startGame();
+        if(multiPlayer) jef = new Attractor(playField);
+    }
 
-       this.pm.setFirstCharacter(mainCharacter.getLocation());
-       cp.setPm(this.pm);
+    private void prepareGame() {
+        for (int i = 0; i < 5; i++) {addEnemy();}
+        mainCharacter = new Attractor(playField);
+        follower = instance.makeFollower(playField);
+
 
     }
 
@@ -88,29 +98,18 @@ public class Game {
 
     public void moveLocation(){
         this.pm = cp.getPm() ;
-
         if(this.pm.getId() == 1){jef.setLocation(this.pm.getSecondCharacter().getX(),this.pm.getSecondCharacter().getY());}
         else{jef.setLocation(this.pm.getFirstCharacter().getX(),this.pm.getFirstCharacter().getY());}
-
         jef.display();
+    }
 
+    public void handler(){
+        this.pm.setFirstCharacter(mainCharacter.getLocation());
+        cp.setPm(this.pm);
     }
 
 
-    public void initGame() {
-        addListeners();
-        prepareGame();
-        startGame();
-        if(multiPlayer) jef = new Attractor(playField);
-    }
 
-    private void prepareGame() {
-        for (int i = 0; i < 5; i++) {addEnemy();}
-        mainCharacter = new Attractor(playField);
-        follower = instance.makeFollower(playField);
-
-
-    }
 
     private void addEnemy() {
         allEnemys.add(new Enemy(playField));
@@ -128,7 +127,7 @@ public class Game {
         if(bossSpeed + 500 < System.currentTimeMillis()){
             location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
             Vector2D bosslocation = new Vector2D(boss.getLocation().getX(),boss.getLocation().getY());
-            Bullet bullet = instance.makeBullet(playField, bosslocation, location);
+            Bullet bullet = instance.makeFireBall(playField, bosslocation, location);
             BulletFromBoss.add(bullet);
             bossSpeed = System.currentTimeMillis();
         }
@@ -148,6 +147,7 @@ public class Game {
                     b.setVisible(false);
                     allBullets.remove(b);
                 }
+
                 else {
                     boss.setVisible(false);
                     xp = xp+  boss.getXp();

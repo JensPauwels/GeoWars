@@ -16,6 +16,7 @@ public class ClientProgram extends Listener {
 	private int tcpPort = 27960, udpPort = 27960;
 	private Client client;
 	private static PacketMessage pm ;
+	//String ip = "172.31.22.151";
 
 
 	public static PacketMessage getPm() {
@@ -26,6 +27,8 @@ public class ClientProgram extends Listener {
 		ClientProgram.pm = pm;
 		client.sendTCP(pm);
 	}
+
+	
 
 
 	public void start() throws IOException {
