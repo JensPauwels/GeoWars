@@ -49,6 +49,7 @@ public class Game {
     private int xp;
     private boolean rapidFireActivated = false;
     private boolean shieldActivated = false;
+    private boolean multiplierActivated = false;
 
     private static Attractor jef;
 
@@ -159,7 +160,8 @@ public class Game {
 
                 else {
                     boss.setVisible(false);
-                    xp = xp+  boss.getXp();
+                    if(multiplierActivated){xp = xp+(boss.getXp()*2);}
+                    else{xp = xp +  boss.getXp();}
                     gameField.updateHighscore(xp);
                     bosses.remove(boss);
                     bossDead =true;
@@ -197,10 +199,6 @@ public class Game {
         }
     }
 
-    private void multiHighScore() {
-        highScore = highScore + 1;
-    }
-
     private void trippleArrow() {
         addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 50));
         addBullet(mouseLocation);
@@ -223,6 +221,7 @@ public class Game {
             shooterSpeed = 1;
             rapidFireActivated =false;
             shieldActivated = false;
+            multiplierActivated = false;
 
         }
 
@@ -232,13 +231,13 @@ public class Game {
     private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(5);
-        switch (number){
+        switch (6){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
                 break;
             case 2:
-                shooterSpeed =1.5;
+                shooterSpeed = 2;
                 gameField.setActivatedPowerupLabel("Fire arrow");
                 System.out.println();
                 break;
@@ -247,7 +246,7 @@ public class Game {
                 shieldActivated=true;
                 break;
             case 4:
-                multiHighScore();
+                multiplierActivated = true;
                 gameField.setActivatedPowerupLabel("Multiplier");
                 break;
             case 5:
@@ -256,13 +255,15 @@ public class Game {
             case 6:
                 gameField.setActivatedPowerupLabel("Extra life");
                 mainCharacter.setlives(mainCharacter.getLives()+1);
+                gameField.updateLives(mainCharacter.getLives());
                 break;
             case 7:
                 gameField.setActivatedPowerupLabel("Slow fire");
-                shooterSpeed =0.5;
+                shooterSpeed= 0.2;
                 break;
             case 8:
                 gameField.setActivatedPowerupLabel("Orcs on fire");
+
                 break;
             case 9:
                 gameField.setActivatedPowerupLabel("Orc zone");
@@ -270,6 +271,7 @@ public class Game {
             case 10:
                 gameField.setActivatedPowerupLabel("Health down");
                 mainCharacter.setlives(mainCharacter.getLives()-1);
+                gameField.updateLives(mainCharacter.getLives());
                 break;
         }
         tekstTime = System.currentTimeMillis();
@@ -392,7 +394,8 @@ public class Game {
     private void killEnemy(Enemy e) {
         e.setVisible(false);
         allEnemys.remove(e);
-        xp = xp+ e.getXp();
+        if(multiplierActivated){ xp = xp + e.getXp()*2;}
+        else{xp = xp+ e.getXp();}
         gameField.updateHighscore(xp);
         enemysKilled++;
     }
