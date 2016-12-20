@@ -446,6 +446,8 @@ public class Game {
     private void stopGame() {
         loop.stop();
         updateHighscoreToDataBase();
+        instance.setWave(waves);
+        instance.setHighscore(xp);
         Client.loadScreen("endGame");
     }
 

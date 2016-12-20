@@ -24,14 +24,33 @@ public class Engine {
     private String weaponType;
     private String followerType;
     private String levelType;
+    private int wave;
+    private int highscore;
+
+
 
     public static Engine getInstance() {
 
         if (firstInstance == null) {
             firstInstance = new Engine();
         }
-
         return firstInstance;
+    }
+
+    public int getWave() {
+        return wave;
+    }
+
+    public void setWave(int wave) {
+        this.wave = wave;
+    }
+
+    public int getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(int highscore) {
+        this.highscore = highscore;
     }
 
     public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {

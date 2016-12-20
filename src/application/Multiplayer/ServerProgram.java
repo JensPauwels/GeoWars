@@ -9,8 +9,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import static sun.net.www.protocol.http.AuthCacheValue.Type.Server;
-
 
 public class ServerProgram extends Listener {
 
@@ -19,17 +17,29 @@ public class ServerProgram extends Listener {
 	private List<Connection> myConnections = new LinkedList<>();
 	static PacketMessage packetMessage = new PacketMessage();
 	static PacketMessage packetMessage2 = new PacketMessage();
+	private List<Vector2D> enemieLocations;
 
 	
 	public static void main(String[] args) throws Exception {
 		ServerProgram serverProgram = new ServerProgram();
 		serverProgram.start();
+		serverProgram.addLocs();
 		packetMessage.setId(1);
 		packetMessage2.setId(2);
 	}
 
+	public void addLocs(){
+		this.enemieLocations = new LinkedList<>();
+		for (int i = 0; i < 5; i++) {
+			this.enemieLocations.add(new Vector2D());
+		}
+		this.packetMessage.setEnemies(this.enemieLocations);
+		this.packetMessage2.setEnemies(this.enemieLocations);
+	}
+
 	public void start() throws IOException {
 		server = new Server();
+		server.getKryo().register(Boolean.class);
 		server.getKryo().register(java.util.concurrent.atomic.AtomicLong.class);
 		server.getKryo().register(java.util.Random.class);
 		server.getKryo().register(Vector2D.class);
@@ -49,8 +59,9 @@ public class ServerProgram extends Listener {
 
 	private void sendMsg(){
 		if(myConnections.size() == 2){
-			myConnections.get(0).sendTCP(packetMessage);
-			myConnections.get(1).sendTCP(packetMessage2);
+			System.out.println(this.packetMessage.getEnemies().size());
+			myConnections.get(0).sendTCP(this.packetMessage);
+			myConnections.get(1).sendTCP(this.packetMessage2);
 		}
 	}
 
@@ -61,11 +72,16 @@ public class ServerProgram extends Listener {
 				if(c == myConnections.get(0)){
 					this.packetMessage.setFirstCharacter(packet.getFirstCharacter());
 					this.packetMessage2.setFirstCharacter(packet.getFirstCharacter());
+					System.out.println(packet.getEnemies().size());
+					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
+					packetMessage2.setSpawnFirstClient(packet.getSpawnFirstClient());
 				}
 				else{
 					this.packetMessage.setSecondCharacter(packet.getFirstCharacter());
 					this.packetMessage2.setSecondCharacter(packet.getFirstCharacter());
 				}
+
+
 			sendMsg();
 		}
 	}}

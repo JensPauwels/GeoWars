@@ -15,7 +15,7 @@
 
 #gameOver{
     -fx-background-color: #38383838;
-    -fx-background-image: url("../../Images/screens/rsz_gameoverscreen.png");
+    -fx-background-image: url("../../Images/screens/rsz_gameoverscreendef.png");
     -fx-background-position: center center;
 }
 
@@ -53,6 +53,48 @@
     -fx-background-image: url("../../Images/weapons/rsz_arrowandbow.png");
     -fx-background-position: center center;
 }
+
+#speedslow{
+    -fx-background-image: url("../../Images/followers/speed/rsz_speedslow.png");
+    -fx-background-position: center center;
+}
+
+#speedmedium{
+    -fx-background-image: url("../../Images/followers/speed/rsz_speedmedium.png");
+    -fx-background-position: center center;
+}
+
+#speedfast{
+    -fx-background-image: url("../../Images/followers/speed/rsz_speedfast.png");
+    -fx-background-position: center center;
+}
+
+#specialAbility10{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi10.png");
+    -fx-background-position: center center;
+}
+#specialAbility12{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi12.png");
+    -fx-background-position: center center;
+}
+#specialAbility14{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi14.png");
+    -fx-background-position: center center;
+}
+#specialAbility16{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi16.png");
+    -fx-background-position: center center;
+}
+#specialAbility18{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi18.png");
+    -fx-background-position: center center;
+}
+#specialAbility20{
+    -fx-background-image: url("../../Images/followers/specialAbility/rsz_specialabi20.png");
+    -fx-background-position: center center;
+}
+
+
 
 #spearscreen{
     -fx-background-image: url("../../Images/weapons/rsz_spear.png");

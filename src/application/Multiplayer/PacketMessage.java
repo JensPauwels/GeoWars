@@ -1,6 +1,5 @@
 package application.Multiplayer;
 
-import application.Models.EnemyType.Enemy;
 import application.Models.Vector2D;
 
 import java.util.LinkedList;
@@ -10,13 +9,39 @@ public class PacketMessage {
 
 
 
-	private List<Vector2D> enemys,bullets = new LinkedList<>();
+	private List<Vector2D> bullets = new LinkedList<>();
 	private Vector2D firstCharacter;
 	private Vector2D secondCharacter;
-	public String message = "testing";
+	public Boolean spawnFirstClient = true;
+	public Boolean spawnSecondClient = true;
+
+	public Boolean getSpawnSecondClient() {
+		return spawnSecondClient;
+	}
+
+	public void setSpawnSecondClient(Boolean spawnSecondClient) {
+		this.spawnSecondClient = spawnSecondClient;
+	}
+
+	public Boolean getSpawnFirstClient() {
+		return spawnFirstClient;
+	}
+
+	public void setSpawnFirstClient(Boolean spawnFirstClient) {
+		this.spawnFirstClient = spawnFirstClient;
+	}
+
+	public List<Vector2D> enemies = new LinkedList<>();
 
 	public int id=0;
 
+	public List<Vector2D> getEnemies() {
+		return enemies;
+	}
+
+	public void setEnemies(List<Vector2D> enemies) {
+		this.enemies = enemies;
+	}
 
 	public int getId() {
 		return id;
@@ -29,15 +54,10 @@ public class PacketMessage {
 	public PacketMessage(){
 		this.firstCharacter = new Vector2D(500,400);
 		this.secondCharacter = new Vector2D(300,400);
+
+
 	}
 
-	public List<Vector2D> getEnemys() {
-		return enemys;
-	}
-
-	public void setEnemys(List<Vector2D> enemys) {
-		this.enemys = enemys;
-	}
 
 	public List<Vector2D> getBullets() {
 		return bullets;

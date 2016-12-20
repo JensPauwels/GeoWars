@@ -35,8 +35,8 @@ public class GameField {
         livesLabel.setLayoutY(20);
         waveLabel.setLayoutX(550);
         waveLabel.setLayoutY(20);
-        activatedPowerupLabel.setLayoutX(400);
-        activatedPowerupLabel.setLayoutY(120);
+        activatedPowerupLabel.setLayoutX(350);
+        activatedPowerupLabel.setLayoutY(100);
         stop.setLayoutX(720);
         stop.setMinSize(70,50);
         pause.setLayoutX(680);

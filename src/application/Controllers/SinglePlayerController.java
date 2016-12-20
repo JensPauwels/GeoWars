@@ -22,8 +22,9 @@ public class SinglePlayerController {
     public ChoiceBox<String> followerType;
     public ChoiceBox<String> levelType;
     public String[] weapons = {"spear","bow","crossbow"};
-    public String[] cooldown = {"10","12","14","16",""};
-    public Region weapon;
+    public String[] speeds = {"slow","medium","fast"};
+    public String[] specialAbilitys = {"10","12","14","16","18","20"};
+    public Region weapon,speed,specialAbility;
     private int index = 0;
  
     @FXML
@@ -33,6 +34,8 @@ public class SinglePlayerController {
         levelType.setItems(level);
         levelType.setValue(level.get(0));
         weapon.setId(weapons[index]+"screen");
+        speed.setId("speed"+speeds[0]);
+        specialAbility.setId("specialAbility"+specialAbilitys[0]);
     }
 
     @FXML

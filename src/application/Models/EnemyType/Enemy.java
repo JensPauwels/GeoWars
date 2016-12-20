@@ -16,6 +16,11 @@ public class Enemy extends Sprite {
         this.xp = 10;
     }
 
+    public Enemy(Pane bp,Vector2D location){
+        super(bp, location, 12.5, 25);
+        this.xp = 10;
+    }
+
     public int getXp(){
         return this.xp;
     }

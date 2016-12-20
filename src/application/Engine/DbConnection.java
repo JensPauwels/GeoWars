@@ -17,7 +17,7 @@ public class DbConnection {
 
         String url = "jdbc:mysql://localhost/geowars";
         String username = "root";
-        String password = "";
+        String password = "localhost";
 
 
         try {
@@ -29,7 +29,6 @@ public class DbConnection {
     }
 
     public boolean controle(String query) {
-
         try {
             rs = st.executeQuery(query);
             return rs.next();
