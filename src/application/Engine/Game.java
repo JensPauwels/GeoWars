@@ -38,7 +38,7 @@ public class Game {
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
-    private long time, shootersTime,bossSpeed = System.currentTimeMillis();
+    private long time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead,multiPlayer;
@@ -47,6 +47,8 @@ public class Game {
     private double shooterSpeed = 1;
     private int waves = 1;
     private int xp;
+    private boolean rapidFireActivated = false;
+    private boolean shieldActivated = false;
 
     private static Attractor jef;
 
@@ -70,10 +72,10 @@ public class Game {
     }
 
     private void prepareGame() {
-        //for (int i = 0; i < 5; i++) {addEnemy();}
+        for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-       // makeBoss();
+        //makeBoss();
 
 
     }
@@ -90,6 +92,7 @@ public class Game {
                 doSpecialAbility();
                 shoot();
                 checkColOnPowerUps();
+                ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
                     moveLocation();
@@ -199,9 +202,9 @@ public class Game {
     }
 
     private void trippleArrow() {
-        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 100));
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 50));
         addBullet(mouseLocation);
-        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 100));
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 50));
     }
 
     private void checkColOnPowerUps(){
@@ -209,28 +212,67 @@ public class Game {
             if (powerups.get(i).coll(mainCharacter, powerups.get(i))) {
                 powerups.get(i).setVisible(false);
                 powerups.remove(powerups.get(i));
-                handlePowerUps();
+                handlePowerUpsAndDown();
             }
         }
     }
 
-    private void handlePowerUps(){
+    private void ControlPowerUp(){
+        if(tekstTime + 5000 < System.currentTimeMillis() && gameField.getActivatedPowerupLabel()){
+            gameField.setActivatedPowerupLabelInvisible();
+            shooterSpeed = 1;
+            rapidFireActivated =false;
+            shieldActivated = false;
+
+        }
+
+    }
+
+
+    private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(5);
         switch (number){
             case 1:
-                trippleArrow();
+                gameField.setActivatedPowerupLabel("Rapid fire");
+                rapidFireActivated = true;
                 break;
             case 2:
-                shooterSpeed =0.5;
+                shooterSpeed =1.5;
+                gameField.setActivatedPowerupLabel("Fire arrow");
                 break;
             case 3:
-                shooterSpeed =1.5;
+                gameField.setActivatedPowerupLabel("Shield");
+                shieldActivated=true;
                 break;
             case 4:
                 multiHighScore();
-
+                gameField.setActivatedPowerupLabel("Multiplier");
+                break;
+            case 5:
+                gameField.setActivatedPowerupLabel("Bomb");
+                break;
+            case 6:
+                gameField.setActivatedPowerupLabel("Extra life");
+                mainCharacter.setlives(mainCharacter.getLives()+1);
+                break;
+            case 7:
+                gameField.setActivatedPowerupLabel("Slow fire");
+                shooterSpeed =0.5;
+                break;
+            case 8:
+                gameField.setActivatedPowerupLabel("Orcs on fire");
+                break;
+            case 9:
+                gameField.setActivatedPowerupLabel("Orc zone");
+                break;
+            case 10:
+                gameField.setActivatedPowerupLabel("Health down");
+                mainCharacter.setlives(mainCharacter.getLives()-1);
+                break;
         }
+        tekstTime = System.currentTimeMillis();
+
     }
 
     private void doSpecialAbility() {
@@ -285,7 +327,7 @@ public class Game {
             for (int i = 0; i < powerups.size(); i++) {
                 follower.movement(powerups.get(0).getLocation(), false);
                 if (follower.coll(follower, powerups.get(0))) {
-                    handlePowerUps();
+                    handlePowerUpsAndDown();
                     powerups.get(0).setVisible(false);
                     powerups.remove(powerups.get(0));
                     time = System.currentTimeMillis();
@@ -293,7 +335,11 @@ public class Game {
             }
         }
         else {
-            follower.movement(mainCharacter.getLocation(), false);
+            double x = mainCharacter.getLocation().getX()-15;
+            double y = mainCharacter.getLocation().getY()+50;
+            Vector2D loc = new Vector2D(x,y);
+            //follower.movement(mainCharacter.getLocation(), false);
+            follower.movement(loc,false);
         }
     }
 
@@ -312,7 +358,7 @@ public class Game {
         for (int i = 0;i < allEnemys.size();i++) {
             Enemy enemy = allEnemys.get(i);
             enemy.movement(mainCharacter.getLocation(), true);
-            checkCollisionEnemy(mainCharacter, enemy);
+            if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
         }
     }
 
@@ -326,7 +372,7 @@ public class Game {
 
         for (int i = 0; i < allBullets.size(); i++) {
             Bullet bullet = allBullets.get(i);
-            if (bullet.outOfDestination()) allBullets.remove(bullet);
+            if (bullet.outOfDestination()) {allBullets.remove(bullet);}
             bullet.movement(bullet.getDestination(), true);
             checkCollisionBullet(bullet);
             checkCollisionBoss(bullet);
@@ -353,10 +399,10 @@ public class Game {
     private void moveChar() {
         double x = mainCharacter.getLocation().getX();
         double y = mainCharacter.getLocation().getY();
-        if (up && y > 0) {mainCharacter.setLocation(x, y - 5);}
-        else if (down && y < 555) {mainCharacter.setLocation(x, y + 5);}
+        if (up && y > 80) {mainCharacter.setLocation(x, y - 5);}
+        else if (down && y < 540) {mainCharacter.setLocation(x, y + 5);}
         else if (left && x > 0) {mainCharacter.setLocation(x - 5, y);}
-        else if (right && x < 775) {mainCharacter.setLocation(x + 5, y);}
+        else if (right && x < 770) {mainCharacter.setLocation(x + 5, y);}
     }
 
     private void keyAction(KeyEvent e, Boolean bool) {
@@ -370,9 +416,14 @@ public class Game {
     private void shoot() {
 
         if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
+            if(rapidFireActivated){
+                trippleArrow();
+            }
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
+
         }
+
     }
 
     private void moveMouseLoc(MouseEvent e ){

@@ -137,6 +137,12 @@
     -fx-min-height: 21px;
     -fx-background-position: center center;
 }
+#powerup {
+    -fx-background-image: url("../../Images/powerup/Powerup.png");
+    -fx-min-width: 30px;
+    -fx-min-height: 27px;
+    -fx-background-position: center center;
+}
 
 #characterWithbow {
     -fx-background-image: url("../../Images/character/characterWithArrow.png");

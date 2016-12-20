@@ -22,6 +22,7 @@ public class SinglePlayerController {
     public ChoiceBox<String> followerType;
     public ChoiceBox<String> levelType;
     public String[] weapons = {"spear","bow","crossbow"};
+    public String[] cooldown = {"10","12","14","16",""};
     public Region weapon;
     private int index = 0;
  
@@ -58,7 +59,7 @@ public class SinglePlayerController {
         instance.setWeaponType(weapons[index]);
         instance.setFollowerType(followerType.getValue());
         instance.setLevelType(levelType.getValue());
-        Game newGame = new Game(Client.scene, Client.mainLayout,true);
+        Game newGame = new Game(Client.scene, Client.mainLayout,false);
         newGame.initGame();
     }
 }

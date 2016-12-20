@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 public class GameField {
 
     private Pane playfield;
-    private Label highscoreLabel, livesLabel, waveLabel;
+    private Label highscoreLabel, livesLabel, waveLabel, activatedPowerupLabel;
     private JFXButton stop = new JFXButton(" ");
     private JFXButton pause = new JFXButton(" ");
 
@@ -26,13 +26,17 @@ public class GameField {
         highscoreLabel = new Label("0");
         waveLabel = new Label("1");
         livesLabel = new Label("3");
-        this.playfield.getChildren().addAll(highscoreLabel, livesLabel, waveLabel,stop,pause);
+        activatedPowerupLabel = new Label();
+        activatedPowerupLabel.setVisible(false);
+        this.playfield.getChildren().addAll(highscoreLabel, livesLabel, waveLabel,stop,pause, activatedPowerupLabel);
         highscoreLabel.setLayoutX(100);
         highscoreLabel.setLayoutY(20);
         livesLabel.setLayoutX(300);
         livesLabel.setLayoutY(20);
         waveLabel.setLayoutX(550);
         waveLabel.setLayoutY(20);
+        activatedPowerupLabel.setLayoutX(400);
+        activatedPowerupLabel.setLayoutY(120);
         stop.setLayoutX(720);
         stop.setMinSize(70,50);
         pause.setLayoutX(680);
@@ -48,9 +52,8 @@ public class GameField {
         return stop;
     }
 
-    public Button getPause() {
-        return pause;
-    }
+    public Button getPause() { return pause;}
+
     public void updateHighscore(int highscore){
         highscoreLabel.setText(Integer.toString(highscore));
     }
@@ -59,9 +62,18 @@ public class GameField {
         waveLabel.setText(Integer.toString(waves));
     }
 
-    public void updateLives(int lives){
-        livesLabel.setText(Integer.toString(lives));
+    public void updateLives(int lives){livesLabel.setText(Integer.toString(lives));}
+
+    public void setActivatedPowerupLabel(String tekst){
+        activatedPowerupLabel.setText("Activated Powerup: " + tekst);
+        activatedPowerupLabel.setVisible(true);
+    }
+    public void setActivatedPowerupLabelInvisible(){
+        activatedPowerupLabel.setVisible(false);
     }
 
+    public Boolean getActivatedPowerupLabel(){
+
+        return activatedPowerupLabel.isVisible();};
 
 }

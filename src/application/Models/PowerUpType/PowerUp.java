@@ -1,8 +1,10 @@
 package application.Models.PowerUpType;
 
+import application.Engine.Engine;
 import application.Models.Sprite;
 import application.Models.Vector2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
@@ -17,11 +19,11 @@ public class PowerUp extends Sprite {
 
     @Override
     public Node createView() {
-        Circle circle = new Circle();
-        circle.setCenterX(5);
-        circle.setCenterY(5);
-        circle.setRadius(2.5);
-        return circle;
+
+        Label t = new Label();
+        t.setId("powerup");
+        System.out.println(t.getId());
+        return t;
 
     }
 }
