@@ -240,6 +240,7 @@ public class Game {
             case 2:
                 shooterSpeed =1.5;
                 gameField.setActivatedPowerupLabel("Fire arrow");
+                System.out.println();
                 break;
             case 3:
                 gameField.setActivatedPowerupLabel("Shield");
