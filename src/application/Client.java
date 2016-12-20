@@ -72,6 +72,7 @@ public class Client extends Application {
         scene.getStylesheets().add("application/Styling/application.css");
         System.out.println(System.identityHashCode(primaryStage));
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(false);
         primaryStage.show();
         loadScreen("loginScreen");
     }

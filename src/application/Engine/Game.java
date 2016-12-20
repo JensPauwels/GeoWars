@@ -73,10 +73,10 @@ public class Game {
     }
 
     private void prepareGame() {
-        for (int i = 0; i < 5; i++) {addEnemy();}
+      //  for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-        //makeBoss();
+        makeBoss();
 
 
     }
@@ -96,7 +96,6 @@ public class Game {
                 ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
-                    moveLocation();
                     handler();
                 }
 
@@ -106,19 +105,17 @@ public class Game {
         loop.start();
     }
 
-    public void moveLocation(){
-        this.pm = cp.getPm() ;
-        if(this.pm.getId() == 1){jef.setLocation(this.pm.getSecondCharacter().getX(),this.pm.getSecondCharacter().getY());}
-        else{jef.setLocation(this.pm.getFirstCharacter().getX(),this.pm.getFirstCharacter().getY());}
-        jef.display();
-    }
 
     public void handler(){
+        this.pm = cp.getPm() ;
+        Vector2D first = this.pm.getFirstCharacter();
+        Vector2D second = this.pm.getSecondCharacter();
+        if(this.pm.getId() == 1){jef.setLocation(first.getX(),first.getY());}
+        else{jef.setLocation(second.getX(),second.getY());}
+        jef.display();
         this.pm.setFirstCharacter(mainCharacter.getLocation());
         cp.setPm(this.pm);
     }
-
-
 
 
     private void addEnemy() {
@@ -135,7 +132,7 @@ public class Game {
 
     private void shootWithBoss(Boss boss){
         if(bossSpeed + 500 < System.currentTimeMillis()){
-            location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
+            location = mainCharacter.getLocation();
             Vector2D bosslocation = new Vector2D(boss.getLocation().getX()-85,boss.getLocation().getY()-50);
             Bullet bullet = instance.makeFireBall(playField, bosslocation, location);
             BulletFromBoss.add(bullet);
@@ -160,7 +157,9 @@ public class Game {
 
                 else {
                     boss.setVisible(false);
-                    if(multiplierActivated){xp = xp+(boss.getXp()*2);}
+                    if(multiplierActivated) {
+                        xp = xp+(boss.getXp()*2);
+                    }
                     else{xp = xp +  boss.getXp();}
                     gameField.updateHighscore(xp);
                     bosses.remove(boss);
@@ -171,13 +170,12 @@ public class Game {
     }
 
     private void addBullet(Vector2D loc) {
-        location = new Vector2D(mainCharacter.getLocation().getX(), mainCharacter.getLocation().getY());
+        location = mainCharacter.getLocation();
         Bullet bullet = instance.makeBullet(playField, location, loc);
         allBullets.add(bullet);
     }
 
     private void spawnPowerUp() {
-
         location = new Vector2D(random.nextDouble() * 800, random.nextDouble() * 600);
         PowerUp pu = new PowerUp(playField, location);
         pu.display();
@@ -230,8 +228,8 @@ public class Game {
 
     private void handlePowerUpsAndDown(){
         Random r = new Random();
-        int number = r.nextInt(5);
-        switch (6){
+        int number = r.nextInt(10);
+        switch (number){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
@@ -296,7 +294,6 @@ public class Game {
     private void specialAbilityHorse(){
 
         follower.movement(follower.getDestionation(),false);
-
         if (Math.round(follower.getLocation().getX()) == Math.round(follower.getDestionation().getX()) && Math.round(follower.getLocation().getY()) == Math.round(follower.getDestionation().getY())) {
             angle = angle + 1;
             double x =mainCharacter.getLocation().getX() + Math.cos(angle) * 75;
@@ -318,7 +315,7 @@ public class Game {
     private void specialAbilityUnicorn(){
         follower.movement(mainCharacter.getLocation(), false);
         if(time + 5000 < System.currentTimeMillis()){
-            location = new Vector2D(follower.getLocation().getX(), follower.getLocation().getY());
+            location = follower.getLocation();
             Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
             System.out.println(bullet);
             time = System.currentTimeMillis();
@@ -341,7 +338,6 @@ public class Game {
             double x = mainCharacter.getLocation().getX()-15;
             double y = mainCharacter.getLocation().getY()+50;
             Vector2D loc = new Vector2D(x,y);
-            //follower.movement(mainCharacter.getLocation(), false);
             follower.movement(loc,false);
         }
     }

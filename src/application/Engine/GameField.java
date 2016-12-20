@@ -39,6 +39,8 @@ public class GameField {
         activatedPowerupLabel.setLayoutY(100);
         stop.setLayoutX(720);
         stop.setMinSize(70,50);
+        stop.setFocusTraversable(false);
+        pause.setFocusTraversable(false);
         pause.setLayoutX(680);
         pause.setMinSize(30,50);
 
