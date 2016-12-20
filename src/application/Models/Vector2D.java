@@ -28,6 +28,11 @@ public class Vector2D implements Serializable{
         this.y = y;
     }
 
+    public Vector2D(Vector2D vector2D){
+         x = vector2D.getX();
+         y = vector2D.getY();
+    }
+
     public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;

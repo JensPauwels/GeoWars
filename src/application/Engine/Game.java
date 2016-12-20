@@ -57,8 +57,6 @@ public class Game {
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
-
-
         this.multiPlayer = multiPlayer;
     }
 
@@ -73,12 +71,9 @@ public class Game {
     }
 
     private void prepareGame() {
-      //  for (int i = 0; i < 5; i++) {addEnemy();}
+        for (int i = 0; i < 5; i++) {addEnemy();}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
-        makeBoss();
-
-
     }
 
     private void startGame() {
@@ -98,8 +93,6 @@ public class Game {
                 if(multiPlayer){
                     handler();
                 }
-
-
             }
         };
         loop.start();
@@ -170,7 +163,7 @@ public class Game {
     }
 
     private void addBullet(Vector2D loc) {
-        location = mainCharacter.getLocation();
+        location = new Vector2D(mainCharacter.getLocation());
         Bullet bullet = instance.makeBullet(playField, location, loc);
         allBullets.add(bullet);
     }
@@ -220,9 +213,7 @@ public class Game {
             rapidFireActivated =false;
             shieldActivated = false;
             multiplierActivated = false;
-
         }
-
     }
 
 
@@ -362,7 +353,6 @@ public class Game {
     }
 
     private void handleBullets() {
-
         for (int i = 0; i < BulletFromBoss.size(); i++) {
             Bullet bullet = BulletFromBoss.get(i);
             if (bullet.outOfDestination()) BulletFromBoss.remove(bullet);
@@ -421,7 +411,6 @@ public class Game {
             }
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
-
         }
 
     }
