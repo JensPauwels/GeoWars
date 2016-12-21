@@ -31,6 +31,7 @@ public class HighScoresController {
 
     private void loadHighScoreResults() throws Exception {
         TableView<User> tableView = new TableView<>();
+        tableView.setId("testing");
         tableView.setItems(generateUserData());
         tableView.setMaxHeight(500);
         tableView.getColumns().addAll(createColumn("username"), createColumn("highscore"));

@@ -21,9 +21,9 @@ public class SinglePlayerController {
     private Engine instance = Engine.getInstance();
     public ChoiceBox<String> followerType;
     public ChoiceBox<String> levelType;
-    public String[] weapons = {"spear","bow","crossbow"};
-    public String[] speeds = {"slow","medium","fast"};
-    public String[] specialAbilitys = {"10","12","14","16","18","20"};
+    private String[] weapons = {"spear","bow","crossbow"};
+    private String[] speeds = {"slow","medium","fast"};
+    private String[] specialAbilitys = {"10","12","14","16","18","20"};
     public Region weapon,speed,specialAbility;
     private int index = 0;
  
@@ -54,8 +54,6 @@ public class SinglePlayerController {
         if(index < weapons.length -1){index++;}
         weapon.setId(weapons[index]+"screen");
     }
-
-
 
     @FXML
     private void launchGame() throws Exception {
