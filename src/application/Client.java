@@ -5,7 +5,9 @@ import application.Engine.Engine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -68,6 +70,7 @@ public class Client extends Application {
         mainLayout.setMinHeight(600);
         mainLayout.setMinWidth(800);
         mainLayout.setId("container");
+        Font.loadFont(getClass().getResourceAsStream("../application/Styling/fonts/TrajanProRegular.ttf"), 14);
         scene.getStylesheets().add("application/Styling/application.css");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(false);

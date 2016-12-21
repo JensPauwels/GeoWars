@@ -1,17 +1,18 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-@font-face {
-    font-family: "mijnFont";
-    src: url("../Styling/TrajanProRegular.ttf") format('truetype');
-}
+
 
 #container {
     -fx-background-color: #38383838;
     -fx-background-image: url("../../Images/screens/test123.jpg");
     -fx-background-position: center center;
+
 }
-.text{
-    -fx-font-family: "mijnFont";
+
+.label{
+    -fx-font-family: "Trajan Pro";
 }
+
+
 
 #loginPage{
     -fx-background-color: #38383838;

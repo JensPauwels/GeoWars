@@ -11,7 +11,7 @@
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="yourScore" text="your score">
+            <Label id="test" fx:id="yourScore" text="your score">
                <VBox.margin>
                   <Insets left="50.0" top="100.0" />
                </VBox.margin>
@@ -21,12 +21,12 @@
                   <Insets left="50.0" top="30.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="highScore" layoutX="393.0" layoutY="15.0" text="highscore">
+            <Label id="test" fx:id="highScore" layoutX="393.0" layoutY="15.0" text="highscore">
                <VBox.margin>
                   <Insets left="50.0" top="30.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="ranking" layoutX="393.0" layoutY="44.0" text="rankings">
+            <Label id="test" fx:id="ranking" layoutX="393.0" layoutY="44.0" text="rankings">
                <VBox.margin>
                   <Insets left="50.0" top="30.0" />
                </VBox.margin>
