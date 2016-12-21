@@ -6,6 +6,7 @@ import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
+import application.Models.PowerUpType.Bomb;
 import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
 import application.Multiplayer.ClientProgram;
@@ -50,6 +51,7 @@ public class Game {
     private boolean rapidFireActivated = false;
     private boolean shieldActivated = false;
     private boolean multiplierActivated = false;
+    private boolean bombActivated=false;
 
     private static Attractor jef;
 
@@ -169,7 +171,7 @@ public class Game {
     }
 
     private void spawnPowerUp() {
-        location = new Vector2D(random.nextDouble() * 800, random.nextDouble() * 600);
+        location = new Vector2D(random.nextDouble() * 770, random.nextDouble() * 540);
         PowerUp pu = new PowerUp(playField, location);
         pu.display();
         powerups.add(pu);
@@ -220,7 +222,7 @@ public class Game {
     private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(10);
-        switch (number){
+        switch (5){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
@@ -228,7 +230,6 @@ public class Game {
             case 2:
                 shooterSpeed = 2;
                 gameField.setActivatedPowerupLabel("Fire arrow");
-                System.out.println();
                 break;
             case 3:
                 gameField.setActivatedPowerupLabel("Shield");
@@ -240,6 +241,7 @@ public class Game {
                 break;
             case 5:
                 gameField.setActivatedPowerupLabel("Bomb");
+                bombActivated=true;
                 break;
             case 6:
                 gameField.setActivatedPowerupLabel("Extra life");
@@ -266,6 +268,7 @@ public class Game {
         tekstTime = System.currentTimeMillis();
 
     }
+
 
     private void doSpecialAbility() {
         switch (instance.getFollowerType()) {
@@ -401,6 +404,12 @@ public class Game {
         else if (key == KeyCode.S || key == KeyCode.DOWN) {down = bool;}
         else if (key == KeyCode.A || key == KeyCode.LEFT) {left = bool;}
         else if (key == KeyCode.D || key == KeyCode.RIGHT) {right = bool;}
+        else if (key == KeyCode.SPACE || bombActivated){
+            System.out.println("pressed spacebar");
+            location = new Vector2D(mainCharacter.getLocation().getX(),mainCharacter.getLocation().getY());
+            Bomb bomb = new Bomb(playField, location);
+            bomb.display();
+        }
     }
 
     private void shoot() {

@@ -186,6 +186,13 @@
     -fx-background-position: center center;
 }
 
+#bomb{
+    -fx-background-image: url("../../Images/powerup/bomb.png");
+    -fx-min-width: 23px;
+    -fx-min-height: 21px;
+    -fx-background-position: center center;
+}
+
 #characterWithbow {
     -fx-background-image: url("../../Images/character/characterWithArrow.png");
     -fx-min-height: 62px;
