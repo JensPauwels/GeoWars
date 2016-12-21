@@ -70,7 +70,6 @@ public class Client extends Application {
         mainLayout.setMinWidth(800);
         mainLayout.setId("container");
         scene.getStylesheets().add("application/Styling/application.css");
-        System.out.println(System.identityHashCode(primaryStage));
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(false);
         primaryStage.show();

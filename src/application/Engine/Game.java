@@ -35,8 +35,8 @@ public class Game {
     private List<Boss> bosses;
     private Map<Bomb,Long> bombs = new HashMap<>();
     private GameField gameField;
-    private ClientProgram cp;
-    private PacketMessage pm;
+    private ClientProgram clientProgram;
+    private PacketMessage packetMessage;
     private Engine instance;
     private Random random;
     private Vector2D mouseLocation,location;
@@ -59,8 +59,8 @@ public class Game {
         powerups = new LinkedList<>();
         bosses = new LinkedList<>();
         gameField = new GameField();
-        cp = new ClientProgram();
-        pm = new PacketMessage();
+        clientProgram = new ClientProgram();
+        packetMessage = new PacketMessage();
         instance = Engine.getInstance();
         random = new Random();
         mouseLocation = new Vector2D(0,0);
@@ -69,6 +69,7 @@ public class Game {
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
         this.multiPlayer = multiPlayer;
+        System.out.println(multiPlayer);
     }
 
     public void initGame() throws Exception {
@@ -77,12 +78,13 @@ public class Game {
         startGame();
         if(multiPlayer) {
             secondCharacter = new Attractor(playField);
-            cp.start();
+            clientProgram.start();
+            Thread.sleep(1000);
         }
     }
 
     private void prepareGame() {
-        for (int i = 0; i < 5; i++) {addEnemy();}
+        if(!multiPlayer){for (int i = 0; i < 5; i++) {addEnemy();}}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
     }
@@ -102,6 +104,8 @@ public class Game {
                 ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
+                    packetMessage = clientProgram.getPm() ;
+                    spawnMultiPlayer();
                     moveLocation();
                     handler();
                 }
@@ -110,19 +114,63 @@ public class Game {
         loop.start();
     }
 
+    public void spawnMultiPlayer(){
+        if(packetMessage.getId() == 1){
+            if(packetMessage.getSpawnFirstClient()){
+                spawnEnemyMultiPlayer(packetMessage.getEnemies());
+                packetMessage.setSpawnFirstClient(false);
+            }
+        }
+        else {
+            if(packetMessage.getSpawnSecondClient()){
+                spawnEnemyMultiPlayer(packetMessage.getEnemies());
+                packetMessage.setSpawnSecondClient(false);
+            }
+        }
+    }
+
 
     public void moveLocation(){
-        this.pm = cp.getPm() ;
-        if(this.pm.getId() == 1){
-            secondCharacter.setLocation(pm.getSecondCharacter());}
+        if(packetMessage.getId() == 1){
+            secondCharacter.setLocation(packetMessage.getSecondCharacter());
+        }
         else{
-            secondCharacter.setLocation(pm.getFirstCharacter());}
+            secondCharacter.setLocation(packetMessage.getFirstCharacter());
+        }
         secondCharacter.display();
     }
 
+    private void moveEnemysTowardsMainCharacter() {
+        for (int i = 0;i < allEnemys.size();i++) {
+            Enemy enemy = allEnemys.get(i);
+            if(multiPlayer){
+                double distance = Math.sqrt(Math.pow(mainCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
+                double secondDistance = Math.sqrt(Math.pow(secondCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
+                if(distance < secondDistance){enemy.movement(mainCharacter.getLocation(),true);}
+                else {enemy.movement(secondCharacter.getLocation(),true);}
+            }else{
+                enemy.movement(mainCharacter.getLocation(), true);
+            }
+            //if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
+        }
+    }
+
+    public void spawnEnemyMultiPlayer(List<Vector2D> enemies){
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = new Enemy(playField,enemies.get(i));
+            allEnemys.add(enemy);
+        }
+    }
+
     public void handler(){
-        this.pm.setFirstCharacter(mainCharacter.getLocation());
-        cp.setPm(this.pm);
+        packetMessage.setFirstCharacter(mainCharacter.getLocation());
+        List<Vector2D> enemieLocations = new LinkedList<>();
+        for (int i = 0; i < allEnemys.size(); i++) {
+            enemieLocations.add(allEnemys.get(i).getLocation());
+        }
+        packetMessage.setEnemies(enemieLocations);
+
+        clientProgram.setPm(packetMessage);
     }
 
 
@@ -375,13 +423,7 @@ public class Game {
         }
     }
 
-    private void moveEnemysTowardsMainCharacter() {
-        for (int i = 0;i < allEnemys.size();i++) {
-            Enemy enemy = allEnemys.get(i);
-            enemy.movement(mainCharacter.getLocation(), true);
-            if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
-        }
-    }
+
 
     private void handleBullets() {
         for (int i = 0; i < BulletFromBoss.size(); i++) {
@@ -470,7 +512,7 @@ public class Game {
 
     private void stopGame() {
         loop.stop();
-        updateHighscoreToDataBase();
+      //  updateHighscoreToDataBase();
         instance.setWave(waves);
         instance.setHighscore(xp);
         Client.loadScreen("endGame");

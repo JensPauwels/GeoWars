@@ -24,7 +24,6 @@ public class LoginController {
     private void initialGame() throws Exception {
         this.username = userNameInput.getText();
         this.password = passwordInput.getText();
-        System.out.println(username + ": is de username");
         instance.setUsername(username);
 
         query = "select * from users where username like '" + username + "' and password like '" + password + "'";

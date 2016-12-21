@@ -21,7 +21,7 @@ public class ClientProgram extends Listener {
 	//String ip = "172.31.22.175";
 
 
-	public static PacketMessage getPm() {
+	public  PacketMessage getPm() {
 		return pm;
 	}
 

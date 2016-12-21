@@ -15,8 +15,8 @@ public class ServerProgram extends Listener {
 	private Server server;
 	private int udpPort = 27960, tcpPort = 27960;
 	private List<Connection> myConnections = new LinkedList<>();
-	static PacketMessage packetMessage = new PacketMessage();
-	static PacketMessage packetMessage2 = new PacketMessage();
+	private static PacketMessage packetMessage = new PacketMessage();
+	private static PacketMessage packetMessage2 = new PacketMessage();
 	private List<Vector2D> enemieLocations;
 
 	
@@ -26,15 +26,17 @@ public class ServerProgram extends Listener {
 		serverProgram.addLocs();
 		packetMessage.setId(1);
 		packetMessage2.setId(2);
+
 	}
 
 	public void addLocs(){
+
 		this.enemieLocations = new LinkedList<>();
 		for (int i = 0; i < 5; i++) {
 			this.enemieLocations.add(new Vector2D());
 		}
-		this.packetMessage.setEnemies(this.enemieLocations);
-		this.packetMessage2.setEnemies(this.enemieLocations);
+		packetMessage.setEnemies(this.enemieLocations);
+		packetMessage2.setEnemies(this.enemieLocations);
 	}
 
 	public void start() throws IOException {
@@ -55,13 +57,15 @@ public class ServerProgram extends Listener {
 	public void connected(Connection c){
 		myConnections.add(c);
 		System.out.println("Received a connection from "+c.getRemoteAddressTCP().getHostString());
+		if(myConnections.size() == 2 ){
+			sendMsg();
+		}
 	}
 
 	private void sendMsg(){
 		if(myConnections.size() == 2){
-			System.out.println(this.packetMessage.getEnemies().size());
-			myConnections.get(0).sendTCP(this.packetMessage);
-			myConnections.get(1).sendTCP(this.packetMessage2);
+			myConnections.get(0).sendTCP(packetMessage);
+			myConnections.get(1).sendTCP(packetMessage2);
 		}
 	}
 
@@ -70,15 +74,15 @@ public class ServerProgram extends Listener {
 			PacketMessage packet = (PacketMessage) p;
 			if(myConnections.size() == 2){
 				if(c == myConnections.get(0)){
-					this.packetMessage.setFirstCharacter(packet.getFirstCharacter());
-					this.packetMessage2.setFirstCharacter(packet.getFirstCharacter());
-					System.out.println(packet.getEnemies().size());
+					packetMessage.setFirstCharacter(packet.getFirstCharacter());
+					packetMessage2.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
-					packetMessage2.setSpawnFirstClient(packet.getSpawnFirstClient());
+
 				}
 				else{
-					this.packetMessage.setSecondCharacter(packet.getFirstCharacter());
-					this.packetMessage2.setSecondCharacter(packet.getFirstCharacter());
+					packetMessage.setSecondCharacter(packet.getFirstCharacter());
+					packetMessage2.setSecondCharacter(packet.getFirstCharacter());
+					packetMessage2.setSpawnSecondClient(packet.getSpawnSecondClient());
 				}
 
 
@@ -88,6 +92,11 @@ public class ServerProgram extends Listener {
 
 	public void disconnected(Connection c){
 		myConnections.remove(c);
+		packetMessage = new PacketMessage();
+		packetMessage2 = new PacketMessage();
+		addLocs();
+		packetMessage.setId(1);
+		packetMessage2.setId(2);
 		System.out.println("A client disconnected!");
 	}
 }
