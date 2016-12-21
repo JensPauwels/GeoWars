@@ -12,8 +12,27 @@ public class PacketMessage {
 	private List<Vector2D> bullets = new LinkedList<>();
 	private Vector2D firstCharacter;
 	private Vector2D secondCharacter;
-	public Boolean spawnFirstClient = true;
-	public Boolean spawnSecondClient = true;
+	private Boolean spawnFirstClient = true;
+	private Boolean spawnSecondClient = true;
+	private List<Vector2D> enemies = new LinkedList<>();
+	private List<Integer> deadEnemies = new LinkedList<>();
+	private int id = 0;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<Integer> getDeadEnemies() {
+		return deadEnemies;
+	}
+
+	public void setDeadEnemies(List<Integer> deadEnemies) {
+		this.deadEnemies = deadEnemies;
+	}
 
 	public Boolean getSpawnSecondClient() {
 		return spawnSecondClient;
@@ -31,9 +50,7 @@ public class PacketMessage {
 		this.spawnFirstClient = spawnFirstClient;
 	}
 
-	public List<Vector2D> enemies = new LinkedList<>();
 
-	public int id=0;
 
 	public List<Vector2D> getEnemies() {
 		return enemies;
@@ -43,19 +60,10 @@ public class PacketMessage {
 		this.enemies = enemies;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public PacketMessage(){
 		this.firstCharacter = new Vector2D(500,400);
 		this.secondCharacter = new Vector2D(300,400);
-
-
 	}
 
 

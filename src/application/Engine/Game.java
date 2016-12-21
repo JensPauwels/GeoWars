@@ -3,7 +3,7 @@ package application.Engine;
 import application.Client;
 import application.Models.AttractorType.Attractor;
 import application.Models.BulletType.*;
-import application.Models.EnemyType.Blood;
+import application.Models.Blood;
 import application.Models.EnemyType.Boss;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
@@ -12,7 +12,6 @@ import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
 import application.Multiplayer.ClientProgram;
 import application.Multiplayer.PacketMessage;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -48,10 +47,11 @@ public class Game {
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
     private int waves = 1;
-
+    private List<Integer> deadEnemies;
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        deadEnemies = new LinkedList<>();
         fakeDataBase = new FakeDataBase();
         allEnemys = new LinkedList<>();
         allBullets = new LinkedList<>();
@@ -69,7 +69,6 @@ public class Game {
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
         this.multiPlayer = multiPlayer;
-        System.out.println(multiPlayer);
     }
 
     public void initGame() throws Exception {
@@ -97,46 +96,56 @@ public class Game {
                 moveChar();
                 handleBullets();
                 moveEnemysTowardsMainCharacter();
-                updateWaves();
                 doSpecialAbility();
                 shoot();
                 checkColOnPowerUps();
                 ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
-                    packetMessage = clientProgram.getPm() ;
+                    packetMessage = clientProgram.getPm();
+                    checkOnDeadEnemys();
                     spawnMultiPlayer();
                     moveLocation();
                     handler();
+                }
+                else {
+                    updateWaves();
                 }
             }
         };
         loop.start();
     }
 
+    public void checkOnDeadEnemys(){
+        for (int i = 0; i < packetMessage.getDeadEnemies().size(); i++) {
+            for (int j = 0; j < allEnemys.size(); j++) {
+                if(allEnemys.get(j).getIdn() == packetMessage.getDeadEnemies().get(i)){
+                    killEnemy(allEnemys.get(j));
+                }
+            }
+        }
+    }
+
     public void spawnMultiPlayer(){
         if(packetMessage.getId() == 1){
             if(packetMessage.getSpawnFirstClient()){
-                spawnEnemyMultiPlayer(packetMessage.getEnemies());
+                deadEnemies.removeAll(deadEnemies);
+                spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
                 packetMessage.setSpawnFirstClient(false);
             }
         }
         else {
             if(packetMessage.getSpawnSecondClient()){
-                spawnEnemyMultiPlayer(packetMessage.getEnemies());
+                deadEnemies.removeAll(deadEnemies);
+                spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
                 packetMessage.setSpawnSecondClient(false);
             }
         }
     }
 
-
     public void moveLocation(){
-        if(packetMessage.getId() == 1){
-            secondCharacter.setLocation(packetMessage.getSecondCharacter());
-        }
-        else{
-            secondCharacter.setLocation(packetMessage.getFirstCharacter());
-        }
+        if(packetMessage.getId() == 1){secondCharacter.setLocation(packetMessage.getSecondCharacter());}
+        else{secondCharacter.setLocation(packetMessage.getFirstCharacter());}
         secondCharacter.display();
     }
 
@@ -146,9 +155,15 @@ public class Game {
             if(multiPlayer){
                 double distance = Math.sqrt(Math.pow(mainCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
                 double secondDistance = Math.sqrt(Math.pow(secondCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
-                if(distance < secondDistance){enemy.movement(mainCharacter.getLocation(),true);}
-                else {enemy.movement(secondCharacter.getLocation(),true);}
-            }else{
+
+                if(distance  < secondDistance ){
+                    enemy.movement(mainCharacter.getLocation(),true);
+                }
+                else {
+                    enemy.movement(secondCharacter.getLocation(),true);
+                }
+            }
+            else{
                 enemy.movement(mainCharacter.getLocation(), true);
             }
             //if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
@@ -157,8 +172,9 @@ public class Game {
 
     public void spawnEnemyMultiPlayer(List<Vector2D> enemies){
         for (int i = 0; i < enemies.size(); i++) {
-            Enemy enemy = new Enemy(playField,enemies.get(i));
+            Enemy enemy = new Enemy(playField,enemies.get(i),i);
             allEnemys.add(enemy);
+            System.out.println(allEnemys.size());
         }
     }
 
@@ -169,7 +185,7 @@ public class Game {
             enemieLocations.add(allEnemys.get(i).getLocation());
         }
         packetMessage.setEnemies(enemieLocations);
-
+        packetMessage.setDeadEnemies(deadEnemies);
         clientProgram.setPm(packetMessage);
     }
 
@@ -383,7 +399,6 @@ public class Game {
         if(time + 5000 < System.currentTimeMillis()){
             location = follower.getLocation();
             Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
-            System.out.println(bullet);
             time = System.currentTimeMillis();
         }
     }
@@ -412,10 +427,6 @@ public class Game {
         for (int i = 0; i < allEnemys.size(); i++) {
             Enemy e = allEnemys.get(i);
             if (e.coll(b, e)) {
-                System.out.println("x: "+e.getLocation().getX()+", y: "+e.getLocation().getY());
-                location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
-                Blood blood = new Blood(playField,location);
-                blood.display();
                 b.setVisible(false);
                 allBullets.remove(b);
                 killEnemy(e);
@@ -452,10 +463,14 @@ public class Game {
 
     private void killEnemy(Enemy e) {
         e.setVisible(false);
+        location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
+        Blood blood = new Blood(playField,location);
+        blood.display();
         allEnemys.remove(e);
         if(multiplierActivated){ xp = xp + e.getXp()*2;}
         else{xp = xp+ e.getXp();}
         gameField.updateHighscore(xp);
+        deadEnemies.add(e.getIdn());
         enemysKilled++;
     }
 

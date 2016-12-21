@@ -29,7 +29,6 @@ public class Engine {
 
 
     public static Engine getInstance() {
-
         if (firstInstance == null) {
             firstInstance = new Engine();
         }

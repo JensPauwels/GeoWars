@@ -1,4 +1,4 @@
-package application.Models.EnemyType;
+package application.Models;
 
 import application.Models.Sprite;
 import application.Models.Vector2D;

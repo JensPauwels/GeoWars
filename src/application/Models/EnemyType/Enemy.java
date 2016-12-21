@@ -13,6 +13,7 @@ public class Enemy extends Sprite {
     private int xp;
     private Vector2D destination;
     private Random random = new Random();
+    private int idn;
 
 
     public Enemy(Pane bp) {
@@ -20,9 +21,18 @@ public class Enemy extends Sprite {
         this.xp = 10;
     }
 
-    public Enemy(Pane bp,Vector2D location){
+    public Enemy(Pane bp,Vector2D location,int id){
         super(bp, location, 12.5, 25);
         this.xp = 10;
+        this.idn = id;
+    }
+
+    public int getIdn() {
+        return idn;
+    }
+
+    public void setIdn(int idn) {
+        this.idn = idn;
     }
 
     public int getXp(){

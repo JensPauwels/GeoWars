@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 public class Boss extends Enemy {
 
     public Boss(Pane bp, Vector2D location) {
-        super(bp, location);
+        super(bp, location,0);
         this.setHealth(25);
         this.setDestination(this.getLocation());
     }

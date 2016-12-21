@@ -18,6 +18,8 @@ public class ServerProgram extends Listener {
 	private static PacketMessage packetMessage = new PacketMessage();
 	private static PacketMessage packetMessage2 = new PacketMessage();
 	private List<Vector2D> enemieLocations;
+	private List<Integer> deadenemies = new LinkedList<>();
+	private int wave = 1;
 
 	
 	public static void main(String[] args) throws Exception {
@@ -30,9 +32,9 @@ public class ServerProgram extends Listener {
 	}
 
 	public void addLocs(){
-
+		this.deadenemies = new LinkedList<>();
 		this.enemieLocations = new LinkedList<>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < (5*this.wave); i++) {
 			this.enemieLocations.add(new Vector2D());
 		}
 		packetMessage.setEnemies(this.enemieLocations);
@@ -72,23 +74,43 @@ public class ServerProgram extends Listener {
 	public void received(Connection c, Object p){
 		if(p instanceof PacketMessage){
 			PacketMessage packet = (PacketMessage) p;
+
 			if(myConnections.size() == 2){
 				if(c == myConnections.get(0)){
 					packetMessage.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage2.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
-
 				}
 				else{
 					packetMessage.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSpawnSecondClient(packet.getSpawnSecondClient());
 				}
-
-
+				checkOnDeadEnemies(packet.getDeadEnemies());
 			sendMsg();
 		}
 	}}
+
+	public void checkOnDeadEnemies(List<Integer> ids){
+		for (int i = 0; i < ids.size(); i++) {
+			if(!deadenemies.contains(ids.get(i))){
+				deadenemies.add(ids.get(i));
+			}
+		}
+		if(deadenemies.size() == wave*5){
+			deadenemies.removeAll(deadenemies);
+			System.out.println("deadenemies size " +deadenemies.size());
+			this.wave = this.wave +1;
+			System.out.println(wave*5);
+			addLocs();
+			System.out.println(enemieLocations.size());
+			packetMessage.setSpawnFirstClient(true);
+			packetMessage2.setSpawnSecondClient(true);
+		}
+		packetMessage.setDeadEnemies(deadenemies);
+		packetMessage2.setDeadEnemies(deadenemies);
+
+	}
 
 	public void disconnected(Connection c){
 		myConnections.remove(c);
