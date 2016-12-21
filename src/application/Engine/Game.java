@@ -48,11 +48,7 @@ public class Game {
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
     private int waves = 1;
-    private int xp;
-    private boolean rapidFireActivated = false;
-    private boolean shieldActivated = false;
-    private boolean multiplierActivated = false;
-    private boolean bombActivated=false;
+
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
