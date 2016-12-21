@@ -3,9 +3,12 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
 <BorderPane id="loginPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.LoginController">
     <center>
         <VBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER_RIGHT">
@@ -41,6 +44,16 @@
                     </children>
                 </VBox>
             </HBox>
+         <BorderPane.margin>
+            <Insets top="40.0" />
+         </BorderPane.margin>
         </VBox>
     </center>
+   <bottom>
+      <JFXButton onAction="#register" maxHeight="20.0" minHeight="10.0" minWidth="60.0" text=" " BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="140.0" />
+         </BorderPane.margin>
+      </JFXButton>
+   </bottom>
 </BorderPane>

@@ -2,17 +2,46 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
 <BorderPane id="gameOver" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.EndGameController">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="yourScore" text="your score">
+               <VBox.margin>
+                  <Insets left="50.0" top="100.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="wave" layoutX="393.0" layoutY="23.0" text="wave">
+               <VBox.margin>
+                  <Insets left="50.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="highScore" layoutX="393.0" layoutY="15.0" text="highscore">
+               <VBox.margin>
+                  <Insets left="50.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="ranking" layoutX="393.0" layoutY="44.0" text="rankings">
+               <VBox.margin>
+                  <Insets left="50.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="coins" layoutX="393.0" layoutY="61.0" text="coins">
+               <VBox.margin>
+                  <Insets left="50.0" top="30.0" />
+               </VBox.margin>
+            </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <VBox.margin>
-                  <Insets top="330.0" />
+                  <Insets />
                </VBox.margin>
                <children>
-                  <JFXButton onAction="#startNewGame" minHeight="60.0" minWidth="200.0" text=" ">
+                  <JFXButton minHeight="60.0" minWidth="200.0" onAction="#startNewGame" text=" ">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -21,7 +50,7 @@
             </HBox>
             <HBox alignment="BOTTOM_RIGHT">
                <children>
-                  <JFXButton onAction="#homePage" minWidth="200.0" text=" ">
+                  <JFXButton minWidth="200.0" onAction="#homePage" text=" ">
                      <HBox.margin>
                         <Insets right="10.0" top="20.0" />
                      </HBox.margin>

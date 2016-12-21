@@ -7,17 +7,19 @@ package application.Controllers;
 import application.Client;
 import application.Engine.Engine;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class EndGameController {
 
     public Engine engine = Engine.getInstance();
+    public Label yourScore,wave,highScore,coins,ranking;
 
     @FXML
     private void initialize() {
         Client.loadScreen("gameOptions");
-        System.out.println(engine.getHighscore());
-        System.out.println(engine.getWave());
-        System.out.println(Math.ceil(engine.getHighscore() / 100));
+        yourScore.setText(Integer.toString(engine.getHighscore()));
+        wave.setText(Integer.toString(engine.getWave()));
+        coins.setText(Double.toString(Math.ceil(engine.getHighscore() / 100)));
     }
 
     @FXML

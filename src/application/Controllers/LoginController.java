@@ -25,9 +25,7 @@ public class LoginController {
         this.username = userNameInput.getText();
         this.password = passwordInput.getText();
         instance.setUsername(username);
-
         query = "select * from users where username like '" + username + "' and password like '" + password + "'";
-
         if (db.controle(query)) {
             instance.setUsername(username);
             instance.initCurrentUser();
@@ -39,23 +37,9 @@ public class LoginController {
     }
 
     @FXML
-    private void Register() throws Exception {
-
-        this.username = userNameInput.getText();
-        this.password = passwordInput.getText();
-
-        query = "select * from users where username like '" + username + "'";
-        if (db.controle(query)) {
-            alert.setText(username + " is already token");
-        } else {
-            alert.setVisible(false);
-
-            query = "INSERT INTO users VALUES(default,'" + username + "', '" + password + "',0)";
-            db.updateTable(query);
-
-            query = "INSERT INTO settings VALUES(default," + 0 + ",'" + username + "',false,false)";
-            db.updateTable(query);
-            Client.loadScreen("gameOptions");
-        }
+    public void register(){
+        Client.loadScreen("SignUpScreen");
     }
+
+
 }
