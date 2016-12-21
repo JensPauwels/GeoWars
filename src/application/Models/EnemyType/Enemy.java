@@ -6,9 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+import java.util.Random;
+
 public class Enemy extends Sprite {
     private int health;
     private int xp;
+    private Vector2D destination;
+    private Random random = new Random();
 
 
     public Enemy(Pane bp) {
@@ -23,6 +27,30 @@ public class Enemy extends Sprite {
 
     public int getXp(){
         return this.xp;
+    }
+
+    public Vector2D getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Vector2D destination) {
+        this.destination = destination;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void changeLocation(){
+        this.movement(this.getDestination(),false);
+        if(Math.round(this.getLocation().getX()) == Math.round(this.getDestination().getX()) && Math.round(this.getLocation().getY()) == Math.round(this.getDestination().getY())){
+            Vector2D location = new Vector2D(random.nextDouble() *800,random.nextDouble()*600);
+            this.setDestination(location);
+        }
     }
 
 

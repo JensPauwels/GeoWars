@@ -2,8 +2,8 @@ package application.Engine;
 
 import application.Client;
 import application.Models.AttractorType.Attractor;
-import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
+import application.Models.EnemyType.Boss;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.Bomb;
@@ -93,6 +93,7 @@ public class Game {
                 ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
+                    moveLocation();
                     handler();
                 }
             }
@@ -101,13 +102,14 @@ public class Game {
     }
 
 
-    public void handler(){
+    public void moveLocation(){
         this.pm = cp.getPm() ;
-        Vector2D first = this.pm.getFirstCharacter();
-        Vector2D second = this.pm.getSecondCharacter();
-        if(this.pm.getId() == 1){jef.setLocation(first.getX(),first.getY());}
-        else{jef.setLocation(second.getX(),second.getY());}
+        if(this.pm.getId() == 1){jef.setLocation(pm.getSecondCharacter());}
+        else{jef.setLocation(pm.getFirstCharacter());}
         jef.display();
+    }
+
+    public void handler(){
         this.pm.setFirstCharacter(mainCharacter.getLocation());
         cp.setPm(this.pm);
     }
@@ -415,9 +417,7 @@ public class Game {
     private void shoot() {
 
         if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
-            if(rapidFireActivated){
-                trippleArrow();
-            }
+            if(rapidFireActivated){trippleArrow();}
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
         }
