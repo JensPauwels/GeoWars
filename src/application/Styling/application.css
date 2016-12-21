@@ -193,6 +193,13 @@
     -fx-background-position: center center;
 }
 
+#blood{
+    -fx-background-image: url("../../Images/enemy/Blood.png");
+    -fx-min-width: 30px;
+    -fx-min-height: 35px;
+    -fx-background-position: center center;
+}
+
 #characterWithbow {
     -fx-background-image: url("../../Images/character/characterWithArrow.png");
     -fx-min-height: 62px;

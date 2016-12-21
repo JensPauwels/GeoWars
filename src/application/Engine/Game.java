@@ -4,6 +4,7 @@ import application.Client;
 import application.Models.AttractorType.Attractor;
 import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
+import application.Models.EnemyType.Blood;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.Bomb;
@@ -11,6 +12,7 @@ import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
 import application.Multiplayer.ClientProgram;
 import application.Multiplayer.PacketMessage;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -18,9 +20,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 
 public class Game {
@@ -33,13 +34,14 @@ public class Game {
     private List<Bullet> BulletFromBoss = new LinkedList<>();
     private List<PowerUp> powerups = new LinkedList<>();
     private List<Boss> bosses = new LinkedList<>();
+    private Map<Bomb,Long> bombs = new HashMap<>();
     private GameField gameField = new GameField();
     private ClientProgram cp = new ClientProgram();
     private PacketMessage pm = new PacketMessage();
     private Engine instance = Engine.getInstance();
     private Random random = new Random();
     private Vector2D mouseLocation,location = new Vector2D(0, 0);
-    private long time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
+    private long time, shootersTime,bossSpeed,tekstTime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead,multiPlayer;
@@ -215,20 +217,29 @@ public class Game {
             rapidFireActivated =false;
             shieldActivated = false;
             multiplierActivated = false;
+            bombActivated=false;
+            for (Enemy e:allEnemys) {
+                e.setMaxSpeed(2);
+            }
         }
-    }
+        for (Map.Entry<Bomb,Long> entry : bombs.entrySet()) {
+            if(entry.getValue() + 6000 < System.currentTimeMillis()){
+                entry.getKey().setVisible(false);
+                bombs.remove(entry);
+            }
+    }}
 
 
     private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(10);
-        switch (5){
+        switch (2){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
                 break;
             case 2:
-                shooterSpeed = 2;
+                shooterSpeed = 0.3;
                 gameField.setActivatedPowerupLabel("Fire arrow");
                 break;
             case 3:
@@ -250,11 +261,13 @@ public class Game {
                 break;
             case 7:
                 gameField.setActivatedPowerupLabel("Slow fire");
-                shooterSpeed= 0.2;
+                shooterSpeed= 2;
                 break;
             case 8:
                 gameField.setActivatedPowerupLabel("Orcs on fire");
-
+                for (Enemy e:allEnemys) {
+                    e.setMaxSpeed(3);
+                }
                 break;
             case 9:
                 gameField.setActivatedPowerupLabel("Orc zone");
@@ -340,6 +353,10 @@ public class Game {
         for (int i = 0; i < allEnemys.size(); i++) {
             Enemy e = allEnemys.get(i);
             if (e.coll(b, e)) {
+                System.out.println("x: "+e.getLocation().getX()+", y: "+e.getLocation().getY());
+                location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
+                Blood blood = new Blood(playField,location);
+                blood.display();
                 b.setVisible(false);
                 allBullets.remove(b);
                 killEnemy(e);
@@ -404,13 +421,15 @@ public class Game {
         else if (key == KeyCode.S || key == KeyCode.DOWN) {down = bool;}
         else if (key == KeyCode.A || key == KeyCode.LEFT) {left = bool;}
         else if (key == KeyCode.D || key == KeyCode.RIGHT) {right = bool;}
-        else if (key == KeyCode.SPACE || bombActivated){
-            System.out.println("pressed spacebar");
+        else if (key == KeyCode.SPACE && bombActivated){
             location = new Vector2D(mainCharacter.getLocation().getX(),mainCharacter.getLocation().getY());
             Bomb bomb = new Bomb(playField, location);
             bomb.display();
+            bombs.put(bomb,System.currentTimeMillis());
+
+            }
         }
-    }
+
 
     private void shoot() {
 
