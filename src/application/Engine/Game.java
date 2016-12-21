@@ -24,38 +24,45 @@ import java.util.Random;
 
 
 public class Game {
-    private FakeDataBase fakeDataBase = new FakeDataBase();
+    private FakeDataBase fakeDataBase;
     private Pane playField;
-    private Attractor mainCharacter;
+    private Attractor mainCharacter, secondCharacter;
     private Follower follower;
-    private List<Enemy> allEnemys = new LinkedList<>();
-    private List<Bullet> allBullets = new LinkedList<>();
-    private List<Bullet> BulletFromBoss = new LinkedList<>();
-    private List<PowerUp> powerups = new LinkedList<>();
-    private List<Boss> bosses = new LinkedList<>();
-    private GameField gameField = new GameField();
-    private ClientProgram cp = new ClientProgram();
-    private PacketMessage pm = new PacketMessage();
-    private Engine instance = Engine.getInstance();
-    private Random random = new Random();
-    private Vector2D mouseLocation,location = new Vector2D(0, 0);
+    private List<Enemy> allEnemys;
+    private List<Bullet> allBullets,BulletFromBoss;
+    private List<PowerUp> powerups;
+    private List<Boss> bosses;
+    private GameField gameField;
+    private ClientProgram cp;
+    private PacketMessage pm;
+    private Engine instance;
+    private Random random;
+    private Vector2D mouseLocation,location;
     private long time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
-    private boolean up, down, left, right, shooting,bossDead,multiPlayer;
-    private int highScore, enemysKilled,angle = 0;
+    private boolean up, down, left, right, shooting,bossDead,multiPlayer,rapidFireActivated,shieldActivated,multiplierActivated,bombActivated;
+    private int enemysKilled,angle,xp = 0;
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
     private int waves = 1;
-    private int xp;
-    private boolean rapidFireActivated = false;
-    private boolean shieldActivated = false;
-    private boolean multiplierActivated = false;
-    private boolean bombActivated=false;
 
-    private static Attractor jef;
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        fakeDataBase = new FakeDataBase();
+        allEnemys = new LinkedList<>();
+        allBullets = new LinkedList<>();
+        BulletFromBoss = new LinkedList<>();
+        powerups = new LinkedList<>();
+        bosses = new LinkedList<>();
+        gameField = new GameField();
+        cp = new ClientProgram();
+        pm = new PacketMessage();
+        instance = Engine.getInstance();
+        random = new Random();
+        mouseLocation = new Vector2D(0,0);
+        location = new Vector2D(0,0);
+
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
@@ -63,11 +70,14 @@ public class Game {
     }
 
     public void initGame() throws Exception {
+
+
+
         addListeners();
         prepareGame();
         startGame();
         if(multiPlayer) {
-            jef = new Attractor(playField);
+            secondCharacter = new Attractor(playField);
             cp.start();
         }
     }
@@ -104,9 +114,11 @@ public class Game {
 
     public void moveLocation(){
         this.pm = cp.getPm() ;
-        if(this.pm.getId() == 1){jef.setLocation(pm.getSecondCharacter());}
-        else{jef.setLocation(pm.getFirstCharacter());}
-        jef.display();
+        if(this.pm.getId() == 1){
+            secondCharacter.setLocation(pm.getSecondCharacter());}
+        else{
+            secondCharacter.setLocation(pm.getFirstCharacter());}
+        secondCharacter.display();
     }
 
     public void handler(){
@@ -449,8 +461,8 @@ public class Game {
     }
 
     private void updateHighscoreToDataBase() {
-        if (instance.getCurrentUser().getHighscore() < highScore) {
-            String query = "update users set highScore=" + highScore + " where username like '" + instance.getCurrentUser().getUsername() + "'";
+        if (instance.getCurrentUser().getHighscore() < xp) {
+            String query = "update users set highScore=" + xp + " where username like '" + instance.getCurrentUser().getUsername() + "'";
             instance.getDb().updateTable(query);
         }
     }
