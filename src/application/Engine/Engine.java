@@ -1,8 +1,7 @@
 package application.Engine;
 
 
-import application.Models.BossType.Boss;
-import application.Models.BossType.Dragon;
+import application.Models.EnemyType.Boss;
 import application.Models.BulletType.*;
 import application.Models.FollowerType.Donkey;
 import application.Models.FollowerType.Follower;
@@ -73,7 +72,7 @@ public class Engine {
     }
 
     public Boss makeBoss(Pane bp, Vector2D mainloc){
-        return new Dragon(bp,mainloc);
+        return new Boss(bp,mainloc);
     }
 
     public Follower makeFollower(Pane bp) {

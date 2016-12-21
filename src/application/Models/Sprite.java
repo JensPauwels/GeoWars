@@ -147,5 +147,9 @@ public abstract class Sprite extends Region {
         location.setY(y);
     }
 
+    public void setLocation(Vector2D vector2D){
+        location = vector2D;
+    }
+
 
 }

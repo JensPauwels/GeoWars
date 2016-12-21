@@ -2,9 +2,9 @@ package application.Engine;
 
 import application.Client;
 import application.Models.AttractorType.Attractor;
-import application.Models.BossType.Boss;
 import application.Models.BulletType.*;
 import application.Models.EnemyType.Blood;
+import application.Models.EnemyType.Boss;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.Bomb;
@@ -25,27 +25,26 @@ import java.util.*;
 
 
 public class Game {
-    private FakeDataBase fakeDataBase = new FakeDataBase();
+    private FakeDataBase fakeDataBase;
     private Pane playField;
-    private Attractor mainCharacter;
+    private Attractor mainCharacter, secondCharacter;
     private Follower follower;
-    private List<Enemy> allEnemys = new LinkedList<>();
-    private List<Bullet> allBullets = new LinkedList<>();
-    private List<Bullet> BulletFromBoss = new LinkedList<>();
-    private List<PowerUp> powerups = new LinkedList<>();
-    private List<Boss> bosses = new LinkedList<>();
+    private List<Enemy> allEnemys;
+    private List<Bullet> allBullets,BulletFromBoss;
+    private List<PowerUp> powerups;
+    private List<Boss> bosses;
     private Map<Bomb,Long> bombs = new HashMap<>();
-    private GameField gameField = new GameField();
-    private ClientProgram cp = new ClientProgram();
-    private PacketMessage pm = new PacketMessage();
-    private Engine instance = Engine.getInstance();
-    private Random random = new Random();
-    private Vector2D mouseLocation,location = new Vector2D(0, 0);
-    private long time, shootersTime,bossSpeed,tekstTime = System.currentTimeMillis();
+    private GameField gameField;
+    private ClientProgram cp;
+    private PacketMessage pm;
+    private Engine instance;
+    private Random random;
+    private Vector2D mouseLocation,location;
+    private long time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
-    private boolean up, down, left, right, shooting,bossDead,multiPlayer;
-    private int highScore, enemysKilled,angle = 0;
+    private boolean up, down, left, right, shooting,bossDead,multiPlayer,rapidFireActivated,shieldActivated,multiplierActivated,bombActivated;
+    private int enemysKilled,angle,xp = 0;
     private int enemyToKill = 5;
     private double shooterSpeed = 1;
     private int waves = 1;
@@ -55,9 +54,21 @@ public class Game {
     private boolean multiplierActivated = false;
     private boolean bombActivated=false;
 
-    private static Attractor jef;
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        fakeDataBase = new FakeDataBase();
+        allEnemys = new LinkedList<>();
+        allBullets = new LinkedList<>();
+        BulletFromBoss = new LinkedList<>();
+        powerups = new LinkedList<>();
+        bosses = new LinkedList<>();
+        gameField = new GameField();
+        cp = new ClientProgram();
+        pm = new PacketMessage();
+        instance = Engine.getInstance();
+        random = new Random();
+        mouseLocation = new Vector2D(0,0);
+        location = new Vector2D(0,0);
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
@@ -69,7 +80,7 @@ public class Game {
         prepareGame();
         startGame();
         if(multiPlayer) {
-            jef = new Attractor(playField);
+            secondCharacter = new Attractor(playField);
             cp.start();
         }
     }
@@ -95,6 +106,7 @@ public class Game {
                 ControlPowerUp();
                 handleBoss();
                 if(multiPlayer){
+                    moveLocation();
                     handler();
                 }
             }
@@ -103,13 +115,16 @@ public class Game {
     }
 
 
-    public void handler(){
+    public void moveLocation(){
         this.pm = cp.getPm() ;
-        Vector2D first = this.pm.getFirstCharacter();
-        Vector2D second = this.pm.getSecondCharacter();
-        if(this.pm.getId() == 1){jef.setLocation(first.getX(),first.getY());}
-        else{jef.setLocation(second.getX(),second.getY());}
-        jef.display();
+        if(this.pm.getId() == 1){
+            secondCharacter.setLocation(pm.getSecondCharacter());}
+        else{
+            secondCharacter.setLocation(pm.getFirstCharacter());}
+        secondCharacter.display();
+    }
+
+    public void handler(){
         this.pm.setFirstCharacter(mainCharacter.getLocation());
         cp.setPm(this.pm);
     }
@@ -233,7 +248,7 @@ public class Game {
     private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(10);
-        switch (2){
+        switch (5){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
@@ -434,9 +449,7 @@ public class Game {
     private void shoot() {
 
         if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
-            if(rapidFireActivated){
-                trippleArrow();
-            }
+            if(rapidFireActivated){trippleArrow();}
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
         }
@@ -468,8 +481,8 @@ public class Game {
     }
 
     private void updateHighscoreToDataBase() {
-        if (instance.getCurrentUser().getHighscore() < highScore) {
-            String query = "update users set highScore=" + highScore + " where username like '" + instance.getCurrentUser().getUsername() + "'";
+        if (instance.getCurrentUser().getHighscore() < xp) {
+            String query = "update users set highScore=" + xp + " where username like '" + instance.getCurrentUser().getUsername() + "'";
             instance.getDb().updateTable(query);
         }
     }
