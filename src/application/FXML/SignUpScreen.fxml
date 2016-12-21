@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="signUp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.LoginController">
+   <center>
+      <VBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <JFXTextField fx:id="userNameInput" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="576.0" promptText="Username" unFocusColor="#293a49">
+               <VBox.margin>
+                  <Insets bottom="20.0" right="130.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Trajan Pro 3" size="13.0" />
+               </font>
+            </JFXTextField>
+            <HBox alignment="CENTER_RIGHT" maxHeight="67.0" maxWidth="576.0" minHeight="0.0" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="33.0" prefWidth="571.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" right="130.0" />
+               </VBox.margin>
+               <children>
+                  <JFXPasswordField fx:id="passwordInput" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="272.0" prefHeight="33.0" prefWidth="292.0" promptText="Password" unFocusColor="#293a49">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Trajan Pro 3" size="13.0" />
+                     </font>
+                  </JFXPasswordField>
+                  <JFXPasswordField fx:id="confirmPasswordInput" focusColor="#293a49" labelFloat="true" maxWidth="318.0" minWidth="272.0" prefHeight="33.0" prefWidth="285.0" promptText="Confirm password" unFocusColor="#293a49">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Trajan Pro 3" size="13.0" />
+                     </font>
+                  </JFXPasswordField>
+               </children>
+            </HBox>
+            <JFXTextField fx:id="userNameInput1" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="576.0" promptText="Email address" unFocusColor="#293a49">
+               <VBox.margin>
+                  <Insets bottom="20.0" right="130.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Trajan Pro 3" size="13.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="userNameInput11" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="574.0" promptText="Confirm your email address" unFocusColor="#293a49">
+               <VBox.margin>
+                  <Insets bottom="20.0" right="130.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Trajan Pro 3" size="13.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -73,7 +73,7 @@ public class Client extends Application {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(false);
         primaryStage.show();
-        loadScreen("loginScreen");
+        loadScreen("SignUpScreen");
     }
 
 

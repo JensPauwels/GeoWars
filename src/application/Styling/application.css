@@ -33,6 +33,18 @@
     -fx-background-position: center center;
 }
 
+#settings{
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_settingsscreen.png");
+    -fx-background-position: center center;
+}
+
+#signUp{
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_signupscreen.png");
+    -fx-background-position: center center;
+}
+
 
 
 
