@@ -2,8 +2,8 @@ package application.Engine;
 
 import application.Client;
 import application.Models.AttractorType.Attractor;
-import application.Models.BulletType.*;
 import application.Models.Blood;
+import application.Models.BulletType.Bullet;
 import application.Models.EnemyType.Boss;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
@@ -166,7 +166,7 @@ public class Game {
             else{
                 enemy.movement(mainCharacter.getLocation(), true);
             }
-            //if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
+            if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
         }
     }
 
@@ -308,7 +308,7 @@ public class Game {
     private void handlePowerUpsAndDown(){
         Random r = new Random();
         int number = r.nextInt(10);
-        switch (5){
+        switch (number){
             case 1:
                 gameField.setActivatedPowerupLabel("Rapid fire");
                 rapidFireActivated = true;
@@ -465,6 +465,7 @@ public class Game {
         e.setVisible(false);
         location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
         Blood blood = new Blood(playField,location);
+        blood.toBack();
         blood.display();
         allEnemys.remove(e);
         if(multiplierActivated){ xp = xp + e.getXp()*2;}

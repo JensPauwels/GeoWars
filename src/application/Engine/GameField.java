@@ -1,6 +1,5 @@
 package application.Engine;
 
-import application.Engine.Game;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -1,14 +1,10 @@
 package application.Models.PowerUpType;
 
-import application.Engine.Engine;
 import application.Models.Sprite;
 import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-
-import java.util.Random;
 
 public class PowerUp extends Sprite {
 

@@ -1,7 +1,5 @@
 package application.Models;
 
-import application.Models.Sprite;
-import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;

@@ -1,8 +1,5 @@
 package application.Engine;
 
-import application.Engine.Settings;
-import application.Engine.User;
-
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;

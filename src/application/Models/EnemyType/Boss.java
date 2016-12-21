@@ -1,6 +1,5 @@
 package application.Models.EnemyType;
 
-import application.Models.EnemyType.Enemy;
 import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

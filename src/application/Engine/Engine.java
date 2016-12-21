@@ -1,14 +1,14 @@
 package application.Engine;
 
 
-import application.Models.EnemyType.Boss;
+import application.Client;
 import application.Models.BulletType.*;
+import application.Models.EnemyType.Boss;
 import application.Models.FollowerType.Donkey;
 import application.Models.FollowerType.Follower;
 import application.Models.FollowerType.Horse;
 import application.Models.FollowerType.Unicorn;
 import application.Models.Vector2D;
-import application.Client;
 import javafx.scene.layout.Pane;
 
 import java.util.HashMap;

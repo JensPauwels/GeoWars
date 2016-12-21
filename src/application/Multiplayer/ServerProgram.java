@@ -1,13 +1,13 @@
 package application.Multiplayer;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 import application.Models.Vector2D;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class ServerProgram extends Listener {

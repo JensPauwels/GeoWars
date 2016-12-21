@@ -1,6 +1,5 @@
 package application.Models.BulletType;
 
-import application.Engine.Engine;
 import application.Models.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
