@@ -62,7 +62,6 @@ public class Game {
         random = new Random();
         mouseLocation = new Vector2D(0,0);
         location = new Vector2D(0,0);
-
         this.scene = scene;
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
@@ -70,9 +69,6 @@ public class Game {
     }
 
     public void initGame() throws Exception {
-
-
-
         addListeners();
         prepareGame();
         startGame();
