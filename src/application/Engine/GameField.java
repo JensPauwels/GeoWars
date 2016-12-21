@@ -1,9 +1,20 @@
 package application.Engine;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 /**
  * Created by jens on 03/12/2016.
@@ -18,6 +29,8 @@ public class GameField {
 
 
     public GameField(){
+        //Font f = Font.loadFont(new FileInputStream(new File("../../TrajanProRegular.ttf")),20);
+        //Font.loadFont(CustomFontWebView.class.getResource("").toExternalForm(),10 );
         this.playfield = new Pane();
         playfield.setMinWidth(800);
         playfield.setMinHeight(600);
@@ -44,6 +57,7 @@ public class GameField {
         pause.setMinSize(30,50);
 
     }
+
 
     public Pane getScreen(){
         return this.playfield;

@@ -3,11 +3,13 @@ package application.Engine;
 import application.Client;
 import application.Models.AttractorType.Attractor;
 import application.Models.Blood;
-import application.Models.BulletType.Bullet;
+import application.Models.BulletType.*;
+
 import application.Models.EnemyType.Boss;
 import application.Models.EnemyType.Enemy;
 import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.Bomb;
+
 import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
 import application.Multiplayer.ClientProgram;
@@ -32,7 +34,9 @@ public class Game {
     private List<Bullet> allBullets,BulletFromBoss;
     private List<PowerUp> powerups;
     private List<Boss> bosses;
-    private Map<Bomb,Long> bombs = new HashMap<>();
+    private List<Blood> blood;
+    private Map<Bomb,Long> bombs;
+    //private Map<Explosion,Long> explosions;
     private GameField gameField;
     private ClientProgram clientProgram;
     private PacketMessage packetMessage;
@@ -58,6 +62,9 @@ public class Game {
         BulletFromBoss = new LinkedList<>();
         powerups = new LinkedList<>();
         bosses = new LinkedList<>();
+        blood = new LinkedList<>();
+        bombs = new HashMap<>();
+        //explosions = new HashMap<>();
         gameField = new GameField();
         clientProgram = new ClientProgram();
         packetMessage = new PacketMessage();
@@ -96,6 +103,7 @@ public class Game {
                 moveChar();
                 handleBullets();
                 moveEnemysTowardsMainCharacter();
+                updateWaves();
                 doSpecialAbility();
                 shoot();
                 checkColOnPowerUps();
@@ -260,6 +268,10 @@ public class Game {
             enemyToKill += instance.getIncrease();
             enemysKilled = 0;
             waves++;
+            for(Blood bl:blood){
+                bl.setVisible(false);
+            }
+            blood.clear();
             gameField.updateWaves(waves);
             if(waves% 5==0){makeBoss();}
             else{
@@ -289,21 +301,40 @@ public class Game {
         if(tekstTime + 5000 < System.currentTimeMillis() && gameField.getActivatedPowerupLabel()){
             gameField.setActivatedPowerupLabelInvisible();
             shooterSpeed = 1;
-            rapidFireActivated =false;
+            rapidFireActivated=false;
             shieldActivated = false;
             multiplierActivated = false;
             bombActivated=false;
             for (Enemy e:allEnemys) {
                 e.setMaxSpeed(2);
+            }}
+            setBomb();
+
+
+
+    }
+    private void setBomb(){
+        for (Map.Entry<Bomb,Long> bomb : bombs.entrySet()) {
+            if (bomb.getValue() + 3000 < System.currentTimeMillis()) {
+                bomb.getKey().setVisible(false);
+                bombs.remove(bomb.getKey());
+                System.out.println(bombs);
+                //setExplosion();
             }
         }
-        for (Map.Entry<Bomb,Long> entry : bombs.entrySet()) {
-            if(entry.getValue() + 6000 < System.currentTimeMillis()){
-                entry.getKey().setVisible(false);
-                bombs.remove(entry);
-            }
-    }}
 
+    }
+/*
+    private void setExplosion(){
+        for (Map.Entry<Explosion,Long> entry : explosions.entrySet()) {
+            entry.getKey().display();
+            if(entry.getValue() + 1000 < System.currentTimeMillis()){
+                entry.getKey().setVisible(false);
+                explosions.remove(entry.getKey());
+
+            }}
+
+    }*/
 
     private void handlePowerUpsAndDown(){
         Random r = new Random();
@@ -464,9 +495,10 @@ public class Game {
     private void killEnemy(Enemy e) {
         e.setVisible(false);
         location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
-        Blood blood = new Blood(playField,location);
-        blood.toBack();
-        blood.display();
+        Blood bl = new Blood(playField,location);
+        bl.toBack();
+        bl.display();
+        blood.add(bl);
         allEnemys.remove(e);
         if(multiplierActivated){ xp = xp + e.getXp()*2;}
         else{xp = xp+ e.getXp();}
@@ -528,7 +560,7 @@ public class Game {
 
     private void stopGame() {
         loop.stop();
-      //  updateHighscoreToDataBase();
+      //updateHighscoreToDataBase();
         instance.setWave(waves);
         instance.setHighscore(xp);
         Client.loadScreen("endGame");

@@ -14,7 +14,7 @@ public class DbConnection {
 
         String url = "jdbc:mysql://localhost/geowars";
         String username = "root";
-        String password = "localhost";
+        String password = "";
 
 
         try {

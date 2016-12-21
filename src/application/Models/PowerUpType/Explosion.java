@@ -6,9 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class Bomb extends Sprite {
+public class Explosion extends Sprite {
 
-    public Bomb(Pane bp, Vector2D location) {
+    public Explosion(Pane bp, Vector2D location) {
         super(bp, location, 12.5, 12.5);
     }
 
@@ -17,12 +17,9 @@ public class Bomb extends Sprite {
     public Node createView() {
 
         Label t = new Label();
-        t.setId("bomb");
-        //System.out.println(t.getId());
+        t.setId("explosion");
         return t;
     }
-
-
 
 
 
