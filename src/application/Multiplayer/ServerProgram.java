@@ -44,10 +44,12 @@ public class ServerProgram extends Listener {
 
 	public void start() throws IOException {
 		server = new Server();
+
 		server.getKryo().register(Boolean.class);
 		server.getKryo().register(java.util.concurrent.atomic.AtomicLong.class);
 		server.getKryo().register(java.util.Random.class);
 		server.getKryo().register(Vector2D.class);
+		server.getKryo().register(BulletPositions.class);
 		server.getKryo().register(LinkedList.class);
 		server.getKryo().register(PacketMessage.class);
 		server.bind(tcpPort, udpPort);
@@ -80,14 +82,14 @@ public class ServerProgram extends Listener {
 					packetMessage.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage2.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
-					packetMessage2.setSecondBullets(packet.getSecondBullets());
+					packetMessage2.setBullets(packet.getBullets());
 
 				}
 				else{
 					packetMessage.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSpawnSecondClient(packet.getSpawnSecondClient());
-					packetMessage.setSecondBullets(packet.getSecondBullets());
+					packetMessage.setBullets(packet.getBullets());
 
 				}
 
@@ -106,6 +108,7 @@ public class ServerProgram extends Listener {
 			deadenemies.removeAll(deadenemies);
 			this.wave = this.wave +1;
 			addLocs();
+			System.out.println(enemieLocations.size());
 			packetMessage.setSpawnFirstClient(true);
 			packetMessage2.setSpawnSecondClient(true);
 		}

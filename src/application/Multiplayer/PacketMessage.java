@@ -8,22 +8,15 @@ import java.util.List;
 public class PacketMessage {
 
 
-	private List<Vector2D> secondBullets = new LinkedList<>();
+	private List<BulletPositions> bullets = new LinkedList<>();
 	private Vector2D firstCharacter;
 	private Vector2D secondCharacter;
 	private Boolean spawnFirstClient = true;
 	private Boolean spawnSecondClient = true;
 	private List<Vector2D> enemies = new LinkedList<>();
 	private List<Integer> deadEnemies = new LinkedList<>();
-	private int id = 0;
+	private int id =0;
 
-	public List<Vector2D> getSecondBullets() {
-		return secondBullets;
-	}
-
-	public void setSecondBullets(List<Vector2D> secondBullets) {
-		this.secondBullets = secondBullets;
-	}
 
 	public int getId() {
 		return id;
@@ -31,6 +24,14 @@ public class PacketMessage {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<BulletPositions> getBullets() {
+		return bullets;
+	}
+
+	public void setBullets(List<BulletPositions> bullets) {
+		this.bullets = bullets;
 	}
 
 	public List<Integer> getDeadEnemies() {

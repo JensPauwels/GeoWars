@@ -29,8 +29,6 @@ public class GameField {
 
 
     public GameField(){
-        //Font f = Font.loadFont(new FileInputStream(new File("../../TrajanProRegular.ttf")),20);
-        //Font.loadFont(CustomFontWebView.class.getResource("").toExternalForm(),10 );
         this.playfield = new Pane();
         playfield.setMinWidth(800);
         playfield.setMinHeight(600);

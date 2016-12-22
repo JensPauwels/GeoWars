@@ -9,8 +9,8 @@ import javafx.scene.layout.Pane;
  * Created by jens on 11/11/16.
  */
 public class Bolt extends Bullet {
-    public Bolt(Pane bp, Vector2D location, Vector2D mouseLoc) {
-        super(bp, location, mouseLoc);
+    public Bolt(Pane bp, Vector2D location, Vector2D mouseLoc,int randomInt) {
+        super(bp, location, mouseLoc,randomInt);
         this.setMaxSpeed(99999);
         this.setDamage(3);
     }

@@ -13,12 +13,12 @@ import java.util.LinkedList;
 public class ClientProgram extends Listener {
 
 
-	private String ip = "localhost";
+	//private String ip = "localhost";
 	private int tcpPort = 27960, udpPort = 27960;
 	private Client client;
 	private static PacketMessage pm ;
 
-	//String ip = "172.31.22.180";
+	String ip = "192.168.1.144";
 
 
 	public  PacketMessage getPm() {
@@ -37,6 +37,7 @@ public class ClientProgram extends Listener {
 		client.getKryo().register(java.util.concurrent.atomic.AtomicLong.class);
 		client.getKryo().register(java.util.Random.class);
 		client.getKryo().register(Vector2D.class);
+		client.getKryo().register(BulletPositions.class);
 		client.getKryo().register(LinkedList.class);
 		client.getKryo().register(PacketMessage.class);
 		client.start();

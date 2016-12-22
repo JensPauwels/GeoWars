@@ -24,11 +24,11 @@ public class LoginController {
     private void initialGame() throws Exception {
         this.username = userNameInput.getText();
         this.password = passwordInput.getText();
-        instance.setUsername(username);
+        //instance.setUsername(username);
         query = "select * from users where username like '" + username + "' and password like '" + password + "'";
         if (db.controle(query)) {
-            instance.setUsername(username);
-            instance.initCurrentUser();
+            //instance.setUsername(username);
+            //instance.initCurrentUser();
 
             Client.loadScreen("gameOptions");
         } else {

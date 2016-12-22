@@ -16,10 +16,7 @@ import java.util.Map;
 
 public class Engine {
     private static Engine firstInstance = null;
-    private User currentUser;
     private DbConnection db = new DbConnection();
-    private Client ui;
-    private String username;
     private String weaponType;
     private String followerType;
     private String levelType;
@@ -51,23 +48,23 @@ public class Engine {
         this.highscore = highscore;
     }
 
-    public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {
+    public Bullet makeBullet(Pane bp, Vector2D mainLoc, Vector2D mouseLoc,int randomInt) {
         switch (getWeaponType()){
             case "spear":
-                return new Spear(bp,mainLoc,mouseLoc);
+                return new Spear(bp,mainLoc,mouseLoc,randomInt);
             case "bow":
-                return new Arrow(bp,mainLoc,mouseLoc);
+                return new Arrow(bp,mainLoc,mouseLoc,randomInt);
             case "crossbow":
-                return new Bolt(bp,mainLoc,mouseLoc);
+                return new Bolt(bp,mainLoc,mouseLoc,randomInt);
             case "Unicorn":
-                return new UnicornHorn(bp,mainLoc,mouseLoc);
+                return new UnicornHorn(bp,mainLoc,mouseLoc,randomInt);
             default:
                 return null;
         }
     }
 
-    public Bullet makeFireBall(Pane bp, Vector2D mainLoc, Vector2D mouseLoc){
-        return new FireBall(bp,mainLoc,mouseLoc);
+    public Bullet makeFireBall(Pane bp, Vector2D mainLoc, Vector2D mouseLoc,int randomInt){
+        return new FireBall(bp,mainLoc,mouseLoc,randomInt);
     }
 
     public Boss makeBoss(Pane bp, Vector2D mainloc){
@@ -96,37 +93,7 @@ public class Engine {
         return levels.get(levelType);
     }
 
-    public void initCurrentUser() {
 
-        try {
-            setCurrentUser(db.initUser(username));
-            System.out.println(currentUser.getHighscore());
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-
-    public void saveCurrentUser() throws Exception {
-
-        String query = "UPDATE settings SET music=" + currentUser.getSettings().isMusic() + ",autosave=" + currentUser.getSettings().isAutoSave() + " WHERE             username = '" + currentUser.getUsername() + "'";
-        db.updateTable(query);
-    }
-
-    public void setUi(Client ui) {
-        this.ui = ui;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public User getCurrentUser() {
-        return this.currentUser;
-    }
-
-    private void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public DbConnection getDb() {
         return this.db;

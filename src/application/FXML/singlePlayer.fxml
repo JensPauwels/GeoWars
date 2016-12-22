@@ -14,16 +14,16 @@
             <children>
                 <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Region id="easyChoice" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#easy" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="easy" id="easyChoice" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#easy" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin></Region>
-                  <Region id="mediumChoice" onMouseClicked="#medium" layoutX="380.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="medium" id="mediumChoice" onMouseClicked="#medium" layoutX="380.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Region>
-                  <Region id="hardChoice" onMouseClicked="#hard" layoutX="410.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="hard" id="hardChoice" onMouseClicked="#hard" layoutX="410.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -38,17 +38,17 @@
                   <Insets top="15.0" />
                </VBox.margin>
                <children>
-                  <Region id="Fdonkey" onMouseClicked="#donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="donkey" id="Fdonkey" onMouseClicked="#donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
                   </Region>
-                  <Region id="Fhorse" onMouseClicked="#horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="horse" id="Fhorse" onMouseClicked="#horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Region>
-                  <Region id="Funicorn" onMouseClicked="#unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region fx:id="unicorn" id="Funicorn" onMouseClicked="#unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

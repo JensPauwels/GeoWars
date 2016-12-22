@@ -11,8 +11,8 @@ import javafx.scene.layout.Pane;
 public class UnicornHorn extends Bullet{
 
 
-    public UnicornHorn(Pane bp, Vector2D location, Vector2D mouseLoc) {
-        super(bp, location, mouseLoc);
+    public UnicornHorn(Pane bp, Vector2D location, Vector2D mouseLoc,int randomInt) {
+        super(bp, location, mouseLoc,randomInt);
 
     }
 

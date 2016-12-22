@@ -46,22 +46,13 @@ public class DbConnection {
 
     public User initUser(String username) {
         String query = "select * from users where username like'" + username + "'";
-
-
         try {
             rs = st.executeQuery(query);
             if (rs.next()) {
                 int highscore = rs.getInt("highscore");
                 currentUser = new User(username, highscore);
             }
-            query = "select * from settings where username like'" + username + "'";
-            rs = st.executeQuery(query);
 
-            if (rs.next()) {
-                Settings currentUserSettings = currentUser.getSettings();
-                currentUserSettings.setAutoSave(rs.getBoolean("autosave"));
-                currentUserSettings.setMusic(rs.getBoolean("music"));
-            }
             return currentUser;
         } catch (SQLException e) {
             e.printStackTrace();

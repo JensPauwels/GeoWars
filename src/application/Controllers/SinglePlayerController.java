@@ -14,58 +14,81 @@ import java.io.IOException;
 
 public class SinglePlayerController {
 
-    private ObservableList<String> level = FXCollections.observableArrayList("Easy", "Medium", "Hard");
-    private ObservableList<String> followerOfChoice = FXCollections.observableArrayList("Donkey", "Horse", "Unicorn");
+
     private Engine instance = Engine.getInstance();
-   // public ChoiceBox<String> followerType;
-    //public ChoiceBox<String> levelType;
     private String[] weapons = {"spear","bow","crossbow"};
     private String[] speeds = {"slow","medium","fast"};
     private String[] specialAbilitys = {"10","12","14","16","18","20"};
     public String difficulty = "Easy";
     public String follower = "Donkey";
-    public Region weapon,speed,specialAbility;
+    public Region weapon,speed,specialAbility,easy,medium,hard,donkey,horse,unicorn;
     private int index = 0;
+
+    public void removeDifficultyGlows(){
+
+        easy.setId("easyChoice");
+        hard.setId("hardChoice");
+        medium.setId("mediumChoice");
+
+    }
+
+    public void removeFollowerGlows(){
+        donkey.setId("Fdonkey");
+        horse.setId("Fhorse");
+        unicorn.setId("Funicorn");
+    }
+
+
  
     @FXML
     private void initialize() {
-       // followerType.setItems(followerOfChoice);
-       // followerType.setValue(followerOfChoice.get(0));
-        //levelType.setItems(level);
-        //levelType.setValue(level.get(0));
         weapon.setId(weapons[index]+"screen");
+        easy.setId("easyGlow");
+        donkey.setId("donkeyGlow");
         speed.setId("speed"+speeds[0]);
         specialAbility.setId("specialAbility"+specialAbilitys[0]);
     }
 
     @FXML
     public void easy(){
+        removeDifficultyGlows();
         difficulty = "Easy";
+        easy.setId("easyGlow");
     }
 
     @FXML
     public void medium(){
+        removeDifficultyGlows();
         difficulty  = "Medium";
+        medium.setId("mediumGlow");
     }
 
     @FXML
     public void hard(){
+        removeDifficultyGlows();
         difficulty = "Hard";
+        hard.setId("hardGlow");
     }
 
     @FXML
     public void donkey(){
+        removeFollowerGlows();
         follower = "Donkey";
+        donkey.setId("donkeyGlow");
     }
 
     @FXML
     public void horse(){
+        removeFollowerGlows();
         follower = "Horse";
+        horse.setId("horseGlow");
     }
 
     @FXML
     public void unicorn(){
+        removeFollowerGlows();
         follower = "Unicorn";
+        unicorn.setId("unicornGlow");
     }
 
     @FXML

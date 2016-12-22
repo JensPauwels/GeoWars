@@ -7,14 +7,14 @@ import javafx.scene.layout.Pane;
 
 public class Arrow extends Bullet {
 
-    public Arrow(Pane bp, Vector2D mainLoc, Vector2D mouseLoc) {
-        super(bp, mainLoc, mouseLoc);
+    public Arrow(Pane bp, Vector2D mainLoc, Vector2D mouseLoc,int randomInt) {
+        super(bp, mainLoc, mouseLoc,randomInt);
         this.setDamage(2);
         this.setMaxSpeed(100);
     }
 
-    public Arrow(Pane bp, Vector2D mainLoc) {
-        super(bp, mainLoc);
+    public Arrow(Pane bp, Vector2D mainLoc,int randomInt) {
+        super(bp, mainLoc,randomInt);
         this.setDamage(2);
         this.setMaxSpeed(100);
     }

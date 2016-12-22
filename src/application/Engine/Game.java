@@ -12,11 +12,11 @@ import application.Models.PowerUpType.Bomb;
 
 import application.Models.PowerUpType.PowerUp;
 import application.Models.Vector2D;
+import application.Multiplayer.BulletPositions;
 import application.Multiplayer.ClientProgram;
 import application.Multiplayer.PacketMessage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -51,12 +51,15 @@ public class Game {
     private int enemysKilled,angle,enemyToKill = 5,waves = 1,xp = 0;
     private double shooterSpeed = 1;
     private List<Integer> deadEnemies;
-    private List<Bullet> bulletsToRemove;
+    private int randomInt;
+    private List<Bullet> bulletsFromSecondPlayer;
+    private List<Integer> test = new LinkedList<>();
+
 
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
-        bulletsToRemove = new LinkedList<>();
+        bulletsFromSecondPlayer = new LinkedList<>();
         deadEnemies = new LinkedList<>();
         fakeDataBase = new FakeDataBase();
         allEnemys = new LinkedList<>();
@@ -78,6 +81,7 @@ public class Game {
         playField = gameField.getScreen();
         mainLayout.setCenter(playField);
         this.multiPlayer = multiPlayer;
+
     }
 
     public void initGame() throws Exception {
@@ -105,7 +109,6 @@ public class Game {
                 moveChar();
                 handleBullets();
                 moveEnemysTowardsMainCharacter();
-                updateWaves();
                 doSpecialAbility();
                 shoot();
                 checkColOnPowerUps();
@@ -114,9 +117,10 @@ public class Game {
                 if(multiPlayer){
                     packetMessage = clientProgram.getPm();
                     checkOnDeadEnemys();
-                    secondPlayerBullets();
                     spawnMultiPlayer();
                     moveLocation();
+                    addBulletsForSecondPlayer();
+                    moveSecondPlayerBullets();
                     handler();
                 }
                 else {
@@ -127,17 +131,45 @@ public class Game {
         loop.start();
     }
 
-    private void secondPlayerBullets(){
-        for (int i = 0; i < bulletsToRemove.size(); i++) {
-            bulletsToRemove.get(i).setVisible(false);
-            bulletsToRemove.remove(i);
-            //test
+    private void moveSecondPlayerBullets(){
+        for (int i = 0; i < bulletsFromSecondPlayer.size(); i++) {
+            Bullet b = bulletsFromSecondPlayer.get(i);
+            b.movement(b.getDestination(),true);
+            if(b.outOfDestination()){
+                b.setVisible(false);
+                bulletsFromSecondPlayer.remove(b);
+            }
         }
-        for (int i = 0; i < packetMessage.getSecondBullets().size(); i++) {
-            Bullet t = new Arrow(playField,packetMessage.getSecondBullets().get(i));
-            bulletsToRemove.add(t);
-            t.display();
+
+    }
+
+    private void addBulletsForSecondPlayer(){
+
+        for (int i = 0; i < packetMessage.getBullets().size(); i++) {
+            BulletPositions bullet = packetMessage.getBullets().get(i);
+            if(!test.contains(bullet.getRandomId())){
+                test.add(bullet.getRandomId());
+                bulletsFromSecondPlayer.add(new Spear(playField,bullet.getStart(),bullet.getEnd(),randomInt));
+                System.out.println("testSize" + test.size());
+                System.out.println(bullet.getRandomId());
+            }
+
         }
+
+    }
+    private void handler(){
+        packetMessage.setFirstCharacter(mainCharacter.getLocation());
+        List<Vector2D> enemieLocations = new LinkedList<>();
+        List<BulletPositions> bulletPositions= new LinkedList<>();
+        for (int i = 0; i < allEnemys.size(); i++) {enemieLocations.add(allEnemys.get(i).getLocation());}
+        for (int i = 0; i < allBullets.size(); i++) {
+            Bullet b = allBullets.get(i);
+            bulletPositions.add(new BulletPositions(b.getLocation(),b.getDestination(),randomInt));
+        }
+        packetMessage.setBullets(bulletPositions);
+        packetMessage.setEnemies(enemieLocations);
+        packetMessage.setDeadEnemies(deadEnemies);
+        clientProgram.setPm(packetMessage);
     }
 
     private void checkOnDeadEnemys(){
@@ -183,7 +215,7 @@ public class Game {
                 if(distance  > secondDistance ){location = secondCharacter.getLocation();}
             }
             enemy.movement(location, true);
-            //if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
+            if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
         }
     }
 
@@ -195,19 +227,7 @@ public class Game {
         }
     }
 
-    private void handler(){
-        packetMessage.setFirstCharacter(mainCharacter.getLocation());
-        List<Vector2D> enemieLocations = new LinkedList<>();
-        List<Vector2D> secondCharBullets = new LinkedList<>();
-        for (int i = 0; i < allEnemys.size(); i++) {enemieLocations.add(allEnemys.get(i).getLocation());}
-        for (int i = 0; i < allBullets.size(); i++) {
-            secondCharBullets.add(allBullets.get(i).getLocation());
-        }
-        packetMessage.setSecondBullets(secondCharBullets);
-        packetMessage.setEnemies(enemieLocations);
-        packetMessage.setDeadEnemies(deadEnemies);
-        clientProgram.setPm(packetMessage);
-    }
+
 
 
     private void addEnemy() {
@@ -225,8 +245,9 @@ public class Game {
     private void shootWithBoss(Boss boss){
         if(bossSpeed + 500 < System.currentTimeMillis()){
             location = mainCharacter.getLocation();
+            randomInt++;
             Vector2D bosslocation = new Vector2D(boss.getLocation().getX()-85,boss.getLocation().getY()-50);
-            Bullet bullet = instance.makeFireBall(playField, bosslocation, location);
+            Bullet bullet = instance.makeFireBall(playField, bosslocation, location,randomInt);
             BulletFromBoss.add(bullet);
             bossSpeed = System.currentTimeMillis();
         }
@@ -261,8 +282,8 @@ public class Game {
 
     private void addBullet(Vector2D loc) {
         location = new Vector2D(mainCharacter.getLocation());
-        Bullet bullet = instance.makeBullet(playField, location, loc);
-        System.out.println("made a bullet");
+        randomInt++;
+        Bullet bullet = instance.makeBullet(playField, location, loc,randomInt);
         allBullets.add(bullet);
     }
 
@@ -273,7 +294,6 @@ public class Game {
         powerups.add(pu);
     }
 
-    //hey griet
     private void updateWaves() {
         if (enemysKilled == enemyToKill || bossDead) {
             bossDead =false;
@@ -293,7 +313,9 @@ public class Game {
     }
 
     public void removeBlood(){
-        for(Blood bl:blood){bl.setVisible(false);}
+        for(Blood bl:blood){
+            bl.setVisible(false);
+        }
         blood.clear();
     }
 
@@ -324,6 +346,8 @@ public class Game {
             for (Enemy e:allEnemys) {
                 e.setMaxSpeed(2);
             }}
+
+
             setBomb();
 
 
@@ -446,7 +470,7 @@ public class Game {
         follower.movement(mainCharacter.getLocation(), false);
         if(time + 5000 < System.currentTimeMillis()){
             location = follower.getLocation();
-            Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
+            //Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
             time = System.currentTimeMillis();
         }
     }
@@ -493,7 +517,11 @@ public class Game {
 
         for (int i = 0; i < allBullets.size(); i++) {
             Bullet bullet = allBullets.get(i);
-            if (bullet.outOfDestination()) {allBullets.remove(bullet);}
+            if (bullet.outOfDestination()) {
+                allBullets.remove(bullet);
+
+            }
+
             bullet.movement(bullet.getDestination(), true);
             checkCollisionBullet(bullet);
             checkCollisionBoss(bullet);

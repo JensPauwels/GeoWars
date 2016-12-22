@@ -9,8 +9,6 @@ public class Blood extends Sprite {
     public Blood(Pane bp, Vector2D location) {
         super(bp, location, 12.5, 12.5);
     }
-
-
     @Override
     public Node createView() {
         Label img = new Label();

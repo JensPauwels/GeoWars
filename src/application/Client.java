@@ -17,11 +17,6 @@ public class Client extends Application {
     public static BorderPane mainLayout;
     public static Scene scene;
     private Stage primaryStage;
-    private Engine instance = Engine.getInstance();
-
-    public Client() {
-        instance.setUi(this);
-    }
 
 
     public static BorderPane createBorderPane(String url) {
@@ -50,19 +45,11 @@ public class Client extends Application {
         showMainView();
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
-            close();
+            this.primaryStage.close();
         });
-
     }
 
-    private void close() {
-        try {
-            instance.saveCurrentUser();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        primaryStage.close();
-    }
+
 
     private void showMainView() {
         mainLayout.setMinHeight(600);

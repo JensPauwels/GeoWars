@@ -48,11 +48,41 @@
     -fx-background-position: center center;
 }
 
+#donkeyGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_donkeyglow.png");
+    -fx-background-position: center center;
+}
+
+#horseGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_horseglow.png");
+    -fx-background-position: center center;
+}
+
+#unicornGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_unicornglow.png");
+    -fx-background-position: center center;
+}
+
+#easyGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_easyglow.png");
+    -fx-background-position: center center;
+}
+
+#mediumGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_mediumglow.png");
+    -fx-background-position: center center;
+}
+
+#hardGlow{
+    -fx-background-image: url("../../Images/configuration/glow/rsz_hardglow.png");
+    -fx-background-position: center center;
+}
+
 
 
 #gameOver{
     -fx-background-color: #38383838;
-    -fx-background-image: url("../../Images/screens/rsz_gameoverscreendef.png");
+    -fx-background-image: url("../../Images/screens/rsz_gameoverscreen.png");
     -fx-background-position: center center;
 }
 

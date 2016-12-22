@@ -10,16 +10,27 @@ public abstract class Bullet extends Sprite {
 
     private Vector2D destination;
     private int damage;
-    private int id;
+    private int randomInt;
 
-    public Bullet(Pane bp,Vector2D location){
+    public Bullet(Pane bp,Vector2D location,int randomInt){
         super(bp,location,25,12.5);
+        this.randomInt = randomInt;
+
 
     }
 
-    public Bullet(Pane bp, Vector2D location, Vector2D mouseLoc) {
+    public Bullet(Pane bp, Vector2D location, Vector2D mouseLoc,int randomInt) {
         super(bp, location, 25, 12.5);
         setDestination(location, mouseLoc);
+        this.randomInt = randomInt;
+    }
+
+    public int getRandomInt() {
+        return randomInt;
+    }
+
+    public void setRandomInt(int randomInt) {
+        this.randomInt = randomInt;
     }
 
     @Override
