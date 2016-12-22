@@ -51,10 +51,12 @@ public class Game {
     private int enemysKilled,angle,enemyToKill = 5,waves = 1,xp = 0;
     private double shooterSpeed = 1;
     private List<Integer> deadEnemies;
+    private List<Bullet> bulletsToRemove;
 
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        bulletsToRemove = new LinkedList<>();
         deadEnemies = new LinkedList<>();
         fakeDataBase = new FakeDataBase();
         allEnemys = new LinkedList<>();
@@ -126,8 +128,13 @@ public class Game {
     }
 
     private void secondPlayerBullets(){
+        for (int i = 0; i < bulletsToRemove.size(); i++) {
+            bulletsToRemove.get(i).setVisible(false);
+            bulletsToRemove.remove(i);
+        }
         for (int i = 0; i < packetMessage.getSecondBullets().size(); i++) {
             Bullet t = new Arrow(playField,packetMessage.getSecondBullets().get(i));
+            bulletsToRemove.add(t);
             t.display();
         }
     }

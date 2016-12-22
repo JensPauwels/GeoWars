@@ -74,20 +74,22 @@ public class ServerProgram extends Listener {
 	public void received(Connection c, Object p){
 		if(p instanceof PacketMessage){
 			PacketMessage packet = (PacketMessage) p;
-
-			System.out.println(packet.getSecondBullets().size());
-
 			if(myConnections.size() == 2){
 				if(c == myConnections.get(0)){
 					packetMessage.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage2.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
+					packetMessage2.setSecondBullets(packet.getSecondBullets());
+
 				}
 				else{
 					packetMessage.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSecondCharacter(packet.getFirstCharacter());
 					packetMessage2.setSpawnSecondClient(packet.getSpawnSecondClient());
+					packetMessage.setSecondBullets(packet.getSecondBullets());
+
 				}
+
 				checkOnDeadEnemies(packet.getDeadEnemies());
 			sendMsg();
 		}

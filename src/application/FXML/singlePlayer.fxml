@@ -38,17 +38,17 @@
                   <Insets top="15.0" />
                </VBox.margin>
                <children>
-                  <Region id="easyChoice" onMouseClicked="#donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region id="Fdonkey" onMouseClicked="#donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="40.0" />
                      </HBox.margin>
                   </Region>
-                  <Region id="easyChoice" onMouseClicked="#horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region id="Fhorse" onMouseClicked="#horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Region>
-                  <Region id="easyChoice" onMouseClicked="#unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
+                  <Region id="Funicorn" onMouseClicked="#unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

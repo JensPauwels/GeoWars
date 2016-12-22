@@ -19,20 +19,36 @@
 }
 
 #easyChoice{
-    -fx-background-image: url("../../Images/rsz_easy.png");
+    -fx-background-image: url("../../Images/configuration/rsz_easy.png");
     -fx-background-position: center center;
 }
 
 #mediumChoice{
-    -fx-background-image: url("../../Images/rsz_medium.png");
+    -fx-background-image: url("../../Images/configuration/rsz_medium.png");
     -fx-background-position: center center;
 }
-
 
 #hardChoice{
-    -fx-background-image: url("../../Images/rsz_1hard.png");
+    -fx-background-image: url("../../Images/configuration/rsz_hard.png");
     -fx-background-position: center center;
 }
+
+#Fdonkey{
+    -fx-background-image: url("../../Images/configuration/rsz_donkey.png");
+    -fx-background-position: center center;
+}
+
+#Fhorse{
+    -fx-background-image: url("../../Images/configuration/rsz_horse.png");
+    -fx-background-position: center center;
+}
+
+#Funicorn{
+    -fx-background-image: url("../../Images/configuration/rsz_unicorn.png");
+    -fx-background-position: center center;
+}
+
+
 
 #gameOver{
     -fx-background-color: #38383838;

@@ -18,7 +18,7 @@ public class ClientProgram extends Listener {
 	private Client client;
 	private static PacketMessage pm ;
 
-	String ip = "192.168.0.156";
+	String ip = "172.31.22.180";
 
 
 	public  PacketMessage getPm() {
