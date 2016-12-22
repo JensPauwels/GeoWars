@@ -131,6 +131,7 @@ public class Game {
         for (int i = 0; i < bulletsToRemove.size(); i++) {
             bulletsToRemove.get(i).setVisible(false);
             bulletsToRemove.remove(i);
+            //test
         }
         for (int i = 0; i < packetMessage.getSecondBullets().size(); i++) {
             Bullet t = new Arrow(playField,packetMessage.getSecondBullets().get(i));

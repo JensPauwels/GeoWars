@@ -28,6 +28,7 @@ public class ServerProgram extends Listener {
 		serverProgram.addLocs();
 		packetMessage.setId(1);
 		packetMessage2.setId(2);
+		//files
 
 	}
 
