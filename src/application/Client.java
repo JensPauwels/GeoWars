@@ -14,7 +14,6 @@ import java.io.IOException;
 
 
 public class Client extends Application {
-
     public static BorderPane mainLayout;
     public static Scene scene;
     private Stage primaryStage;
@@ -66,7 +65,6 @@ public class Client extends Application {
     }
 
     private void showMainView() {
-
         mainLayout.setMinHeight(600);
         mainLayout.setMinWidth(800);
         mainLayout.setId("container");

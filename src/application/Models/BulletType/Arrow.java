@@ -13,6 +13,14 @@ public class Arrow extends Bullet {
         this.setMaxSpeed(100);
     }
 
+    public Arrow(Pane bp, Vector2D mainLoc) {
+        super(bp, mainLoc);
+        this.setDamage(2);
+        this.setMaxSpeed(100);
+    }
+
+
+
     @Override
     public Node createView() {
         Label t = new Label();

@@ -12,11 +12,25 @@
     -fx-font-family: "Trajan Pro";
 }
 
-
-
 #loginPage{
     -fx-background-color: #38383838;
     -fx-background-image: url("../../Images/screens/rsz_loginscreen.png");
+    -fx-background-position: center center;
+}
+
+#easyChoice{
+    -fx-background-image: url("../../Images/rsz_easy.png");
+    -fx-background-position: center center;
+}
+
+#mediumChoice{
+    -fx-background-image: url("../../Images/rsz_medium.png");
+    -fx-background-position: center center;
+}
+
+
+#hardChoice{
+    -fx-background-image: url("../../Images/rsz_1hard.png");
     -fx-background-position: center center;
 }
 
@@ -25,7 +39,6 @@
     -fx-background-image: url("../../Images/screens/rsz_gameoverscreendef.png");
     -fx-background-position: center center;
 }
-
 
 #dragon{
     -fx-background-image: url("../../Images/boss/dragon.png");

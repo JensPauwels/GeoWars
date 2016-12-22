@@ -16,6 +16,7 @@ import application.Multiplayer.ClientProgram;
 import application.Multiplayer.PacketMessage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -47,11 +48,10 @@ public class Game {
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead,multiPlayer,rapidFireActivated,shieldActivated,multiplierActivated,bombActivated;
-    private int enemysKilled,angle,xp = 0;
-    private int enemyToKill = 5;
+    private int enemysKilled,angle,enemyToKill = 5,waves = 1,xp = 0;
     private double shooterSpeed = 1;
-    private int waves = 1;
     private List<Integer> deadEnemies;
+
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
@@ -112,6 +112,7 @@ public class Game {
                 if(multiPlayer){
                     packetMessage = clientProgram.getPm();
                     checkOnDeadEnemys();
+                    secondPlayerBullets();
                     spawnMultiPlayer();
                     moveLocation();
                     handler();
@@ -124,7 +125,14 @@ public class Game {
         loop.start();
     }
 
-    public void checkOnDeadEnemys(){
+    private void secondPlayerBullets(){
+        for (int i = 0; i < packetMessage.getSecondBullets().size(); i++) {
+            Bullet t = new Arrow(playField,packetMessage.getSecondBullets().get(i));
+            t.display();
+        }
+    }
+
+    private void checkOnDeadEnemys(){
         for (int i = 0; i < packetMessage.getDeadEnemies().size(); i++) {
             for (int j = 0; j < allEnemys.size(); j++) {
                 if(allEnemys.get(j).getIdn() == packetMessage.getDeadEnemies().get(i)){
@@ -134,24 +142,24 @@ public class Game {
         }
     }
 
-    public void spawnMultiPlayer(){
+    private void spawnMultiPlayer(){
         if(packetMessage.getId() == 1){
             if(packetMessage.getSpawnFirstClient()){
-                deadEnemies.removeAll(deadEnemies);
+                deadEnemies.clear();
                 spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
                 packetMessage.setSpawnFirstClient(false);
             }
         }
         else {
             if(packetMessage.getSpawnSecondClient()){
-                deadEnemies.removeAll(deadEnemies);
+                deadEnemies.clear();
                 spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
                 packetMessage.setSpawnSecondClient(false);
             }
         }
     }
 
-    public void moveLocation(){
+    private void moveLocation(){
         if(packetMessage.getId() == 1){secondCharacter.setLocation(packetMessage.getSecondCharacter());}
         else{secondCharacter.setLocation(packetMessage.getFirstCharacter());}
         secondCharacter.display();
@@ -160,25 +168,18 @@ public class Game {
     private void moveEnemysTowardsMainCharacter() {
         for (int i = 0;i < allEnemys.size();i++) {
             Enemy enemy = allEnemys.get(i);
+            Vector2D location = mainCharacter.getLocation();
             if(multiPlayer){
                 double distance = Math.sqrt(Math.pow(mainCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
                 double secondDistance = Math.sqrt(Math.pow(secondCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
-
-                if(distance  < secondDistance ){
-                    enemy.movement(mainCharacter.getLocation(),true);
-                }
-                else {
-                    enemy.movement(secondCharacter.getLocation(),true);
-                }
+                if(distance  > secondDistance ){location = secondCharacter.getLocation();}
             }
-            else{
-                enemy.movement(mainCharacter.getLocation(), true);
-            }
-            if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
+            enemy.movement(location, true);
+            //if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
         }
     }
 
-    public void spawnEnemyMultiPlayer(List<Vector2D> enemies){
+    private void spawnEnemyMultiPlayer(List<Vector2D> enemies){
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = new Enemy(playField,enemies.get(i),i);
             allEnemys.add(enemy);
@@ -186,12 +187,15 @@ public class Game {
         }
     }
 
-    public void handler(){
+    private void handler(){
         packetMessage.setFirstCharacter(mainCharacter.getLocation());
         List<Vector2D> enemieLocations = new LinkedList<>();
-        for (int i = 0; i < allEnemys.size(); i++) {
-            enemieLocations.add(allEnemys.get(i).getLocation());
+        List<Vector2D> secondCharBullets = new LinkedList<>();
+        for (int i = 0; i < allEnemys.size(); i++) {enemieLocations.add(allEnemys.get(i).getLocation());}
+        for (int i = 0; i < allBullets.size(); i++) {
+            secondCharBullets.add(allBullets.get(i).getLocation());
         }
+        packetMessage.setSecondBullets(secondCharBullets);
         packetMessage.setEnemies(enemieLocations);
         packetMessage.setDeadEnemies(deadEnemies);
         clientProgram.setPm(packetMessage);
@@ -237,9 +241,7 @@ public class Game {
 
                 else {
                     boss.setVisible(false);
-                    if(multiplierActivated) {
-                        xp = xp+(boss.getXp()*2);
-                    }
+                    if(multiplierActivated) {xp = xp+(boss.getXp()*2);}
                     else{xp = xp +  boss.getXp();}
                     gameField.updateHighscore(xp);
                     bosses.remove(boss);
@@ -252,6 +254,7 @@ public class Game {
     private void addBullet(Vector2D loc) {
         location = new Vector2D(mainCharacter.getLocation());
         Bullet bullet = instance.makeBullet(playField, location, loc);
+        System.out.println("made a bullet");
         allBullets.add(bullet);
     }
 
@@ -268,17 +271,21 @@ public class Game {
             enemyToKill += instance.getIncrease();
             enemysKilled = 0;
             waves++;
-            for(Blood bl:blood){
-                bl.setVisible(false);
-            }
-            blood.clear();
             gameField.updateWaves(waves);
+            removeBlood();
             if(waves% 5==0){makeBoss();}
             else{
-                for (int i = 0; i < enemyToKill ; i++) {addEnemy();}
+                for (int i = 0; i < enemyToKill ; i++) {
+                    addEnemy();
+                }
                 spawnPowerUp();
             }
         }
+    }
+
+    public void removeBlood(){
+        for(Blood bl:blood){bl.setVisible(false);}
+        blood.clear();
     }
 
     private void trippleArrow() {
@@ -419,6 +426,7 @@ public class Game {
                 if(allEnemys.get(i).coll(allEnemys.get(i),follower)){
                     allEnemys.get(i).setVisible(false);
                     allEnemys.remove(allEnemys.get(i));
+                    enemysKilled++;
                     time = System.currentTimeMillis();
                 }
             }
@@ -539,7 +547,6 @@ public class Game {
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
         }
-
     }
 
     private void moveMouseLoc(MouseEvent e ){
@@ -555,21 +562,12 @@ public class Game {
         scene.setOnKeyReleased(e -> keyAction(e, false));
         gameField.getStop().setOnAction(e -> stopGame());
         gameField.getPause().setOnAction(e -> loop.stop());
-
     }
 
     private void stopGame() {
         loop.stop();
-      //updateHighscoreToDataBase();
         instance.setWave(waves);
         instance.setHighscore(xp);
         Client.loadScreen("endGame");
-    }
-
-    private void updateHighscoreToDataBase() {
-        if (instance.getCurrentUser().getHighscore() < xp) {
-            String query = "update users set highScore=" + xp + " where username like '" + instance.getCurrentUser().getUsername() + "'";
-            instance.getDb().updateTable(query);
-        }
     }
 }

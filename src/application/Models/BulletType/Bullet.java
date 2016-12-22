@@ -10,6 +10,12 @@ public abstract class Bullet extends Sprite {
 
     private Vector2D destination;
     private int damage;
+    private int id;
+
+    public Bullet(Pane bp,Vector2D location){
+        super(bp,location,25,12.5);
+
+    }
 
     public Bullet(Pane bp, Vector2D location, Vector2D mouseLoc) {
         super(bp, location, 25, 12.5);
@@ -17,7 +23,6 @@ public abstract class Bullet extends Sprite {
     }
 
     @Override
-
     public abstract Node createView();
 
     public Vector2D getDestination() {
@@ -37,11 +42,8 @@ public abstract class Bullet extends Sprite {
     }
 
     public void setDestination(Vector2D mainLoc, Vector2D mouseLoc) {
-        // calculation a : angle of inclination
         double a = (mouseLoc.getY() - mainLoc.getY()) / (mouseLoc.getX() - mainLoc.getX());
-        // calculation b : startfigure
         double b = mouseLoc.getY() - (a * mouseLoc.getX());
-        // y=ax+b
         double destinationX = 815;
         if (mainLoc.getX() > mouseLoc.getX()) {destinationX = -15;}
         double destinationY = (a * destinationX) + b;

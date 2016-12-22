@@ -75,6 +75,8 @@ public class ServerProgram extends Listener {
 		if(p instanceof PacketMessage){
 			PacketMessage packet = (PacketMessage) p;
 
+			System.out.println(packet.getSecondBullets().size());
+
 			if(myConnections.size() == 2){
 				if(c == myConnections.get(0)){
 					packetMessage.setFirstCharacter(packet.getFirstCharacter());
@@ -99,11 +101,8 @@ public class ServerProgram extends Listener {
 		}
 		if(deadenemies.size() == wave*5){
 			deadenemies.removeAll(deadenemies);
-			System.out.println("deadenemies size " +deadenemies.size());
 			this.wave = this.wave +1;
-			System.out.println(wave*5);
 			addLocs();
-			System.out.println(enemieLocations.size());
 			packetMessage.setSpawnFirstClient(true);
 			packetMessage2.setSpawnSecondClient(true);
 		}
