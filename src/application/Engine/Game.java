@@ -265,6 +265,7 @@ public class Game {
         powerups.add(pu);
     }
 
+    //hey griet
     private void updateWaves() {
         if (enemysKilled == enemyToKill || bossDead) {
             bossDead =false;
