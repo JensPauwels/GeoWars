@@ -15,7 +15,7 @@
          <children>
             <JFXTextField fx:id="userNameInput" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="576.0" promptText="Username" unFocusColor="#293a49">
                <VBox.margin>
-                  <Insets bottom="20.0" right="130.0" />
+                  <Insets bottom="20.0" right="130.0" top="185.0" />
                </VBox.margin>
                <font>
                   <Font name="Trajan Pro 3" size="13.0" />
@@ -44,7 +44,7 @@
                   </JFXPasswordField>
                </children>
             </HBox>
-            <JFXTextField fx:id="userNameInput1" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="576.0" promptText="Email address" unFocusColor="#293a49">
+            <JFXTextField fx:id="email" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="576.0" promptText="Email address" unFocusColor="#293a49">
                <VBox.margin>
                   <Insets bottom="20.0" right="130.0" />
                </VBox.margin>
@@ -52,7 +52,7 @@
                   <Font name="Trajan Pro 3" size="13.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="userNameInput11" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="574.0" promptText="Confirm your email address" unFocusColor="#293a49">
+            <JFXTextField fx:id="confirmEmail" focusColor="#293a49" labelFloat="true" maxWidth="576.0" minWidth="402.0" prefColumnCount="1" prefHeight="33.0" prefWidth="574.0" promptText="Confirm your email address" unFocusColor="#293a49">
                <VBox.margin>
                   <Insets bottom="20.0" right="130.0" />
                </VBox.margin>
@@ -60,11 +60,16 @@
                   <Font name="Trajan Pro 3" size="13.0" />
                </font>
             </JFXTextField>
+            <JFXButton onAction="#submitUser" minHeight="60.0" minWidth="200.0">
+               <VBox.margin>
+                  <Insets right="300.0" top="50.0" />
+               </VBox.margin>
+            </JFXButton>
          </children>
       </VBox>
    </center>
    <bottom>
-      <JFXButton onAction="#loadLoginPage" minHeight="20.0" minWidth="150.0" text=" " BorderPane.alignment="CENTER_LEFT">
+      <JFXButton  minHeight="20.0" minWidth="150.0" onAction="#loadLoginPage" text=" " BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
             <Insets bottom="20.0" left="10.0" />
          </BorderPane.margin>

@@ -38,6 +38,11 @@ public class Vector2D implements Serializable{
         this.y = y;
     }
 
+    public void changeLocation(double x,double y){
+        this.x += x;
+        this.y += y;
+    }
+
     public void setX(double x) {
         this.x = x;
     }

@@ -13,13 +13,10 @@ import java.util.LinkedList;
 public class ClientProgram extends Listener {
 
 
-	//private String ip = "localhost";
+	private String ip = "localhost";
 	private int tcpPort = 27960, udpPort = 27960;
 	private Client client;
 	private static PacketMessage pm ;
-
-	String ip = "192.168.1.144";
-
 
 	public  PacketMessage getPm() {
 		return pm;

@@ -11,6 +11,7 @@ import application.Models.FollowerType.Follower;
 import application.Models.PowerUpType.Bomb;
 
 import application.Models.PowerUpType.PowerUp;
+import application.Models.Sprite;
 import application.Models.Vector2D;
 import application.Multiplayer.BulletPositions;
 import application.Multiplayer.ClientProgram;
@@ -31,12 +32,11 @@ public class Game {
     private Attractor mainCharacter, secondCharacter;
     private Follower follower;
     private List<Enemy> allEnemys;
-    private List<Bullet> allBullets,BulletFromBoss,bulletsFromSecondPlayer;
+    private List<Bullet> allBullets,BulletFromBoss,bulletsFromSecondPlayer,bulletsFollower;
     private List<PowerUp> powerups;
     private List<Boss> bosses;
     private List<Blood> blood;
     private Map<Bomb,Long> bombs;
-    //private Map<Explosion,Long> explosions;
     private GameField gameField;
     private ClientProgram clientProgram;
     private PacketMessage packetMessage;
@@ -53,8 +53,12 @@ public class Game {
     private Database database;
 
 
+    /******************************/
+    /*             INIT          */
+    /*****************************/
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        bulletsFollower = new LinkedList<>();
         database = Database.getInstance();
         bulletsFromSecondPlayer = new LinkedList<>();
         integersWithIds= new LinkedList<>();
@@ -98,11 +102,15 @@ public class Game {
         follower = instance.makeFollower(playField);
     }
 
+
+    /******************************/
+    /*          GAMELOOP         */
+    /*****************************/
+
     private void startGame() {
         loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                mainCharacter.display();
                 moveChar();
                 handleBullets();
                 moveEnemysTowardsMainCharacter();
@@ -128,20 +136,19 @@ public class Game {
         loop.start();
     }
 
+    /******************************/
+    /*       MULTIPLAYER         */
+    /*****************************/
+
     private void moveSecondPlayerBullets(){
         for (int i = 0; i < bulletsFromSecondPlayer.size(); i++) {
             Bullet b = bulletsFromSecondPlayer.get(i);
             b.movement(b.getDestination(),true);
-            if(b.outOfDestination()){
-                b.setVisible(false);
-                bulletsFromSecondPlayer.remove(b);
-            }
+            if(b.outOfDestination()){removeItem(bulletsFromSecondPlayer,b);}
         }
-
     }
 
     private void addBulletsForSecondPlayer(){
-
         for (int i = 0; i < packetMessage.getBullets().size(); i++) {
             BulletPositions bullet = packetMessage.getBullets().get(i);
             if(!integersWithIds.contains(bullet.getRandomId())){
@@ -161,6 +168,7 @@ public class Game {
             Bullet b = allBullets.get(i);
             bulletPositions.add(new BulletPositions(b.getLocation(),b.getDestination(),randomInt));
         }
+
         packetMessage.setBullets(bulletPositions);
         packetMessage.setEnemies(enemieLocations);
         packetMessage.setDeadEnemies(deadEnemies);
@@ -180,17 +188,25 @@ public class Game {
     private void spawnMultiPlayer(){
         if(packetMessage.getId() == 1){
             if(packetMessage.getSpawnFirstClient()){
-                deadEnemies.clear();
-                spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
+                spawnEnemyMultiPlayer();
                 packetMessage.setSpawnFirstClient(false);
             }
         }
         else {
             if(packetMessage.getSpawnSecondClient()){
-                deadEnemies.clear();
-                spawnEnemyMultiPlayer(this.packetMessage.getEnemies());
+                spawnEnemyMultiPlayer();
                 packetMessage.setSpawnSecondClient(false);
             }
+        }
+    }
+
+
+    private void spawnEnemyMultiPlayer(){
+        waves++;
+        gameField.updateWaves(waves);
+        for (int i = 0; i < this.packetMessage.getEnemies().size(); i++) {
+            Enemy enemy = new Enemy(playField,this.packetMessage.getEnemies().get(i),i);
+            allEnemys.add(enemy);
         }
     }
 
@@ -199,6 +215,12 @@ public class Game {
         else{secondCharacter.setLocation(packetMessage.getFirstCharacter());}
         secondCharacter.display();
     }
+
+    /******************************/
+    /*          ENEMYS           */
+    /*****************************/
+
+
 
     private void moveEnemysTowardsMainCharacter() {
         for (int i = 0;i < allEnemys.size();i++) {
@@ -214,20 +236,36 @@ public class Game {
         }
     }
 
-    private void spawnEnemyMultiPlayer(List<Vector2D> enemies){
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy enemy = new Enemy(playField,enemies.get(i),i);
-            allEnemys.add(enemy);
-            System.out.println(allEnemys.size());
-        }
-    }
-
-
-
 
     private void addEnemy() {
         allEnemys.add(new Enemy(playField));
     }
+
+
+    private void checkCollisionEnemy(Attractor a, Enemy e) {
+        if (e.coll(a, e)) {
+            killEnemy(e);
+            updateLifes(-1);
+        }
+    }
+
+    private void killEnemy(Enemy e) {
+        location = new Vector2D(e.getLocation());
+        Blood bl = new Blood(playField,location);
+        bl.toBack();
+        blood.add(bl);
+        removeItem(allEnemys,e);
+        xp += (multiplierActivated)? e.getXp() * 2 : e.getXp();
+        gameField.updateHighscore(xp);
+        deadEnemies.add(e.getIdn());
+        enemysKilled++;
+    }
+
+
+    /******************************/
+    /*       BossHandlers         */
+    /*****************************/
+
 
     private void handleBoss(){
         for (int i = 0; i < bosses.size(); i++) {
@@ -275,6 +313,11 @@ public class Game {
         }
     }
 
+
+    /******************************/
+    /*           Bullets         */
+    /*****************************/
+
     private void addBullet(Vector2D loc) {
         location = new Vector2D(mainCharacter.getLocation());
         randomInt++;
@@ -282,49 +325,52 @@ public class Game {
         allBullets.add(bullet);
     }
 
-    private void spawnPowerUp() {
-        location = new Vector2D(random.nextDouble() * 770, random.nextDouble() * 540);
-        PowerUp pu = new PowerUp(playField, location);
-        pu.display();
-        powerups.add(pu);
-    }
-
-    private void updateWaves() {
-        if (enemysKilled == enemyToKill || bossDead) {
-            bossDead =false;
-            enemyToKill += instance.getIncrease();
-            enemysKilled = 0;
-            waves++;
-            gameField.updateWaves(waves);
-            removeBlood();
-            if(waves% 5==0){makeBoss();}
-            else{
-                for (int i = 0; i < enemyToKill ; i++) {
-                    addEnemy();
-                }
-                spawnPowerUp();
+    private void checkCollisionBullet(Bullet b) {
+        for (int i = 0; i < allEnemys.size(); i++) {
+            Enemy e = allEnemys.get(i);
+            if (e.coll(b, e)) {
+                removeItem(allBullets,b);
+                killEnemy(e);
             }
         }
     }
 
-    public void removeBlood(){
-        for(Blood bl:blood){
-            bl.setVisible(false);
+    private void handleBullets() {
+        for (int i = 0; i < BulletFromBoss.size(); i++) {
+            Bullet bullet = BulletFromBoss.get(i);
+            if (bullet.outOfDestination()){BulletFromBoss.remove(bullet);}
+            bullet.movement(bullet.getDestination(), true);
+            if(bullet.coll(bullet,mainCharacter)){
+                updateLifes(-1);
+                removeItem(BulletFromBoss,bullet);
+            }
         }
-        blood.clear();
+
+        for (int i = 0; i < allBullets.size(); i++) {
+            Bullet bullet = allBullets.get(i);
+            if (bullet.outOfDestination()) {allBullets.remove(bullet);}
+            bullet.movement(bullet.getDestination(), true);
+            checkCollisionBullet(bullet);
+            checkCollisionBoss(bullet);
+        }
     }
 
-    private void trippleArrow() {
-        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 50));
-        addBullet(mouseLocation);
-        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 50));
+
+    /******************************/
+    /*          POWERUPS         */
+    /*****************************/
+
+    private void spawnPowerUp() {
+        location = new Vector2D(random.nextDouble() * 770, random.nextDouble() * 540);
+        PowerUp pu = new PowerUp(playField, location);
+        powerups.add(pu);
     }
 
     private void checkColOnPowerUps(){
         for (int i = 0; i< powerups.size();i++) {
-            if (powerups.get(i).coll(mainCharacter, powerups.get(i))) {
-                powerups.get(i).setVisible(false);
-                powerups.remove(powerups.get(i));
+            PowerUp pu = powerups.get(i);
+            if (pu.coll(mainCharacter, pu)) {
+                removeItem(powerups,pu);
                 handlePowerUpsAndDown();
             }
         }
@@ -344,85 +390,111 @@ public class Game {
 
     }
 
-    //setBomb();
-    /*
-    private void setBomb(){
-        for (Map.Entry<Bomb,Long> bomb : bombs.entrySet()) {
-            if (bomb.getValue() + 3000 < System.currentTimeMillis()) {
-                bomb.getKey().setVisible(false);
-                bombs.remove(bomb.getKey());
-                System.out.println(bombs);
-                //setExplosion();
-            }
-        }
-
-    }
-
-    private void setExplosion(){
-        for (Map.Entry<Explosion,Long> entry : explosions.entrySet()) {
-            entry.getKey().display();
-            if(entry.getValue() + 1000 < System.currentTimeMillis()){
-                entry.getKey().setVisible(false);
-                explosions.remove(entry.getKey());
-
-            }}
-
-    }*/
-
     private void handlePowerUpsAndDown(){
-        Random r = new Random();
-        int number = r.nextInt(10);
+
+        int number = (int)(Math.random() * 10);
+        String[] powerups = {"Tripple arrow","Rapid Fire","Shield","Multiplier","Bomb","Extra Life","Slow fire","Orcs on fire","Orc zone","Health Down"};
+        System.out.println(number);
+        System.out.println(powerups[number]);
+        gameField.setActivatedPowerupLabel(powerups[number]);
         switch (number){
-            case 1:
-                gameField.setActivatedPowerupLabel("Rapid fire");
+            case 0:
+                System.out.println("tr");
                 rapidFireActivated = true;
                 break;
-            case 2:
+            case 1:
+                System.out.println("");
                 shooterSpeed = 0.3;
-                gameField.setActivatedPowerupLabel("Fire arrow");
                 break;
-            case 3:
-                gameField.setActivatedPowerupLabel("Shield");
+            case 2:
                 shieldActivated=true;
                 break;
-            case 4:
+            case 3:
                 multiplierActivated = true;
-                gameField.setActivatedPowerupLabel("Multiplier");
                 break;
-            case 5:
-                gameField.setActivatedPowerupLabel("Bomb");
+            case 4:
                 bombActivated=true;
                 break;
-            case 6:
-                gameField.setActivatedPowerupLabel("Extra life");
-                mainCharacter.setlives(mainCharacter.getLives()+1);
-                gameField.updateLives(mainCharacter.getLives());
+            case 5:
+                updateLifes(+1);
                 break;
-            case 7:
-                gameField.setActivatedPowerupLabel("Slow fire");
+            case 6:
                 shooterSpeed= 2;
                 break;
+            case 7:
+                allEnemys.forEach(e -> e.setMaxSpeed(3));
+                break;
             case 8:
-                gameField.setActivatedPowerupLabel("Orcs on fire");
-                for (Enemy e:allEnemys) {
-                    e.setMaxSpeed(3);
-                }
                 break;
             case 9:
-                gameField.setActivatedPowerupLabel("Orc zone");
-                break;
-            case 10:
-                gameField.setActivatedPowerupLabel("Health down");
-                mainCharacter.setlives(mainCharacter.getLives()-1);
-                gameField.updateLives(mainCharacter.getLives());
+                updateLifes(-1);
                 break;
         }
         tekstTime = System.currentTimeMillis();
+    }
 
+    private void trippleArrow() {
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() + 50));
+        addBullet(mouseLocation);
+        addBullet(new Vector2D(mouseLocation.getX(), mouseLocation.getY() - 50));
     }
 
 
+    /******************************/
+    /*           OTHERS          */
+    /*****************************/
+
+
+    private void updateWaves() {
+        if (enemysKilled == enemyToKill || bossDead) {
+            bossDead =false;
+            enemyToKill += instance.getIncrease();
+            enemysKilled = 0;
+            waves++;
+            gameField.updateWaves(waves);
+            removeBlood();
+            if(waves% 5!=0){
+                for (int i = 0; i < enemyToKill ; i++) {
+                    addEnemy();
+                }
+                spawnPowerUp();
+            }
+            else{makeBoss();}
+        }
+    }
+
+    private void removeBlood(){
+        for (int i = 0; i < blood.size(); i++) {
+            removeItem(blood,blood.get(i));
+        }
+    }
+
+    private void removeItem(List list,Sprite object){
+        object.setVisible(false);
+        list.remove(object);
+    }
+
+
+    private void updateLifes(int health){
+        mainCharacter.setlives(mainCharacter.getLives() + health);
+        if(mainCharacter.getLives() == 0){
+            stopGame();
+        }
+        gameField.updateLives(mainCharacter.getLives());
+    }
+
+
+
+    /******************************/
+    /*          FOLLOWERS        */
+    /*****************************/
+
+
+
     private void doSpecialAbility() {
+        for (int i = 0; i < bulletsFollower.size(); i++) {
+            bulletsFollower.get(i).movement(bulletsFollower.get(i).getDestination(),true);
+        }
         switch (instance.getFollowerType()) {
             case "Donkey":
                 specialAbilityDonkey();
@@ -438,8 +510,10 @@ public class Game {
     }
 
     private void specialAbilityHorse(){
-        follower.movement(follower.getDestionation(),false);
-        if (Math.round(follower.getLocation().getX()) == Math.round(follower.getDestionation().getX()) && Math.round(follower.getLocation().getY()) == Math.round(follower.getDestionation().getY())) {
+        Vector2D dest = follower.getDestionation();
+        Vector2D loc = follower.getLocation();
+        follower.movement(dest,false);
+        if (Math.round(loc.getX()) == Math.round(dest.getX()) && Math.round(loc.getY()) == Math.round(dest.getY())) {
             angle = angle + 1;
             double x =mainCharacter.getLocation().getX() + Math.cos(angle) * 75;
             double y = mainCharacter.getLocation().getY() + Math.sin(angle) * 75;
@@ -448,9 +522,9 @@ public class Game {
 
         if(time + 500 < System.currentTimeMillis()){
             for (int i = 0; i < allEnemys.size(); i++) {
-                if(allEnemys.get(i).coll(allEnemys.get(i),follower)){
-                    allEnemys.get(i).setVisible(false);
-                    allEnemys.remove(allEnemys.get(i));
+                Enemy e = allEnemys.get(i);
+                if(e.coll(e,follower)){
+                    removeItem(allEnemys,e);
                     enemysKilled++;
                     time = System.currentTimeMillis();
                 }
@@ -461,95 +535,45 @@ public class Game {
     private void specialAbilityUnicorn(){
         follower.movement(mainCharacter.getLocation(), false);
         if(time + 5000 < System.currentTimeMillis()){
-            location = follower.getLocation();
-            //Bullet bullet = instance.makeBullet(playField,location,mouseLocation);
             time = System.currentTimeMillis();
+            randomInt++;
+            location = new Vector2D(follower.getLocation());
+            Bullet bullet = instance.makeBullet(playField,location,mouseLocation,randomInt);
+            bulletsFollower.add(bullet);
         }
     }
 
     private void specialAbilityDonkey() {
         if (time + 10000 < System.currentTimeMillis() && powerups.size() > 0) {
+
             for (int i = 0; i < powerups.size(); i++) {
-                follower.movement(powerups.get(0).getLocation(), false);
-                if (follower.coll(follower, powerups.get(0))) {
+                PowerUp pu = powerups.get(i);
+                follower.movement(pu.getLocation(), false);
+                if (follower.coll(follower, pu)) {
                     handlePowerUpsAndDown();
-                    powerups.get(0).setVisible(false);
-                    powerups.remove(powerups.get(0));
+                    removeItem(powerups,pu);
                     time = System.currentTimeMillis();
                 }
             }
         }
         else {
-            double x = mainCharacter.getLocation().getX()-15;
-            double y = mainCharacter.getLocation().getY()+50;
-            Vector2D loc = new Vector2D(x,y);
+            Vector2D loc = new Vector2D(mainCharacter.getLocation());
+            loc.changeLocation(-15,50);
             follower.movement(loc,false);
         }
     }
 
-    private void checkCollisionBullet(Bullet b) {
-        for (int i = 0; i < allEnemys.size(); i++) {
-            Enemy e = allEnemys.get(i);
-            if (e.coll(b, e)) {
-                b.setVisible(false);
-                allBullets.remove(b);
-                killEnemy(e);
-            }
-        }
-    }
-
-
-
-    private void handleBullets() {
-        for (int i = 0; i < BulletFromBoss.size(); i++) {
-            Bullet bullet = BulletFromBoss.get(i);
-            if (bullet.outOfDestination()){
-                BulletFromBoss.remove(bullet);
-            }
-            bullet.movement(bullet.getDestination(), true);
-        }
-
-        for (int i = 0; i < allBullets.size(); i++) {
-            Bullet bullet = allBullets.get(i);
-            if (bullet.outOfDestination()) {
-                allBullets.remove(bullet);
-            }
-            bullet.movement(bullet.getDestination(), true);
-            checkCollisionBullet(bullet);
-            checkCollisionBoss(bullet);
-        }
-    }
-
-    private void checkCollisionEnemy(Attractor a, Enemy e) {
-        if (e.coll(a, e)) {
-            killEnemy(e);
-            mainCharacter.setlives(mainCharacter.getLives() - 1);
-            gameField.updateLives(mainCharacter.getLives());
-            if (a.getLives() <= 0) {stopGame();}
-        }
-    }
-
-    private void killEnemy(Enemy e) {
-        e.setVisible(false);
-        location = new Vector2D(e.getLocation());
-        Blood bl = new Blood(playField,location);
-        bl.toBack();
-        bl.display();
-        blood.add(bl);
-        allEnemys.remove(e);
-        xp += (multiplierActivated)? e.getXp() * 2 : e.getXp();
-        gameField.updateHighscore(xp);
-        deadEnemies.add(e.getIdn());
-        enemysKilled++;
-    }
+    /******************************/
+    /*          HANDLERS         */
+    /*****************************/
 
     private void moveChar() {
         double x = mainCharacter.getLocation().getX();
         double y = mainCharacter.getLocation().getY();
-        if (up && y > 80) {mainCharacter.setLocation(x, y - 5);}
-        else if (down && y < 540) {mainCharacter.setLocation(x, y + 5);}
-        else if (left && x > 0) {mainCharacter.setLocation(x - 5, y);}
-        else if (right && x < 770) {mainCharacter.setLocation(x + 5, y);}
+        if (up && y > 80) {mainCharacter.changeLocation(0, - 5);}
+        else if (down && y < 540) {mainCharacter.changeLocation(0,5);}
+        else if (left && x > 0) {mainCharacter.changeLocation(- 5, 0);}
+        else if (right && x < 770) {mainCharacter.changeLocation(5, 0);}
     }
 
     private void keyAction(KeyEvent e, Boolean bool) {
@@ -558,19 +582,10 @@ public class Game {
         else if (key == KeyCode.S || key == KeyCode.DOWN) {down = bool;}
         else if (key == KeyCode.A || key == KeyCode.LEFT) {left = bool;}
         else if (key == KeyCode.D || key == KeyCode.RIGHT) {right = bool;}
-
-
-        else if (key == KeyCode.SPACE && bombActivated){
-            location = new Vector2D(mainCharacter.getLocation());
-            Bomb bomb = new Bomb(playField, location);
-            bomb.display();
-            bombs.put(bomb,System.currentTimeMillis());
-            }
-        }
+    }
 
 
     private void shoot() {
-
         if (shooting && (shootersTime + interValWeapon * shooterSpeed) < System.currentTimeMillis()) {
             if(rapidFireActivated){trippleArrow();}
             addBullet(mouseLocation);
@@ -597,10 +612,51 @@ public class Game {
         loop.stop();
         instance.setWave(waves);
         instance.setHighscore(xp);
-        database.saveUser("","");
-        database.updateHighscoreFromUser(instance.getUsername(),xp);
+        if(database.getHighscoreFromUser(instance.getUsername()) < xp){
+            database.updateHighscoreFromUser(instance.getUsername(),xp);
+        }
         database.updateCurrentWaveFromUser(instance.getUsername(),waves);
         database.updateCoinsFromUser(instance.getUsername(),xp/100);
         Client.loadScreen("endGame");
     }
 }
+
+
+
+
+
+//private Map<Explosion,Long> explosions;
+//setBomb();
+    /*
+    private void setBomb(){
+        for (Map.Entry<Bomb,Long> bomb : bombs.entrySet()) {
+            if (bomb.getValue() + 3000 < System.currentTimeMillis()) {
+                bomb.getKey().setVisible(false);
+                bombs.remove(bomb.getKey());
+                System.out.println(bombs);
+                //setExplosion();
+            }
+        }
+
+    }
+
+    private void setExplosion(){
+        for (Map.Entry<Explosion,Long> entry : explosions.entrySet()) {
+            entry.getKey().display();
+            if(entry.getValue() + 1000 < System.currentTimeMillis()){
+                entry.getKey().setVisible(false);
+                explosions.remove(entry.getKey());
+
+            }}
+
+    }
+
+    else if (key == KeyCode.SPACE && bombActivated){
+            location = new Vector2D(mainCharacter.getLocation());
+            Bomb bomb = new Bomb(playField, location);
+            bombs.put(bomb,System.currentTimeMillis());
+            }
+        }
+
+
+    */

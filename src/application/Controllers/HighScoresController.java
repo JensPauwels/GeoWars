@@ -49,13 +49,7 @@ public class HighScoresController {
     private ObservableList<User> generateUserData() throws Exception {
         ObservableList<User> users = FXCollections.observableArrayList();
         List<User> listOfUsers = Database.getInstance().getHighscoreOfAllUsers();
-
-
-        int number = listOfUsers.size();
-        if (number > 5) {
-            number = 5;
-        }
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < listOfUsers.size(); i++) {
             users.add(listOfUsers.get(i));
         }
         return users;

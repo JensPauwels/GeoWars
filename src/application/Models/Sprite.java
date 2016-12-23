@@ -50,6 +50,7 @@ public abstract class Sprite extends Region {
         setPrefSize(width, height);
         getChildren().add(view);
         bp.getChildren().add(this);
+        this.display();
 
     }
 
@@ -141,10 +142,16 @@ public abstract class Sprite extends Region {
         return location;
     }
 
+    public void changeLocation(double x, double y){
+        x += location.getX();
+        y += location.getY();
+        setLocation(x,y);
+    }
 
     public void setLocation(double x, double y) {
         location.setX(x);
         location.setY(y);
+        display();
     }
 
     public void setLocation(Vector2D vector2D){
