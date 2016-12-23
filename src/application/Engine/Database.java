@@ -6,10 +6,6 @@ import application.Engine.User;
 import java.sql.*;
 import java.util.*;
 
-/**
- * Created by maximternier on 21/12/16.
- */
-
 public class Database {
 
     private static Database instance;
