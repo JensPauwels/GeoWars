@@ -27,12 +27,11 @@ import java.util.*;
 
 
 public class Game {
-    private FakeDataBase fakeDataBase;
     private Pane playField;
     private Attractor mainCharacter, secondCharacter;
     private Follower follower;
     private List<Enemy> allEnemys;
-    private List<Bullet> allBullets,BulletFromBoss;
+    private List<Bullet> allBullets,BulletFromBoss,bulletsFromSecondPlayer;
     private List<PowerUp> powerups;
     private List<Boss> bosses;
     private List<Blood> blood;
@@ -44,24 +43,22 @@ public class Game {
     private Engine instance;
     private Random random;
     private Vector2D mouseLocation,location;
-    private long time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
+    private long interValWeapon,time, shootersTime,bossSpeed, tekstTime = System.currentTimeMillis();
     private Scene scene;
     private AnimationTimer loop;
     private boolean up, down, left, right, shooting,bossDead,multiPlayer,rapidFireActivated,shieldActivated,multiplierActivated,bombActivated;
-    private int enemysKilled,angle,enemyToKill = 5,waves = 1,xp = 0;
+    private int enemysKilled,angle,enemyToKill = 5,waves = 1,xp,randomInt = 0;
     private double shooterSpeed = 1;
-    private List<Integer> deadEnemies;
-    private int randomInt;
-    private List<Bullet> bulletsFromSecondPlayer;
-    private List<Integer> test = new LinkedList<>();
-
+    private List<Integer> deadEnemies,integersWithIds;
+    private Database database;
 
 
 
     public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+        database = Database.getInstance();
         bulletsFromSecondPlayer = new LinkedList<>();
+        integersWithIds= new LinkedList<>();
         deadEnemies = new LinkedList<>();
-        fakeDataBase = new FakeDataBase();
         allEnemys = new LinkedList<>();
         allBullets = new LinkedList<>();
         BulletFromBoss = new LinkedList<>();
@@ -69,7 +66,6 @@ public class Game {
         bosses = new LinkedList<>();
         blood = new LinkedList<>();
         bombs = new HashMap<>();
-        //explosions = new HashMap<>();
         gameField = new GameField();
         clientProgram = new ClientProgram();
         packetMessage = new PacketMessage();
@@ -79,6 +75,7 @@ public class Game {
         location = new Vector2D(0,0);
         this.scene = scene;
         playField = gameField.getScreen();
+        interValWeapon = database.getWeaponDamage(instance.getWeaponType());
         mainLayout.setCenter(playField);
         this.multiPlayer = multiPlayer;
 
@@ -147,16 +144,14 @@ public class Game {
 
         for (int i = 0; i < packetMessage.getBullets().size(); i++) {
             BulletPositions bullet = packetMessage.getBullets().get(i);
-            if(!test.contains(bullet.getRandomId())){
-                test.add(bullet.getRandomId());
+            if(!integersWithIds.contains(bullet.getRandomId())){
+                integersWithIds.add(bullet.getRandomId());
                 bulletsFromSecondPlayer.add(new Spear(playField,bullet.getStart(),bullet.getEnd(),randomInt));
-                System.out.println("testSize" + test.size());
-                System.out.println(bullet.getRandomId());
             }
-
         }
-
     }
+
+
     private void handler(){
         packetMessage.setFirstCharacter(mainCharacter.getLocation());
         List<Vector2D> enemieLocations = new LinkedList<>();
@@ -347,12 +342,10 @@ public class Game {
                 e.setMaxSpeed(2);
             }}
 
-
-            setBomb();
-
-
-
     }
+
+    //setBomb();
+    /*
     private void setBomb(){
         for (Map.Entry<Bomb,Long> bomb : bombs.entrySet()) {
             if (bomb.getValue() + 3000 < System.currentTimeMillis()) {
@@ -364,7 +357,7 @@ public class Game {
         }
 
     }
-/*
+
     private void setExplosion(){
         for (Map.Entry<Explosion,Long> entry : explosions.entrySet()) {
             entry.getKey().display();
@@ -445,7 +438,6 @@ public class Game {
     }
 
     private void specialAbilityHorse(){
-
         follower.movement(follower.getDestionation(),false);
         if (Math.round(follower.getLocation().getX()) == Math.round(follower.getDestionation().getX()) && Math.round(follower.getLocation().getY()) == Math.round(follower.getDestionation().getY())) {
             angle = angle + 1;
@@ -511,7 +503,9 @@ public class Game {
     private void handleBullets() {
         for (int i = 0; i < BulletFromBoss.size(); i++) {
             Bullet bullet = BulletFromBoss.get(i);
-            if (bullet.outOfDestination()) BulletFromBoss.remove(bullet);
+            if (bullet.outOfDestination()){
+                BulletFromBoss.remove(bullet);
+            }
             bullet.movement(bullet.getDestination(), true);
         }
 
@@ -519,9 +513,7 @@ public class Game {
             Bullet bullet = allBullets.get(i);
             if (bullet.outOfDestination()) {
                 allBullets.remove(bullet);
-
             }
-
             bullet.movement(bullet.getDestination(), true);
             checkCollisionBullet(bullet);
             checkCollisionBoss(bullet);
@@ -539,14 +531,13 @@ public class Game {
 
     private void killEnemy(Enemy e) {
         e.setVisible(false);
-        location = new Vector2D(e.getLocation().getX(),e.getLocation().getY());
+        location = new Vector2D(e.getLocation());
         Blood bl = new Blood(playField,location);
         bl.toBack();
         bl.display();
         blood.add(bl);
         allEnemys.remove(e);
-        if(multiplierActivated){ xp = xp + e.getXp()*2;}
-        else{xp = xp+ e.getXp();}
+        xp += (multiplierActivated)? e.getXp() * 2 : e.getXp();
         gameField.updateHighscore(xp);
         deadEnemies.add(e.getIdn());
         enemysKilled++;
@@ -567,19 +558,20 @@ public class Game {
         else if (key == KeyCode.S || key == KeyCode.DOWN) {down = bool;}
         else if (key == KeyCode.A || key == KeyCode.LEFT) {left = bool;}
         else if (key == KeyCode.D || key == KeyCode.RIGHT) {right = bool;}
+
+
         else if (key == KeyCode.SPACE && bombActivated){
-            location = new Vector2D(mainCharacter.getLocation().getX(),mainCharacter.getLocation().getY());
+            location = new Vector2D(mainCharacter.getLocation());
             Bomb bomb = new Bomb(playField, location);
             bomb.display();
             bombs.put(bomb,System.currentTimeMillis());
-
             }
         }
 
 
     private void shoot() {
 
-        if (shooting && (shootersTime + fakeDataBase.getTimeFromWeapon(instance.getWeaponType()) * shooterSpeed) < System.currentTimeMillis()) {
+        if (shooting && (shootersTime + interValWeapon * shooterSpeed) < System.currentTimeMillis()) {
             if(rapidFireActivated){trippleArrow();}
             addBullet(mouseLocation);
             shootersTime = System.currentTimeMillis();
@@ -605,6 +597,10 @@ public class Game {
         loop.stop();
         instance.setWave(waves);
         instance.setHighscore(xp);
+        database.saveUser("","");
+        database.updateHighscoreFromUser(instance.getUsername(),xp);
+        database.updateCurrentWaveFromUser(instance.getUsername(),waves);
+        database.updateCoinsFromUser(instance.getUsername(),xp/100);
         Client.loadScreen("endGame");
     }
 }

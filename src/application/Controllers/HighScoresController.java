@@ -1,7 +1,7 @@
 package application.Controllers;
 
 import application.Client;
-import application.Engine.DbConnection;
+import application.Engine.Database;
 import application.Engine.Engine;
 import application.Engine.User;
 import javafx.collections.FXCollections;
@@ -13,11 +13,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HighScoresController {
     public VBox vbox;
-    private DbConnection db = Engine.getInstance().getDb();
 
     @FXML
     public void initialize() throws Exception {
@@ -48,8 +48,8 @@ public class HighScoresController {
 
     private ObservableList<User> generateUserData() throws Exception {
         ObservableList<User> users = FXCollections.observableArrayList();
-        String query = "SELECT  userName,highscore FROM users order by highscore desc";
-        List<User> listOfUsers = db.getHighscores(query);
+        List<User> listOfUsers = Database.getInstance().getHighscoreOfAllUsers();
+
 
         int number = listOfUsers.size();
         if (number > 5) {

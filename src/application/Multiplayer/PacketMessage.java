@@ -58,8 +58,6 @@ public class PacketMessage {
 		this.spawnFirstClient = spawnFirstClient;
 	}
 
-
-
 	public List<Vector2D> getEnemies() {
 		return enemies;
 	}
@@ -68,13 +66,10 @@ public class PacketMessage {
 		this.enemies = enemies;
 	}
 
-
 	public PacketMessage(){
 		this.firstCharacter = new Vector2D(500,400);
 		this.secondCharacter = new Vector2D(300,400);
 	}
-
-
 
 	public Vector2D getFirstCharacter() {
 		return firstCharacter;

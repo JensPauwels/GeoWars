@@ -75,7 +75,9 @@ public class GameField {
         waveLabel.setText(Integer.toString(waves));
     }
 
-    public void updateLives(int lives){livesLabel.setText(Integer.toString(lives));}
+    public void updateLives(int lives){
+        livesLabel.setText(Integer.toString(lives));
+    }
 
     public void setActivatedPowerupLabel(String tekst){
         activatedPowerupLabel.setText("Activated Powerup: " + tekst);

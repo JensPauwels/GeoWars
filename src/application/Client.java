@@ -1,25 +1,19 @@
 package application;
 
-
-import application.Engine.Engine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-
 
 public class Client extends Application {
     public static BorderPane mainLayout;
     public static Scene scene;
     private Stage primaryStage;
 
-
-    public static BorderPane createBorderPane(String url) {
+    private static BorderPane createBorderPane(String url) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Client.class.getResource(url));
@@ -34,7 +28,6 @@ public class Client extends Application {
         mainLayout.setCenter(createBorderPane("FXML/" + url + ".FXML"));
     }
 
-
     @Override
     public void start(Stage primaryStage) {
         mainLayout = new BorderPane();
@@ -48,8 +41,6 @@ public class Client extends Application {
             this.primaryStage.close();
         });
     }
-
-
 
     private void showMainView() {
         mainLayout.setMinHeight(600);

@@ -115,7 +115,7 @@ public abstract class Sprite extends Region {
         if (d < 100) {
 
             // ...set the magnitude according to how close we are.
-            double m = Utils.map(d, 0, 100, 0, maxSpeed);
+            double m = 0 + (maxSpeed) * ((d) / (100));
             desired.multiply(m);
 
         }

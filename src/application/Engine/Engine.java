@@ -16,12 +16,12 @@ import java.util.Map;
 
 public class Engine {
     private static Engine firstInstance = null;
-    private DbConnection db = new DbConnection();
     private String weaponType;
     private String followerType;
     private String levelType;
     private int wave;
     private int highscore;
+    private String username;
 
 
 
@@ -30,6 +30,14 @@ public class Engine {
             firstInstance = new Engine();
         }
         return firstInstance;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getWave() {
@@ -91,12 +99,6 @@ public class Engine {
             put("Hard", 6);
         }};
         return levels.get(levelType);
-    }
-
-
-
-    public DbConnection getDb() {
-        return this.db;
     }
 
     public void setLevelType(String levelType) {

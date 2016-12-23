@@ -1,12 +1,7 @@
 package application.Engine;
-
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
-
-/**
- * Created by maximternier on 21/12/16.
- */
 
 public class Database {
 
@@ -86,6 +81,36 @@ public class Database {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public boolean checkUser(String loginUsername, String loginPassword) {
+        try {
+            String dbUsername;
+            String dbPassword;
+            String sql = "SELECT * FROM users WHERE username = ?";
+
+            PreparedStatement prep = this.connection.prepareStatement(sql);
+            prep.setString(1, loginUsername);
+
+            ResultSet rs = prep.executeQuery();
+
+            if (rs.next()) {
+                dbUsername = rs.getString("username");
+                dbPassword = rs.getString("password");
+
+                if (BCrypt.checkpw(loginPassword, dbPassword)) {
+                    System.out.println("Excisting user");
+                    //currentUser = new User(dbUsername, dbPassword);
+                    return true;
+                } else {
+                    System.out.println("User not found");
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
 
@@ -202,5 +227,48 @@ public class Database {
         return 0;
     }
 
+
+    public int getRankingOfUser(String player) {
+        try {
+            String sql = "SELECT u.*, @curRank := @curRank + 1 AS rank FROM users u, (SELECT @curRank := 0) r WHERE username = ? ORDER BY highscore DESC";
+
+            PreparedStatement prep = this.connection.prepareStatement(sql);
+            //prep.setString(1, player);
+
+            ResultSet rs = prep.executeQuery();
+
+            if (rs.next()) {
+                int rank = rs.getInt("rank");
+                String username = rs.getString("username");
+                int highscore = rs.getInt("highscore");
+                System.out.println(rank + " : " + username + " - " + highscore);
+                return rank;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long getWeaponDamage(String weaponName) {
+        try {
+            String sql = "SELECT damage FROM weapons where type = ?";
+
+            PreparedStatement prep = this.connection.prepareStatement(sql);
+            prep.setString(1, weaponName);
+
+            ResultSet rs = prep.executeQuery();
+
+            if (rs.next()) {
+                long damage = rs.getLong("damage");
+                return damage;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
 
 }
