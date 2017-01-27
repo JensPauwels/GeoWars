@@ -1,9 +1,11 @@
 package application.Engine;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXProgressBar;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -25,6 +27,7 @@ public class GameField {
     private Label highscoreLabel, livesLabel, waveLabel, activatedPowerupLabel;
     private JFXButton stop = new JFXButton(" ");
     private JFXButton pause = new JFXButton(" ");
+    private JFXProgressBar bossHealth = new JFXProgressBar();
 
 
 
@@ -38,7 +41,7 @@ public class GameField {
         livesLabel = new Label("3");
         activatedPowerupLabel = new Label();
         activatedPowerupLabel.setVisible(false);
-        this.playfield.getChildren().addAll(highscoreLabel, livesLabel, waveLabel,stop,pause, activatedPowerupLabel);
+        this.playfield.getChildren().addAll(highscoreLabel, livesLabel, waveLabel,stop,pause, activatedPowerupLabel,bossHealth);
         highscoreLabel.setLayoutX(100);
         highscoreLabel.setLayoutY(20);
         livesLabel.setLayoutX(300);
@@ -53,6 +56,8 @@ public class GameField {
         pause.setFocusTraversable(false);
         pause.setLayoutX(680);
         pause.setMinSize(30,50);
+        bossHealth.setVisible(false);
+
 
     }
 
@@ -90,5 +95,9 @@ public class GameField {
     public Boolean getActivatedPowerupLabel(){
 
         return activatedPowerupLabel.isVisible();};
+
+    public JFXProgressBar getBossHealth(){
+        return bossHealth;
+    }
 
 }

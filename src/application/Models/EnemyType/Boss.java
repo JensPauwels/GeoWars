@@ -5,14 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-/**
- * Created by jens on 27/11/2016.
- */
 public class Boss extends Enemy {
 
     public Boss(Pane bp, Vector2D location) {
         super(bp, location,0);
-        this.setHealth(25);
+        this.setHealth(20);
         this.setDestination(this.getLocation());
     }
 

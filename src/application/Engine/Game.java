@@ -18,6 +18,7 @@ import application.Multiplayer.ClientProgram;
 import application.Multiplayer.PacketMessage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +52,8 @@ public class Game {
     private double shooterSpeed = 1;
     private List<Integer> deadEnemies,integersWithIds;
     private Database database;
+    private int enemySpawn = 0;
+
 
 
     /******************************/
@@ -78,6 +81,7 @@ public class Game {
         mouseLocation = new Vector2D(0,0);
         location = new Vector2D(0,0);
         this.scene = scene;
+
         playField = gameField.getScreen();
         interValWeapon = database.getWeaponDamage(instance.getWeaponType());
         mainLayout.setCenter(playField);
@@ -100,6 +104,7 @@ public class Game {
         if(!multiPlayer){for (int i = 0; i < 5; i++) {addEnemy();}}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
+
     }
 
 
@@ -238,7 +243,14 @@ public class Game {
 
 
     private void addEnemy() {
-        allEnemys.add(new Enemy(playField));
+        enemySpawn++;
+        if(enemySpawn % 2 == 0){
+            allEnemys.add(new Enemy(playField,"enemy2"));
+        }
+        else {
+            allEnemys.add(new Enemy(playField));
+        }
+
     }
 
 
@@ -272,6 +284,8 @@ public class Game {
             Boss boss = bosses.get(i);
             shootWithBoss(boss);
             boss.changeLocation();
+            gameField.getBossHealth().setLayoutX(boss.getLocation().getX());
+            gameField.getBossHealth().setLayoutY(boss.getLocation().getY());
         }
     }
 
@@ -288,6 +302,10 @@ public class Game {
 
     private void makeBoss() {
         Boss boss = instance.makeBoss(playField,new Vector2D(300,200));
+
+        gameField.getBossHealth().setLayoutY(boss.getLocation().getY());
+        gameField.getBossHealth().setLayoutX(boss.getLocation().getX());
+
         bosses.add(boss);
     }
 
@@ -297,6 +315,7 @@ public class Game {
             if(boss.coll(boss,b)){
                 if(boss.getHealth() >1){
                     boss.setHealth(boss.getHealth() -1);
+                    gameField.getBossHealth().setProgress(boss.getHealth()*0.05);
                     b.setVisible(false);
                     allBullets.remove(b);
                 }
@@ -308,6 +327,7 @@ public class Game {
                     gameField.updateHighscore(xp);
                     bosses.remove(boss);
                     bossDead =true;
+                    gameField.getBossHealth().setVisible(false);
                 }
             }
         }
@@ -329,8 +349,13 @@ public class Game {
         for (int i = 0; i < allEnemys.size(); i++) {
             Enemy e = allEnemys.get(i);
             if (e.coll(b, e)) {
-                removeItem(allBullets,b);
-                killEnemy(e);
+                if(e.getHealth() != 1){
+                    e.setHealth(e.getHealth()-1);
+                    removeItem(allBullets,b);
+                }
+                else{
+                    killEnemy(e);
+                }
             }
         }
     }
@@ -459,7 +484,10 @@ public class Game {
                 }
                 spawnPowerUp();
             }
-            else{makeBoss();}
+            else{
+                makeBoss();
+                gameField.getBossHealth().setVisible(true);
+            }
         }
     }
 
