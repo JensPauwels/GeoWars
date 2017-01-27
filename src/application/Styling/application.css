@@ -265,7 +265,7 @@
     -fx-background-position: center center;
 }
 #enemy2 {
-    -fx-background-image: url("../../Images/enemy/Orc2.png");
+    -fx-background-image: url("../../Images/enemy/orc2.png");
     -fx-background-size: cover;
     -fx-min-width: 75px;
     -fx-min-height: 58px;
