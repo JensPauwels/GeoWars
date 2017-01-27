@@ -279,7 +279,7 @@ public class Game {
         if(bossSpeed + 500 < System.currentTimeMillis()){
             location = mainCharacter.getLocation();
             randomInt++;
-            Vector2D bosslocation = new Vector2D(boss.getLocation().getX()-85,boss.getLocation().getY()-50);
+            Vector2D bosslocation = new Vector2D(boss.getLocation().getX()+85,boss.getLocation().getY()+70);
             Bullet bullet = instance.makeFireBall(playField, bosslocation, location,randomInt);
             BulletFromBoss.add(bullet);
             bossSpeed = System.currentTimeMillis();

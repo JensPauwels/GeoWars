@@ -23,6 +23,9 @@ public class SinglePlayerController {
     public String follower = "Donkey";
     public Region weapon,speed,specialAbility,easy,medium,hard,donkey,horse,unicorn;
     private int index = 0;
+    private int speedUpdate = 0;
+    private int specialAbilityUpdate = 0;
+
 
     public void removeDifficultyGlows(){
 
@@ -106,6 +109,25 @@ public class SinglePlayerController {
     private void nextWeapon(){
         if(index < weapons.length -1){index++;}
         weapon.setId(weapons[index]+"screen");
+    }
+
+    @FXML
+    private void updateSpeed(){
+
+        if(speedUpdate != speeds.length-1){
+            speedUpdate++;
+            speed.setId("speed"+speeds[speedUpdate]);
+        }
+
+    }
+
+    @FXML
+    private void updateSpecialAbility(){
+        if(specialAbilityUpdate != specialAbilitys.length-1){
+            specialAbilityUpdate++;
+            specialAbility.setId("specialAbility"+specialAbilitys[specialAbilityUpdate]);
+        }
+
     }
 
     @FXML
