@@ -302,12 +302,12 @@
 #characterWithbow {
     -fx-background-image: url("../../Images/character/characterWithArrow.png");
     -fx-min-height: 62px;
-    -fx-max-width: 28px;
+    -fx-max-width: 29px;
     -fx-background-position: center center;
 }
 
 #characterWithspear {
-    -fx-background-image: url("../../Images/character/characterWithArrow.png");
+    -fx-background-image: url("../../Images/character/characterWithSpear.png");
     -fx-min-height: 80px;
     -fx-max-width: 62px;
     -fx-background-position: center center;
@@ -315,8 +315,8 @@
 
 #characterWithcrossbow {
     -fx-background-image: url("../../Images/character/characterWithBolt.png");
-    -fx-min-height: 52px;
-    -fx-max-width: 30px;
+    -fx-min-height: 81px;
+    -fx-max-width: 50px;
     -fx-background-position: center center;
 }
 
