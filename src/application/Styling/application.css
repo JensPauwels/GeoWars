@@ -257,11 +257,18 @@
     -fx-background-position: center center;
 }
 
-#enemy {
-    -fx-background-image: url("../../Images/enemy/orc2.png");
+#enemy1 {
+    -fx-background-image: url("../../Images/enemy/orc1.png");
     -fx-background-size: cover;
-    -fx-min-width: 19px;
-    -fx-min-height: 21px;
+    -fx-min-width: 58px;
+    -fx-min-height: 56px;
+    -fx-background-position: center center;
+}
+#enemy2 {
+    -fx-background-image: url("../../Images/enemy/Orc2.png");
+    -fx-background-size: cover;
+    -fx-min-width: 75px;
+    -fx-min-height: 58px;
     -fx-background-position: center center;
 }
 #powerup {
@@ -279,7 +286,7 @@
 }
 
 #blood{
-    -fx-background-image: url("../../Images/enemy/Blood.png");
+    -fx-background-image: url("../../Images/enemy/blood.png");
     -fx-min-width: 30px;
     -fx-min-height: 35px;
     -fx-background-position: center center;
@@ -300,9 +307,9 @@
 }
 
 #characterWithspear {
-    -fx-background-image: url("../../Images/character/characterWithSpear.png");
-    -fx-min-height: 73px;
-    -fx-max-width: 53px;
+    -fx-background-image: url("../../Images/character/characterWithArrow.png");
+    -fx-min-height: 80px;
+    -fx-max-width: 62px;
     -fx-background-position: center center;
 }
 

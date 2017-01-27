@@ -231,7 +231,7 @@ public class Game {
                 double secondDistance = Math.sqrt(Math.pow(secondCharacter.getLocation().getX(), 2) + Math.pow(enemy.getLocation().getX(), 2));
                 if(distance  > secondDistance ){location = secondCharacter.getLocation();}
             }
-            enemy.movement(location, true);
+            enemy.movement(location, false);
             if(!shieldActivated){checkCollisionEnemy(mainCharacter, enemy);}
         }
     }
