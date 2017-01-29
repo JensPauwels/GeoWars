@@ -60,7 +60,7 @@ public class Game {
     /*             INIT          */
     /*****************************/
 
-    public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) {
+    public Game(Scene scene, BorderPane mainLayout,Boolean multiPlayer) throws Exception {
         bulletsFollower = new LinkedList<>();
         database = Database.getInstance();
         bulletsFromSecondPlayer = new LinkedList<>();
@@ -86,6 +86,7 @@ public class Game {
         interValWeapon = database.getWeaponDamage(instance.getWeaponType());
         mainLayout.setCenter(playField);
         this.multiPlayer = multiPlayer;
+        initGame();
 
     }
 
@@ -104,6 +105,8 @@ public class Game {
         if(!multiPlayer){for (int i = 0; i < 5; i++) {addEnemy();}}
         mainCharacter = new Attractor(playField);
         follower = instance.makeFollower(playField);
+
+
 
     }
 
@@ -301,11 +304,9 @@ public class Game {
     }
 
     private void makeBoss() {
-        Boss boss = instance.makeBoss(playField,new Vector2D(300,200));
-
+        Boss boss = instance.makeBoss(playField,new Vector2D(500,400));
         gameField.getBossHealth().setLayoutY(boss.getLocation().getY());
         gameField.getBossHealth().setLayoutX(boss.getLocation().getX());
-
         bosses.add(boss);
     }
 
@@ -350,8 +351,9 @@ public class Game {
             Enemy e = allEnemys.get(i);
             if (e.coll(b, e)) {
                 if(e.getHealth() != 1){
-                    e.setHealth(e.getHealth()-1);
                     removeItem(allBullets,b);
+                    e.setHealth(e.getHealth()-1);
+
                 }
                 else{
                     killEnemy(e);
@@ -387,6 +389,12 @@ public class Game {
 
     private void spawnPowerUp() {
         location = new Vector2D(random.nextDouble() * 770, random.nextDouble() * 540);
+        if(location.getY() < 100){
+            location.setY(location.getY() + 100);
+        }
+
+
+
         PowerUp pu = new PowerUp(playField, location);
         powerups.add(pu);
     }
@@ -448,6 +456,7 @@ public class Game {
                 break;
             case 7:
                 allEnemys.forEach(e -> e.setMaxSpeed(3));
+
                 break;
             case 8:
                 break;

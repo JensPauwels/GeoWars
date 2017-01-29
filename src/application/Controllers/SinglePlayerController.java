@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ public class SinglePlayerController {
     private int index = 0;
     private int speedUpdate = 0;
     private int specialAbilityUpdate = 0;
+    public Label followerDetail;
+    private String[] infoFollower = {"Power ups are automatically collected by the donkey. A collected power up will be directly activated. The donkey has a cooldown of 20 sec before he can take off again","The horse offers you protection by moving around you. The faster your speed, the better your protection!","Unicorn helps shooting in multiple directions. Upgrade him to get a better score"};
 
 
     public void removeDifficultyGlows(){
@@ -50,6 +53,7 @@ public class SinglePlayerController {
         donkey.setId("donkeyGlow");
         speed.setId("speed"+speeds[0]);
         specialAbility.setId("specialAbility"+specialAbilitys[0]);
+        followerDetail.setText(infoFollower[0]);
     }
 
     @FXML
@@ -78,6 +82,7 @@ public class SinglePlayerController {
         removeFollowerGlows();
         follower = "Donkey";
         donkey.setId("donkeyGlow");
+        followerDetail.setText(infoFollower[0]);
     }
 
     @FXML
@@ -85,6 +90,7 @@ public class SinglePlayerController {
         removeFollowerGlows();
         follower = "Horse";
         horse.setId("horseGlow");
+        followerDetail.setText(infoFollower[1]);
     }
 
     @FXML
@@ -92,6 +98,7 @@ public class SinglePlayerController {
         removeFollowerGlows();
         follower = "Unicorn";
         unicorn.setId("unicornGlow");
+        followerDetail.setText(infoFollower[2]);
     }
 
     @FXML
@@ -132,10 +139,13 @@ public class SinglePlayerController {
 
     @FXML
     private void launchGame() throws Exception {
+
+        Client.loadScreen("Tutorial");
+
+
         instance.setWeaponType(weapons[index]);
         instance.setFollowerType(follower);
         instance.setLevelType(difficulty);
-        Game newGame = new Game(Client.scene, Client.mainLayout,false);
-        newGame.initGame();
+
     }
 }

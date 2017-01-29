@@ -271,6 +271,39 @@
     -fx-min-height: 58px;
     -fx-background-position: center center;
 }
+
+#tutorial1 {
+
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/tutorials1.png");
+    -fx-background-position: center center;
+
+}
+
+
+
+#tutorial2 {
+
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/tutorials2.png");
+    -fx-background-position: center center;
+
+}
+
+#tutorial3 {
+    -fx-background-color: #38383838;
+    -fx-background-image: url("../../Images/screens/rsz_tutorialscreen2.png");
+    -fx-background-position: center center;
+}
+
+#tutorial4{
+
+}
+
+#tutorial5{
+
+}
+
 #powerup {
     -fx-background-image: url("../../Images/powerup/Powerup.png");
     -fx-min-width: 30px;

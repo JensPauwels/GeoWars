@@ -2,96 +2,127 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-
 <BorderPane fx:id="configuration" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controllers.MultiPlayerController">
     <top>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+                <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <Region fx:id="easy" id="easyChoice" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#easy" prefHeight="40.0" prefWidth="60.0">
+                        <VBox prefHeight="178.0" prefWidth="472.0">
+                            <children>
+                                <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+                                    <children>
+                                        <Region id="easyChoice" fx:id="easy" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#easy" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="40.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <Region id="mediumChoice" fx:id="medium" layoutX="380.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#medium" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="10.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <Region id="hardChoice" fx:id="hard" layoutX="410.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#hard" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="10.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="280.0" top="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="200.0">
+                                    <VBox.margin>
+                                        <Insets left="280.0" top="15.0" />
+                                    </VBox.margin>
+                                    <children>
+                                        <Region id="Fdonkey" fx:id="donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#donkey" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="40.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <Region id="Fhorse" fx:id="horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#horse" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="10.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <Region id="Funicorn" fx:id="unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" onMouseClicked="#unicorn" prefHeight="40.0" prefWidth="60.0">
+                                            <HBox.margin>
+                                                <Insets left="10.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Region fx:id="speed" maxHeight="39.0" maxWidth="180.0" minHeight="39.0" minWidth="180.0" nodeOrientation="LEFT_TO_RIGHT">
+                                            <HBox.margin>
+                                                <Insets left="20.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <JFXButton maxHeight="10.0" maxWidth="10.0" minHeight="20.0" minWidth="20.0" onAction="#updateSpeed">
+                                            <HBox.margin>
+                                                <Insets bottom="-15.0" left="25.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font size="10.0" />
+                                            </font>
+                                        </JFXButton>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="280.0" top="10.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Region fx:id="specialAbility" maxHeight="38.0" maxWidth="180.0" minHeight="39.0" minWidth="180.0">
+                                            <HBox.margin>
+                                                <Insets left="20.0" />
+                                            </HBox.margin>
+                                        </Region>
+                                        <JFXButton maxHeight="10.0" maxWidth="10.0" minHeight="20.0" minWidth="20.0" onAction="#updateSpecialAbility" text="button">
+                                            <HBox.margin>
+                                                <Insets bottom="-15.0" left="25.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font size="10.0" />
+                                            </font>
+                                        </JFXButton>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="280.0" top="10.0" />
+                                    </VBox.margin>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="178.0" prefWidth="321.0">
+                            <children>
+                                <Label text="Details of follower">
+                                    <VBox.margin>
+                                        <Insets top="12.0" />
+                                    </VBox.margin></Label>
+                                <Label fx:id="followerDetail" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="137.0" prefWidth="257.0" text="Power ups are automatically collected by the donkey. A collected power up will be directly activated. The donkey has a cooldown of 20 sec before he can take off again" textAlignment="JUSTIFY" wrapText="true">
+                                    <VBox.margin>
+                                        <Insets left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                    <padding>
+                                        <Insets left="10.0" top="10.0" />
+                                    </padding>
+                                </Label>
+                            </children>
                             <HBox.margin>
-                                <Insets left="40.0" />
-                            </HBox.margin></Region>
-                        <Region fx:id="medium" id="mediumChoice" onMouseClicked="#medium" layoutX="380.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
-                            <HBox.margin>
-                                <Insets left="10.0" />
+                                <Insets />
                             </HBox.margin>
-                        </Region>
-                        <Region fx:id="hard" id="hardChoice" onMouseClicked="#hard" layoutX="410.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
-                            <HBox.margin>
-                                <Insets left="10.0" />
-                            </HBox.margin>
-                        </Region>
+                        </VBox>
                     </children>
-                    <VBox.margin>
-                        <Insets top="5.0" />
-                    </VBox.margin>
-                </HBox>
-                <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="200.0">
-                    <VBox.margin>
-                        <Insets top="15.0" />
-                    </VBox.margin>
-                    <children>
-                        <Region fx:id="donkey" id="Fdonkey" onMouseClicked="#donkey" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
-                            <HBox.margin>
-                                <Insets left="40.0" />
-                            </HBox.margin>
-                        </Region>
-                        <Region fx:id="horse" id="Fhorse" onMouseClicked="#horse" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
-                            <HBox.margin>
-                                <Insets left="10.0" />
-                            </HBox.margin>
-                        </Region>
-                        <Region fx:id="unicorn" id="Funicorn" onMouseClicked="#unicorn" layoutX="435.0" layoutY="10.0" maxHeight="30.0" minHeight="30.0" minWidth="40.0" prefHeight="40.0" prefWidth="60.0">
-                            <HBox.margin>
-                                <Insets left="10.0" />
-                            </HBox.margin>
-                        </Region>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Region fx:id="speed" maxHeight="39.0" maxWidth="180.0" minHeight="39.0" minWidth="180.0" nodeOrientation="LEFT_TO_RIGHT">
-                            <HBox.margin>
-                                <Insets left="20.0" />
-                            </HBox.margin></Region>
-                        <JFXButton maxHeight="10.0" maxWidth="10.0" minHeight="20.0" minWidth="20.0">
-                            <HBox.margin>
-                                <Insets bottom="-15.0" left="25.0" />
-                            </HBox.margin>
-                            <font>
-                                <Font size="10.0" />
-                            </font></JFXButton>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <Region fx:id="specialAbility" maxHeight="38.0" maxWidth="180.0" minHeight="39.0" minWidth="180.0">
-                            <HBox.margin>
-                                <Insets left="20.0" />
-                            </HBox.margin></Region>
-                        <JFXButton maxHeight="10.0" maxWidth="10.0" minHeight="20.0" minWidth="20.0" text="Button">
-                            <HBox.margin>
-                                <Insets bottom="-15.0" left="25.0" />
-                            </HBox.margin>
-                            <font>
-                                <Font size="10.0" />
-                            </font></JFXButton>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                     <children>
@@ -111,6 +142,7 @@
                         <Insets top="22.0" />
                     </VBox.margin>
                 </HBox>
+                <HBox prefHeight="100.0" prefWidth="200.0" />
             </children>
             <BorderPane.margin>
                 <Insets top="150.0" />
@@ -136,4 +168,3 @@
         </HBox>
     </bottom>
 </BorderPane>
-
