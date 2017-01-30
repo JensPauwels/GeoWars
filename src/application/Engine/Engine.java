@@ -24,6 +24,18 @@ public class Engine {
     private String username;
 
 
+    private String gameChoice;
+
+
+    public String getGameChoice(){
+        return this.gameChoice;
+    }
+
+    public void setGameChoice(String gamechoice){
+        this.gameChoice = gamechoice;
+    }
+
+
 
     public static Engine getInstance() {
         if (firstInstance == null) {
@@ -64,11 +76,14 @@ public class Engine {
                 return new Arrow(bp,mainLoc,mouseLoc,randomInt);
             case "crossbow":
                 return new Bolt(bp,mainLoc,mouseLoc,randomInt);
-            case "Unicorn":
-                return new UnicornHorn(bp,mainLoc,mouseLoc,randomInt);
+
             default:
                 return null;
         }
+    }
+
+    public UnicornHorn getUnicornHorn(Pane bp, Vector2D mainLoc, Vector2D mouseLoc,int randomInt){
+        return new UnicornHorn(bp,mainLoc,mouseLoc,randomInt);
     }
 
     public Bullet makeFireBall(Pane bp, Vector2D mainLoc, Vector2D mouseLoc,int randomInt){

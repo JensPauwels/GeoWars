@@ -152,16 +152,31 @@ public class Game {
         for (int i = 0; i < bulletsFromSecondPlayer.size(); i++) {
             Bullet b = bulletsFromSecondPlayer.get(i);
             b.movement(b.getDestination(),true);
-            if(b.outOfDestination()){removeItem(bulletsFromSecondPlayer,b);}
+            if(b.outOfDestination()){
+                removeItem(bulletsFromSecondPlayer,b);
+
+            }else{
+                for (int j = 0; j < allEnemys.size(); j++) {
+                    if(b.coll(b,allEnemys.get(j))){
+                        removeItem(bulletsFromSecondPlayer,b);
+                        removeItem(allEnemys,allEnemys.get(j));
+                    }
+                }
+            }
         }
     }
 
+
     private void addBulletsForSecondPlayer(){
+
+
+
         for (int i = 0; i < packetMessage.getBullets().size(); i++) {
             BulletPositions bullet = packetMessage.getBullets().get(i);
             if(!integersWithIds.contains(bullet.getRandomId())){
                 integersWithIds.add(bullet.getRandomId());
                 bulletsFromSecondPlayer.add(new Spear(playField,bullet.getStart(),bullet.getEnd(),randomInt));
+                System.out.println(randomInt);
             }
         }
     }
@@ -172,11 +187,11 @@ public class Game {
         List<Vector2D> enemieLocations = new LinkedList<>();
         List<BulletPositions> bulletPositions= new LinkedList<>();
         for (int i = 0; i < allEnemys.size(); i++) {enemieLocations.add(allEnemys.get(i).getLocation());}
+
         for (int i = 0; i < allBullets.size(); i++) {
             Bullet b = allBullets.get(i);
-            bulletPositions.add(new BulletPositions(b.getLocation(),b.getDestination(),randomInt));
+            bulletPositions.add(new BulletPositions(b.getLocation(),b.getDestination(),b.getRandomInt()));
         }
-
         packetMessage.setBullets(bulletPositions);
         packetMessage.setEnemies(enemieLocations);
         packetMessage.setDeadEnemies(deadEnemies);
@@ -212,9 +227,20 @@ public class Game {
     private void spawnEnemyMultiPlayer(){
         waves++;
         gameField.updateWaves(waves);
+
+
         for (int i = 0; i < this.packetMessage.getEnemies().size(); i++) {
-            Enemy enemy = new Enemy(playField,this.packetMessage.getEnemies().get(i),i);
-            allEnemys.add(enemy);
+            enemySpawn++;
+            if(enemySpawn % 2 == 0){
+                Enemy enemy = new Enemy(playField,this.packetMessage.getEnemies().get(i),i,"enemy2");
+                allEnemys.add(enemy);
+            }
+            else {
+                Enemy enemy = new Enemy(playField,this.packetMessage.getEnemies().get(i),i);
+                allEnemys.add(enemy);
+            }
+
+
         }
     }
 
@@ -350,14 +376,21 @@ public class Game {
         for (int i = 0; i < allEnemys.size(); i++) {
             Enemy e = allEnemys.get(i);
             if (e.coll(b, e)) {
-                if(e.getHealth() != 1){
-                    removeItem(allBullets,b);
-                    e.setHealth(e.getHealth()-1);
-
-                }
-                else{
+                if(multiPlayer){
                     killEnemy(e);
                 }
+                else{
+                    if(e.getHealth() != 1){
+                        removeItem(allBullets,b);
+                        e.setHealth(e.getHealth()-1);
+
+
+                    }
+                    else{
+                        killEnemy(e);
+                    }
+                }
+
             }
         }
     }
@@ -380,7 +413,10 @@ public class Game {
             checkCollisionBullet(bullet);
             checkCollisionBoss(bullet);
         }
+
     }
+
+
 
 
     /******************************/
@@ -417,9 +453,9 @@ public class Game {
             shieldActivated = false;
             multiplierActivated = false;
             bombActivated=false;
-            for (Enemy e:allEnemys) {
-                e.setMaxSpeed(2);
-            }}
+            for (int i = 0; i < allEnemys.size(); i++) {
+                allEnemys.get(i).setMaxSpeed(2);
+            }};
 
     }
 
@@ -570,12 +606,15 @@ public class Game {
     }
 
     private void specialAbilityUnicorn(){
-        follower.movement(mainCharacter.getLocation(), false);
+        Vector2D loc = new Vector2D(mainCharacter.getLocation());
+        loc.changeLocation(55,70);
+        follower.movement(loc,false);
+
         if(time + 5000 < System.currentTimeMillis()){
             time = System.currentTimeMillis();
             randomInt++;
             location = new Vector2D(follower.getLocation());
-            Bullet bullet = instance.makeBullet(playField,location,mouseLocation,randomInt);
+            Bullet bullet = instance.getUnicornHorn(playField,location,mouseLocation,randomInt);
             bulletsFollower.add(bullet);
         }
     }
@@ -626,6 +665,7 @@ public class Game {
         if (shooting && (shootersTime + interValWeapon * shooterSpeed) < System.currentTimeMillis()) {
             if(rapidFireActivated){trippleArrow();}
             addBullet(mouseLocation);
+
             shootersTime = System.currentTimeMillis();
         }
     }

@@ -57,13 +57,11 @@ public class Client extends Application {
         Font.loadFont(getClass().getResourceAsStream("Styling/fonts/TrajanProRegular.ttf"), 14);
         scene.getStylesheets().add("application/Styling/application.css");
         primaryStage.setScene(scene);
-        primaryStage.setFullScreen(false);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
         loadScreen("loginScreen");
 
     }
-
-
 }
 
 

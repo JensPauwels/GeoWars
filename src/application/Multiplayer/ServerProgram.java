@@ -77,12 +77,15 @@ public class ServerProgram extends Listener {
 	public void received(Connection c, Object p){
 		if(p instanceof PacketMessage){
 			PacketMessage packet = (PacketMessage) p;
+
 			if(myConnections.size() == 2){
 				if(c == myConnections.get(0)){
 					packetMessage.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage2.setFirstCharacter(packet.getFirstCharacter());
 					packetMessage.setSpawnFirstClient(packet.getSpawnFirstClient());
 					packetMessage2.setBullets(packet.getBullets());
+
+
 
 				}
 				else{
@@ -108,7 +111,6 @@ public class ServerProgram extends Listener {
 			deadenemies.removeAll(deadenemies);
 			this.wave = this.wave +1;
 			addLocs();
-			System.out.println(enemieLocations.size());
 			packetMessage.setSpawnFirstClient(true);
 			packetMessage2.setSpawnSecondClient(true);
 		}

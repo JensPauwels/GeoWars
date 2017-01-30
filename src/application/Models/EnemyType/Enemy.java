@@ -38,6 +38,14 @@ public class Enemy extends Sprite {
         super(bp, location, 12.5, 25);
         this.xp = 10;
         this.idn = id;
+        this.setId(myid);
+    }
+
+    public Enemy(Pane bp,Vector2D location,int id ,String myid){
+        super(bp, location, 12.5, 25);
+        this.xp = 10;
+        this.idn = id;
+        this.setId(myid);
     }
 
     public int getIdn() {

@@ -125,7 +125,6 @@ public class MultiPlayerController {
             speedUpdate++;
             speed.setId("speed"+speeds[speedUpdate]);
         }
-
     }
 
     @FXML
@@ -134,19 +133,13 @@ public class MultiPlayerController {
             specialAbilityUpdate++;
             specialAbility.setId("specialAbility"+specialAbilitys[specialAbilityUpdate]);
         }
-
     }
 
     @FXML
     private void launchGame() throws Exception {
-
-
-
-
         instance.setWeaponType(weapons[index]);
         instance.setFollowerType(follower);
         instance.setLevelType(difficulty);
-        Game newGame = new Game(Client.scene, Client.mainLayout,true);
-
+        Client.loadScreen("tutorial");
     }
 }

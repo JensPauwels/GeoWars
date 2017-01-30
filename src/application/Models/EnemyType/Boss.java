@@ -11,12 +11,13 @@ public class Boss extends Enemy {
         super(bp, location,0);
         this.setHealth(20);
         this.setDestination(this.getLocation());
+        this.setId("dragon");
     }
 
     @Override
     public Node createView() {
         Label img = new Label();
-        img.setId("dragon");
+
         return img;
     }
 }

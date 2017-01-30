@@ -15,11 +15,13 @@ public class GameOptionsController {
     @FXML
     private void loadMultiPlayer() {
         Client.loadScreen("multiPlayer");
+        Engine.getInstance().setGameChoice("multiplayer");
     }
 
     @FXML
     private void loadSinglePlayer() {
         Client.loadScreen("singlePlayer");
+        Engine.getInstance().setGameChoice("singlePlayer");
     }
 
     @FXML
